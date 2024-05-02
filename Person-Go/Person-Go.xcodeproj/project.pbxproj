@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		275CA9F72BDE940D00200F6D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275CA9F62BDE940D00200F6D /* LocationManager.swift */; };
+		3693DFF62BE40892003F83BD /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3693DFF52BE40892003F83BD /* Supabase */; };
+		3693DFF82BE40B01003F83BD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693DFF72BE40B01003F83BD /* LoginView.swift */; };
+		3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693DFF92BE41215003F83BD /* UserAuth.swift */; };
 		792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */; };
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
@@ -20,6 +23,10 @@
 
 /* Begin PBXFileReference section */
 		275CA9F62BDE940D00200F6D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		3693DFF72BE40B01003F83BD /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3693DFF92BE41215003F83BD /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
+		3693DFFB2BE4132E003F83BD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		3693DFFC2BE41AC3003F83BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		792A4A512BDAEB0500CBCCB1 /* Person-Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person-Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_GoApp.swift; sourceTree = "<group>"; };
 		792A4A562BDAEB0500CBCCB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -36,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3693DFF62BE40892003F83BD /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,6 +53,7 @@
 		792A4A482BDAEB0500CBCCB1 = {
 			isa = PBXGroup;
 			children = (
+				3693DFFB2BE4132E003F83BD /* Config.xcconfig */,
 				792A4A532BDAEB0500CBCCB1 /* Person-Go */,
 				792A4A522BDAEB0500CBCCB1 /* Products */,
 			);
@@ -61,11 +70,13 @@
 		792A4A532BDAEB0500CBCCB1 /* Person-Go */ = {
 			isa = PBXGroup;
 			children = (
+				3693DFFC2BE41AC3003F83BD /* Info.plist */,
 				792A4A622BDB04C600CBCCB1 /* Views */,
 				792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */,
 				792A4A562BDAEB0500CBCCB1 /* ContentView.swift */,
 				792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */,
 				792A4A5A2BDAEB0800CBCCB1 /* Preview Content */,
+				3693DFF92BE41215003F83BD /* UserAuth.swift */,
 			);
 			path = "Person-Go";
 			sourceTree = "<group>";
@@ -84,6 +95,7 @@
 				792A4A6B2BDB056D00CBCCB1 /* SettingView.swift */,
 				792A4A6D2BDB059000CBCCB1 /* InventoryView.swift */,
 				792A4A6F2BDB05A700CBCCB1 /* MapView.swift */,
+				3693DFF72BE40B01003F83BD /* LoginView.swift */,
 				792A4A712BDB05BE00CBCCB1 /* ChatsView.swift */,
 				275CA9F62BDE940D00200F6D /* LocationManager.swift */,
 			);
@@ -106,6 +118,9 @@
 			dependencies = (
 			);
 			name = "Person-Go";
+			packageProductDependencies = (
+				3693DFF52BE40892003F83BD /* Supabase */,
+			);
 			productName = "Person-Go";
 			productReference = 792A4A512BDAEB0500CBCCB1 /* Person-Go.app */;
 			productType = "com.apple.product-type.application";
@@ -134,6 +149,9 @@
 				Base,
 			);
 			mainGroup = 792A4A482BDAEB0500CBCCB1;
+			packageReferences = (
+				3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */,
+			);
 			productRefGroup = 792A4A522BDAEB0500CBCCB1 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -163,8 +181,10 @@
 				792A4A722BDB05BE00CBCCB1 /* ChatsView.swift in Sources */,
 				792A4A702BDB05A700CBCCB1 /* MapView.swift in Sources */,
 				792A4A6C2BDB056D00CBCCB1 /* SettingView.swift in Sources */,
+				3693DFF82BE40B01003F83BD /* LoginView.swift in Sources */,
 				275CA9F72BDE940D00200F6D /* LocationManager.swift in Sources */,
 				792A4A6E2BDB059000CBCCB1 /* InventoryView.swift in Sources */,
+				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
 				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
 			);
@@ -175,6 +195,7 @@
 /* Begin XCBuildConfiguration section */
 		792A4A5D2BDAEB0800CBCCB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3693DFFB2BE4132E003F83BD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -238,6 +259,7 @@
 		};
 		792A4A5E2BDAEB0800CBCCB1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3693DFFB2BE4132E003F83BD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -303,6 +325,7 @@
 				DEVELOPMENT_TEAM = 8M25VBMKB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Person-Go/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -333,6 +356,7 @@
 				DEVELOPMENT_TEAM = 8M25VBMKB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Person-Go/Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -374,6 +398,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3693DFF52BE40892003F83BD /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 792A4A492BDAEB0500CBCCB1 /* Project object */;
 }
