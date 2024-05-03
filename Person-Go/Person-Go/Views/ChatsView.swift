@@ -1,11 +1,29 @@
 import SwiftUI
 
 struct ChatsView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, Wrld!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @State private var showFriendProfile = false
 
-#Preview {
-    ChatsView()
+    var body: some View {
+        NavigationView {
+            VStack {
+                Button(action: {
+                    self.showFriendProfile = true
+                }) {
+                    Text("Friend's Name")
+                        .foregroundColor(.primary) // Not tinted
+                }
+                .padding()
+
+                NavigationLink(destination: FriendProfileView(), isActive: $showFriendProfile) {
+                    EmptyView()
+                }
+            }
+            .navigationBarTitle("Chats", displayMode: .inline)
+            .navigationBarItems(trailing:
+                NavigationLink(destination: AddFriendsView()) {
+                    Image(systemName: "plus")
+                }
+            )
+        }
+    }
 }
