@@ -16,6 +16,9 @@
 		792A4A6E2BDB059000CBCCB1 /* InventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A6D2BDB059000CBCCB1 /* InventoryView.swift */; };
 		792A4A702BDB05A700CBCCB1 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A6F2BDB05A700CBCCB1 /* MapView.swift */; };
 		792A4A722BDB05BE00CBCCB1 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A712BDB05BE00CBCCB1 /* ChatsView.swift */; };
+		7967EDC12BE6F253001947F6 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7967EDC02BE6F253001947F6 /* Message.swift */; };
+		7967EDC32BE6F2D0001947F6 /* ProflieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7967EDC22BE6F2D0001947F6 /* ProflieView.swift */; };
+		7967EDC52BE6F377001947F6 /* ChatWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7967EDC42BE6F377001947F6 /* ChatWindowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +32,9 @@
 		792A4A6D2BDB059000CBCCB1 /* InventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryView.swift; sourceTree = "<group>"; };
 		792A4A6F2BDB05A700CBCCB1 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		792A4A712BDB05BE00CBCCB1 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
+		7967EDC02BE6F253001947F6 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		7967EDC22BE6F2D0001947F6 /* ProflieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProflieView.swift; sourceTree = "<group>"; };
+		7967EDC42BE6F377001947F6 /* ChatWindowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWindowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +67,7 @@
 		792A4A532BDAEB0500CBCCB1 /* Person-Go */ = {
 			isa = PBXGroup;
 			children = (
+				7967EDBF2BE6F243001947F6 /* Model */,
 				792A4A622BDB04C600CBCCB1 /* Views */,
 				792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */,
 				792A4A562BDAEB0500CBCCB1 /* ContentView.swift */,
@@ -86,8 +93,18 @@
 				792A4A6F2BDB05A700CBCCB1 /* MapView.swift */,
 				792A4A712BDB05BE00CBCCB1 /* ChatsView.swift */,
 				275CA9F62BDE940D00200F6D /* LocationManager.swift */,
+				7967EDC22BE6F2D0001947F6 /* ProflieView.swift */,
+				7967EDC42BE6F377001947F6 /* ChatWindowView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7967EDBF2BE6F243001947F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7967EDC02BE6F253001947F6 /* Message.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -161,10 +178,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				792A4A722BDB05BE00CBCCB1 /* ChatsView.swift in Sources */,
+				7967EDC32BE6F2D0001947F6 /* ProflieView.swift in Sources */,
 				792A4A702BDB05A700CBCCB1 /* MapView.swift in Sources */,
 				792A4A6C2BDB056D00CBCCB1 /* SettingView.swift in Sources */,
 				275CA9F72BDE940D00200F6D /* LocationManager.swift in Sources */,
 				792A4A6E2BDB059000CBCCB1 /* InventoryView.swift in Sources */,
+				7967EDC52BE6F377001947F6 /* ChatWindowView.swift in Sources */,
+				7967EDC12BE6F253001947F6 /* Message.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
 				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
 			);
