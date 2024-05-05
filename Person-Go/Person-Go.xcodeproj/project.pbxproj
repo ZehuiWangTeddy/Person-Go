@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		275CA9F72BDE940D00200F6D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275CA9F62BDE940D00200F6D /* LocationManager.swift */; };
+		363A7F672BE4E64000ECA37B /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363A7F662BE4E64000ECA37B /* RegistrationView.swift */; };
+		363A7F692BE4E70D00ECA37B /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363A7F682BE4E70D00ECA37B /* PasswordResetView.swift */; };
 		3693DFF62BE40892003F83BD /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3693DFF52BE40892003F83BD /* Supabase */; };
 		3693DFF82BE40B01003F83BD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693DFF72BE40B01003F83BD /* LoginView.swift */; };
 		3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693DFF92BE41215003F83BD /* UserAuth.swift */; };
@@ -23,9 +25,10 @@
 
 /* Begin PBXFileReference section */
 		275CA9F62BDE940D00200F6D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		363A7F662BE4E64000ECA37B /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
+		363A7F682BE4E70D00ECA37B /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetView.swift; sourceTree = "<group>"; };
 		3693DFF72BE40B01003F83BD /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3693DFF92BE41215003F83BD /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
-		3693DFFB2BE4132E003F83BD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		3693DFFC2BE41AC3003F83BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		792A4A512BDAEB0500CBCCB1 /* Person-Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person-Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_GoApp.swift; sourceTree = "<group>"; };
@@ -53,7 +56,6 @@
 		792A4A482BDAEB0500CBCCB1 = {
 			isa = PBXGroup;
 			children = (
-				3693DFFB2BE4132E003F83BD /* Config.xcconfig */,
 				792A4A532BDAEB0500CBCCB1 /* Person-Go */,
 				792A4A522BDAEB0500CBCCB1 /* Products */,
 			);
@@ -98,6 +100,8 @@
 				3693DFF72BE40B01003F83BD /* LoginView.swift */,
 				792A4A712BDB05BE00CBCCB1 /* ChatsView.swift */,
 				275CA9F62BDE940D00200F6D /* LocationManager.swift */,
+				363A7F662BE4E64000ECA37B /* RegistrationView.swift */,
+				363A7F682BE4E70D00ECA37B /* PasswordResetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -187,6 +191,8 @@
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
 				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
+				363A7F672BE4E64000ECA37B /* RegistrationView.swift in Sources */,
+				363A7F692BE4E70D00ECA37B /* PasswordResetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,7 +201,6 @@
 /* Begin XCBuildConfiguration section */
 		792A4A5D2BDAEB0800CBCCB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3693DFFB2BE4132E003F83BD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -259,7 +264,6 @@
 		};
 		792A4A5E2BDAEB0800CBCCB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3693DFFB2BE4132E003F83BD /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
