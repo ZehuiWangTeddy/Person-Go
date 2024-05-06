@@ -1,25 +1,32 @@
 import SwiftUI
-import MapKit
 
 struct MapView: View {
-    @StateObject var locationManager = LocationManager()
-    @State private var region = MKCoordinateRegion()
+    @StateObject var mapViewContainer = MapViewContainer()
 
     var body: some View {
-        Map(coordinateRegion: $region)
-            .onAppear {
-                if let location = locationManager.location {
-                    region = MKCoordinateRegion(
-                        center: location.coordinate,
-                        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-                    )
+        ZStack {
+            mapViewContainer.mapViewRepresentable
+                .ignoresSafeArea()
+
+            VStack {
+                Spacer()
+
+                HStack {
+                    Spacer()
+
+                    Button(action: {
+                        mapViewContainer.mapViewRepresentable.makeCoordinator().zoomIn()
+                    }) {
+                        Image(systemName: "location.north")
+                            .rotationEffect(.degrees(-30))
+                            .padding()
+                            .background(Color.white.opacity(0.75))
+                            .clipShape(Circle())
+                            .padding(.bottom)
+                            .padding(.trailing)
+                    }
                 }
             }
-    }
-}
-
-struct MapView_Previews: PreviewProvider {
-    static var previews: some View {
-        MapView()
+        }
     }
 }

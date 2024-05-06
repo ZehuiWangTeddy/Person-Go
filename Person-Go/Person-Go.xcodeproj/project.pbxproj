@@ -7,12 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */; };
+		271DF0582BE199FF007DC5F7 /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */; };
+		271DF05A2BE1A628007DC5F7 /* AddFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0592BE1A628007DC5F7 /* AddFriendsView.swift */; };
+		271DF05C2BE23838007DC5F7 /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF05B2BE23838007DC5F7 /* FriendProfileView.swift */; };
 		275CA9F72BDE940D00200F6D /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 275CA9F62BDE940D00200F6D /* LocationManager.swift */; };
 		363A7F672BE4E64000ECA37B /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363A7F662BE4E64000ECA37B /* RegistrationView.swift */; };
 		363A7F692BE4E70D00ECA37B /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 363A7F682BE4E70D00ECA37B /* PasswordResetView.swift */; };
 		3693DFF62BE40892003F83BD /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3693DFF52BE40892003F83BD /* Supabase */; };
 		3693DFF82BE40B01003F83BD /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693DFF72BE40B01003F83BD /* LoginView.swift */; };
 		3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3693DFF92BE41215003F83BD /* UserAuth.swift */; };
+		27FFF3D72BE2939E0008B22B /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FFF3D62BE2939E0008B22B /* SecurityView.swift */; };
+		27FFF3D92BE3F4070008B22B /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FFF3D82BE3F4070008B22B /* AuthenticationView.swift */; };
+		27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FFF3DA2BE40F940008B22B /* AppLockManager.swift */; };
+		27FFF3E32BE50DC10008B22B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */; };
 		792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */; };
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
@@ -24,12 +32,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
+		271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
+		271DF0592BE1A628007DC5F7 /* AddFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendsView.swift; sourceTree = "<group>"; };
+		271DF05B2BE23838007DC5F7 /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		275CA9F62BDE940D00200F6D /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		363A7F662BE4E64000ECA37B /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		363A7F682BE4E70D00ECA37B /* PasswordResetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordResetView.swift; sourceTree = "<group>"; };
 		3693DFF72BE40B01003F83BD /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3693DFF92BE41215003F83BD /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
 		3693DFFC2BE41AC3003F83BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		27FFF3D62BE2939E0008B22B /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
+		27FFF3D82BE3F4070008B22B /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
+		27FFF3DA2BE40F940008B22B /* AppLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockManager.swift; sourceTree = "<group>"; };
+		27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		792A4A512BDAEB0500CBCCB1 /* Person-Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person-Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_GoApp.swift; sourceTree = "<group>"; };
 		792A4A562BDAEB0500CBCCB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +69,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27FFF3DC2BE4FA1E0008B22B /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				275CA9F62BDE940D00200F6D /* LocationManager.swift */,
+				27FFF3DA2BE40F940008B22B /* AppLockManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		27FFF3DD2BE4FFF40008B22B /* Representables */ = {
+			isa = PBXGroup;
+			children = (
+				271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */,
+			);
+			path = Representables;
+			sourceTree = "<group>";
+		};
+		27FFF3DE2BE5000E0008B22B /* Containers */ = {
+			isa = PBXGroup;
+			children = (
+				271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */,
+			);
+			path = Containers;
+			sourceTree = "<group>";
+		};
 		792A4A482BDAEB0500CBCCB1 = {
 			isa = PBXGroup;
 			children = (
@@ -73,12 +114,16 @@
 			isa = PBXGroup;
 			children = (
 				3693DFFC2BE41AC3003F83BD /* Info.plist */,
+				27FFF3DE2BE5000E0008B22B /* Containers */,
+				27FFF3DD2BE4FFF40008B22B /* Representables */,
+				27FFF3DC2BE4FA1E0008B22B /* Managers */,
 				792A4A622BDB04C600CBCCB1 /* Views */,
 				792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */,
 				792A4A562BDAEB0500CBCCB1 /* ContentView.swift */,
 				792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */,
 				792A4A5A2BDAEB0800CBCCB1 /* Preview Content */,
 				3693DFF92BE41215003F83BD /* UserAuth.swift */,
+				27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */,
 			);
 			path = "Person-Go";
 			sourceTree = "<group>";
@@ -102,6 +147,10 @@
 				275CA9F62BDE940D00200F6D /* LocationManager.swift */,
 				363A7F662BE4E64000ECA37B /* RegistrationView.swift */,
 				363A7F682BE4E70D00ECA37B /* PasswordResetView.swift */,
+				271DF05B2BE23838007DC5F7 /* FriendProfileView.swift */,
+				27FFF3D62BE2939E0008B22B /* SecurityView.swift */,
+				271DF0592BE1A628007DC5F7 /* AddFriendsView.swift */,
+				27FFF3D82BE3F4070008B22B /* AuthenticationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27FFF3E32BE50DC10008B22B /* LaunchScreen.storyboard in Resources */,
 				792A4A5C2BDAEB0800CBCCB1 /* Preview Assets.xcassets in Resources */,
 				792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */,
 			);
@@ -184,15 +234,24 @@
 			files = (
 				792A4A722BDB05BE00CBCCB1 /* ChatsView.swift in Sources */,
 				792A4A702BDB05A700CBCCB1 /* MapView.swift in Sources */,
+				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
+				271DF05A2BE1A628007DC5F7 /* AddFriendsView.swift in Sources */,
+				271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */,
+				27FFF3D92BE3F4070008B22B /* AuthenticationView.swift in Sources */,
 				792A4A6C2BDB056D00CBCCB1 /* SettingView.swift in Sources */,
 				3693DFF82BE40B01003F83BD /* LoginView.swift in Sources */,
 				275CA9F72BDE940D00200F6D /* LocationManager.swift in Sources */,
+				271DF05C2BE23838007DC5F7 /* FriendProfileView.swift in Sources */,
 				792A4A6E2BDB059000CBCCB1 /* InventoryView.swift in Sources */,
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
 				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
 				363A7F672BE4E64000ECA37B /* RegistrationView.swift in Sources */,
 				363A7F692BE4E70D00ECA37B /* PasswordResetView.swift in Sources */,
+				27FFF3D72BE2939E0008B22B /* SecurityView.swift in Sources */,
+				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
+				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
+				271DF0582BE199FF007DC5F7 /* MapViewContainer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,9 +389,16 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Person GO";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is required to lock app";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
@@ -361,9 +427,16 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Person GO";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Face ID is required to lock app";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "";
+				INFOPLIST_KEY_NSLocationUsageDescription = "";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
