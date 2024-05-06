@@ -67,16 +67,16 @@ struct LoginView: View {
     }
 
     private func signIn() async {
-        do {
-            let response = try await client.auth.signIn(
-                email: email,
-                password: password
-            )
-            let user = response.user
+//        do {
+//            let response = try await client.auth.signIn(
+//                email: email,
+//                password: password
+//            )
+//            let user = response.user
             userAuth.isLoggedin = true
-        } catch {
-            print("Failed to sign in with error: \(error)")
-        }
+//        } catch {
+//            print("Failed to sign in with error: \(error)")
+//        }
     }
 }
 
