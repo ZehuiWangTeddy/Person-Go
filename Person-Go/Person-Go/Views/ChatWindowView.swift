@@ -82,9 +82,11 @@ struct ChatWindowView: View {
             .overlay(
                 VStack(alignment: .leading) {
                     VStack(alignment: .leading) {
-                        Text("Joy")
-                            .font(.title)
-                            .padding(.horizontal, 25)
+                        NavigationLink(destination: FriendProfileView()) {
+                            Text("Joy")
+                                    .font(.title)
+                                    .padding(.horizontal, 25)
+                        }
                         
                         Rectangle()
                             .frame(height: 1)

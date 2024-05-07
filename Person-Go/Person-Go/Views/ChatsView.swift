@@ -11,9 +11,11 @@ struct ChatsView: View {
                     HStack {
                         Text("Chats")
                             .font(.title)
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .frame(width: 25, height: 25)
+                        NavigationLink(destination: AddFriendsView()) {
+                            Image(systemName: "plus.circle")
+                                    .resizable()
+                                    .frame(width: 25, height: 25)
+                        }
                         Spacer()
                         NavigationLink(destination: ProfileView()){
                             Image("userprofile")
