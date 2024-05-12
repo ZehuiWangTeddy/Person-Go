@@ -2,6 +2,8 @@ import SwiftUI
 
 struct SettingView: View {
     @Environment(\.colorScheme) var colorScheme
+    @State private var showLoginView = false
+    @EnvironmentObject var userAuth: UserAuth
     var body: some View {
         ZStack {
             NavigationView {
@@ -46,23 +48,26 @@ struct SettingView: View {
 
                         Button(action: {
                             // Add your action here
+                            showLoginView = true
                         }) {
-                            NavigationLink(destination: LoginView()) {
-                                Text("Log out")
-                                        .font(.title)
-                                        .padding()
-                                        .background(Color(hex: "#EC9583")) // Change the background color to #EC9583
-                                        .foregroundColor(.white)
-                                        .cornerRadius(10)
-                            }
+                            Text("Log out")
+                                    .font(.title)
+                                    .padding()
+                                    .background(Color(hex: "#EC9583")) // Change the background color to #EC9583
+                                    .foregroundColor(.white)
+                                    .cornerRadius(10)
+                        }
+                                .fullScreenCover(isPresented: $showLoginView) {
+                                    LoginView()
+                                }
                                     .padding(.top, 80) // Add some space above the button some space above the button
                         }
                     }
                 }
             }
-        }
                 .background(colorScheme == .light ? Color(hex: "#F3EBD8") : Color(hex: "#271F0C"))
                 .edgesIgnoringSafeArea(.all) // This line m
+        }
+
     }
 
-}
