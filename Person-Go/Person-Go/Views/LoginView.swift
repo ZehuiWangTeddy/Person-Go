@@ -10,60 +10,65 @@ struct LoginView: View {
 
     var body: some View {
         NavigationView {
-            VStack {
-                HStack {
-                    Text("Sign In")
-                        .font(.largeTitle)
-                        .bold()
-                    Spacer()
-                }
-                Spacer().frame(height: 20)
-                HStack {
-                    Text("Email")
-                        .font(.title2)
-                    Spacer()
-                }
-                TextField("", text: $email)
-                    .autocapitalization(.none)
-                    .padding()
-                    .border(Color.gray, width: 0.5)
-                HStack {
-                    Text("Password")
-                        .font(.title2)
-                    Spacer()
-                }
-                SecureField("", text: $password)
-                    .padding()
-                    .border(Color.gray, width: 0.5)
-                Spacer().frame(height: 20)
-                Button(action: {
-                    Task {
-                        await signIn()
-                    }
-                }, label: {
-                    Text("Sign In")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color.gray)
-                        .foregroundColor(.white)
-                        .cornerRadius(4)
-                        .font(.title3)
-                })
+            ZStack {
+                Color("Background")
                 VStack {
-                    NavigationLink(destination: PasswordResetView()) {
-                        Text("Forgot Password?")
-                            .font(.title3)
+                    HStack {
+                        Text("Sign In")
+                            .font(.largeTitle)
+                            .bold()
+                        Spacer()
                     }
-                    Spacer().frame(height: 10)
-                    NavigationLink(destination: RegistrationView()) {
-                        Text("Sign Up")
-                            .font(.title3)
+                    Spacer().frame(height: 20)
+                    HStack {
+                        Text("Email")
+                            .font(.title2)
+                        Spacer()
                     }
+                    TextField("", text: $email)
+                        .autocapitalization(.none)
+                        .padding()
+                        .border(Color.gray, width: 0.5)
+                    HStack {
+                        Text("Password")
+                            .font(.title2)
+                        Spacer()
+                    }
+                    SecureField("", text: $password)
+                        .padding()
+                        .border(Color.gray, width: 0.5)
+                    Spacer().frame(height: 20)
+                    Button(action: {
+                        Task {
+                            await signIn()
+                        }
+                    }, label: {
+                        Text("Sign In")
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("Primary"))
+                            .foregroundColor(Color("Text"))
+                            .cornerRadius(4)
+                            .font(.title3)
+                    })
+                    VStack {
+                        NavigationLink(destination: PasswordResetView()) {
+                            Text("Forgot Password?")
+                                .font(.title3)
+                        }
+                        Spacer().frame(height: 10)
+                        NavigationLink(destination: RegistrationView()) {
+                            Text("Sign Up")
+                                .font(.title3)
+                        }
+                    }
+                    .padding()
                 }
-                .padding()
             }
+            .padding()
+            .background(Color("Background"))
         }
-        .padding()
+        .foregroundColor(Color("Text"))
     }
 
     private func signIn() async {
