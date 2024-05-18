@@ -27,12 +27,19 @@ struct SettingView: View {
                                 .padding()
                                 .background(Color.clear) // Make the button background transparent
                                 .foregroundColor(.primary) // Use the primary color for the text
-                            } else {
-                                Button(action: {
-                                    // Add your action here
-                                }) {
+                            } else if size == "About" {
+                                NavigationLink(destination: AboutView()) {
+                                    
                                     Text(size)
                                             .font(.system(size: 25))
+                                }
+                                .padding()
+                                .background(Color.clear) // Make the button background transparent
+                                .foregroundColor(.primary) // Use the primary color for the text
+                            } else if size == "Notification" {
+                                NavigationLink(destination: NotificationView()) {
+                                Text(size)
+                                .font(.system(size: 25))
                                 }
                                 .padding()
                                 .background(Color.clear) // Make the button background transparent
