@@ -30,7 +30,9 @@ struct AboutView: View {
                     .fontWeight(.bold)
                     .padding(.top, 10)
 
+
                 Text("Our mission is to bridge the gap between digital and physical interactions by making it easier for people to connect and have fun. We believe that real-world connections are essential for building strong relationships, and Person Go is designed to facilitate these connections.")
+
                     .font(.body)
 
                 Spacer()
