@@ -1,41 +1,51 @@
 import SwiftUI
 
 struct LaunchListView: View {
+    @Environment(\.colorScheme) var colorScheme
     @State private var friends: [Friend] = [
         Friend(name: "Joe", distance: 1.5, avatar: "userprofile"),
-        Friend(name: "JJJ", distance: 1.8, avatar: "userprofile"),
-        Friend(name: "WWW", distance: 2.5, avatar: "userprofile"),
-        Friend(name: "SSS", distance: 2.8, avatar: "userprofile"),
-        Friend(name: "TTT", distance: 3.5, avatar: "userprofile")
+        Friend(name: "John", distance: 1.8, avatar: "userprofile"),
+        Friend(name: "Selena", distance: 2.5, avatar: "userprofile"),
+        Friend(name: "Taylor", distance: 2.8, avatar: "userprofile"),
+        Friend(name: "Lennox", distance: 3.5, avatar: "userprofile")
     ]
     @State private var selectedFriends: Set<UUID> = []
 
     var body: some View {
-        VStack {
-            List(friends) { friend in
-                FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
-                    .onTapGesture {
-                        if self.selectedFriends.contains(friend.id) {
-                            self.selectedFriends.remove(friend.id)
-                        } else {
-                            self.selectedFriends.insert(friend.id)
+        ZStack {
+            Color("Background")
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                List(friends, id: \.id) { friend in
+                    FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
+                        .onTapGesture {
+                            if self.selectedFriends.contains(friend.id) {
+                                self.selectedFriends.remove(friend.id)
+                            } else {
+                                self.selectedFriends.insert(friend.id)
+                            }
                         }
-                    }
+                        .listRowBackground(Color("Background"))
+                }
+                .listStyle(PlainListStyle()) // Ensures the list style is consistent with the app's design
+                
+                Button(action: {
+                    confirmAction()
+                }) {
+                    Text("Send Missile")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color("Primary"))
+                        .foregroundColor(Color("Text"))
+                        .cornerRadius(8)
+                        .padding()
+                }
             }
-            
-            Button(action: {
-                confirmAction()
-            }) {
-                Text("Confirm")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(8)
-                    .padding()
-            }
+            .padding()
         }
-        .navigationTitle("List")
+        .navigationTitle("Friend List")
+        .foregroundColor(Color("Text"))
+       
     }
 
     private func confirmAction() {
@@ -61,17 +71,19 @@ struct FriendRow: View {
             VStack(alignment: .leading) {
                 Text(friend.name)
                     .font(.headline)
+                    .foregroundColor(Color("Text"))
             }
             Spacer() // Pushes the distance to the right
             Text("\(friend.distance, specifier: "%.1f") km")
                 .font(.subheadline)
+                .foregroundColor(Color("Text"))
             if isSelected {
                 Image(systemName: "checkmark")
                     .foregroundColor(.blue)
             }
         }
         .padding()
-        .background(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+        .background(isSelected ? Color("Primary").opacity(0.1) : Color.clear)
         .cornerRadius(8)
     }
 }
@@ -79,6 +91,6 @@ struct FriendRow: View {
 struct LaunchListView_Previews: PreviewProvider {
     static var previews: some View {
         LaunchListView()
+            .environmentObject(UserAuth())
     }
 }
-
