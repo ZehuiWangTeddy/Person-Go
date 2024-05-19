@@ -4,6 +4,7 @@ struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil // State to track selected size
     @State private var navigateToLaunchListView = false // State to trigger navigation
+    @State var friendManager: FriendManager
 
     let missileData = [
         ("Quickstrike", "5km"),
@@ -74,7 +75,7 @@ struct InventoryView: View {
             .background(Color("Background"))
             .navigationBarHidden(true)
             .navigationDestination(isPresented: $navigateToLaunchListView) {
-                LaunchListView()
+                LaunchListView(friendManager: friendManager)
             }
         }
     }
@@ -82,6 +83,6 @@ struct InventoryView: View {
 
 struct InventoryView_Previews: PreviewProvider {
     static var previews: some View {
-        InventoryView()
+        InventoryView(friendManager: FriendManager())
     }
 }

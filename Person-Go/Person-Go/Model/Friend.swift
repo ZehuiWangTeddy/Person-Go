@@ -1,8 +1,10 @@
 import SwiftUI
+import MapKit
 
 struct Friend: Identifiable {
     let id = UUID()
     let name: String
     let distance: Double
-    let avatar: String // Assume this is the name of an image in Assets.xcassets
+    let avatar: String
+    let location: CLLocationCoordinate2D
 }

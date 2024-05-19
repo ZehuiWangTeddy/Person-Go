@@ -2,21 +2,15 @@ import SwiftUI
 
 struct LaunchListView: View {
     @Environment(\.colorScheme) var colorScheme
-    @State private var friends: [Friend] = [
-        Friend(name: "Joe", distance: 1.5, avatar: "userprofile"),
-        Friend(name: "John", distance: 1.8, avatar: "userprofile"),
-        Friend(name: "Selena", distance: 2.5, avatar: "userprofile"),
-        Friend(name: "Taylor", distance: 2.8, avatar: "userprofile"),
-        Friend(name: "Lennox", distance: 3.5, avatar: "userprofile")
-    ]
     @State private var selectedFriends: Set<UUID> = []
-
+    @State var friendManager: FriendManager
+    
     var body: some View {
         ZStack {
             Color("Background")
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                List(friends, id: \.id) { friend in
+                List(friendManager.friends, id: \.id) { friend in
                     FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
                         .onTapGesture {
                             if self.selectedFriends.contains(friend.id) {
@@ -50,7 +44,7 @@ struct LaunchListView: View {
 
     private func confirmAction() {
         // Perform the action with selected friends
-        let selected = friends.filter { selectedFriends.contains($0.id) }
+        let selected = friendManager.friends.filter { selectedFriends.contains($0.id) }
         print("Selected friends: \(selected.map { $0.name })")
         // Add your action here
     }
@@ -90,7 +84,7 @@ struct FriendRow: View {
 
 struct LaunchListView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchListView()
+        LaunchListView(friendManager: FriendManager())
             .environmentObject(UserAuth())
     }
 }

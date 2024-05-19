@@ -1,21 +1,18 @@
 import SwiftUI
 
 struct MapView: View {
-    @StateObject var mapViewContainer = MapViewContainer()
+    @State var mapViewRepresentable: MapViewRepresentable
 
     var body: some View {
         ZStack {
-            mapViewContainer.mapViewRepresentable
+            mapViewRepresentable
                 .ignoresSafeArea()
-
             VStack {
                 Spacer()
-
                 HStack {
                     Spacer()
-
                     Button(action: {
-                        mapViewContainer.mapViewRepresentable.makeCoordinator().zoomIn()
+                        mapViewRepresentable.zoomIn()
                     }) {
                         Image(systemName: "location.north")
                             .rotationEffect(.degrees(-30))
@@ -29,4 +26,8 @@ struct MapView: View {
             }
         }
     }
+}
+
+#Preview {
+    MapView(mapViewRepresentable: MapViewRepresentable(locationManager: LocationManager()))
 }
