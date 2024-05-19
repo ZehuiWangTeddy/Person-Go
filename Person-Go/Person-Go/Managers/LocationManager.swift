@@ -14,6 +14,12 @@ class LocationManager: NSObject, ObservableObject{
     var currentLocation: CLLocation? {
         return locationManager.location
     }
+
+    func calculateDistance(from userLocation: CLLocation, to friendLocation: CLLocation) -> Double {
+        let distanceInMeters = userLocation.distance(from: friendLocation)
+        let distanceInKilometers = distanceInMeters / 1000
+        return distanceInKilometers
+    }
 }
 
 extension LocationManager: CLLocationManagerDelegate{

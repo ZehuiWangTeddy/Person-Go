@@ -4,6 +4,9 @@ struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil // State to track selected size
     @State private var navigateToLaunchListView = false // State to trigger navigation
+    @Binding var selectedTab: String
+    @ObservedObject var selectedFriendsStore: SelectedFriends
+
 
     var body: some View {
         NavigationStack { // Use NavigationStack instead of NavigationView
@@ -63,14 +66,8 @@ struct InventoryView: View {
             .background(colorScheme == .light ? Color(hexString: "#F3EBD8") : Color(hexString: "#271F0C")) // Change the background color based on the color scheme
             .navigationBarHidden(true) // Hide the navigation bar
             .navigationDestination(isPresented: $navigateToLaunchListView) {
-                LaunchListView()
+                LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore)
             }
         }
-    }
-}
-
-struct InventoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        InventoryView()
     }
 }

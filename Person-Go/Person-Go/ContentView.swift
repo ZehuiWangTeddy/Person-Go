@@ -6,6 +6,8 @@ struct ContentView: View {
     @State private var isUnlocked = false
     @StateObject private var appLockManager = AppLockManager()
     @StateObject private var userAuth = UserAuth()
+    @StateObject private var selectedFriendsStore = SelectedFriends()
+
 
     var body: some View {
 
@@ -18,13 +20,13 @@ struct ContentView: View {
                                 Text("Chat")
                             }
                             .tag("Chat")
-                    MapView()
+                    MapView(selectedFriendsStore: selectedFriendsStore)
                             .tabItem {
                                 Image(systemName: "map")
                                 Text("Map")
                             }
                             .tag("Map")
-                    InventoryView()
+                    InventoryView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore)
                             .tabItem {
                                 Image(systemName: selectedTab == "Inventory" ? "door.garage.open" : "door.garage.closed")
                                 Text("Inventory")
