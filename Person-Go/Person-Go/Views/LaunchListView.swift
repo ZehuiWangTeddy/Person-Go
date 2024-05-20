@@ -49,10 +49,10 @@ struct LaunchListView: View {
     }
 
     private func confirmAction() {
-        // Perform the action with selected friends
+//         Perform the action with selected friends
         let selected = friends.filter { selectedFriends.contains($0.id) }
         print("Selected friends: \(selected.map { $0.name })")
-        // Add your action here
+//         Add your action here
     }
 }
 

@@ -1,10 +1,33 @@
 import SwiftUI
+import Supabase
+
+struct CircleWithTextView: View {
+    var content: String
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 2)
+                .frame(width: 25, height: 25)
+            
+            Text(content)
+                .font(.system(size: 12, weight: .bold))
+        }
+    }
+}
 
 struct ChatsView: View {
+    @EnvironmentObject var userAuth: UserAuth
+
+    var chatManager = ChatManager()
+    @State private var friends: [Friend] = []
+    
+    @State var loading = false
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                Color(red: 0xF3 / 255, green: 0xEB / 255, blue: 0xD8 / 255)
+                Color("Background")
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
@@ -17,7 +40,7 @@ struct ChatsView: View {
                                     .frame(width: 25, height: 25)
                         }
                         Spacer()
-                        NavigationLink(destination: ProfileView()){
+                        NavigationLink(destination: ProfileView()/*.environmentObject(userAuth)*/){
                             Image("userprofile")
                                 .resizable()
                                 .frame(width: 50, height: 50)
@@ -31,89 +54,68 @@ struct ChatsView: View {
                         .foregroundColor(.black)
                         .padding(.horizontal)
                     
-                    List {
-                        NavigationLink(destination: ChatWindowView()){
-                            HStack{
-                                Image("userprofile")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(30)
-                                Text("Zoe")
-                                    .font(.headline)
-                                Spacer()
-                                Image(systemName: "01.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                            .padding(.vertical, 8)
+                    if (friends.isEmpty) {
+                        if (loading) {
+                            Text("loadings...").padding()
+                        } else {
+                            Text("No Friends...").padding()
                         }
-                        NavigationLink(destination: ChatWindowView()){
-                            HStack{
-                                Image("userprofile")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(30)
-                                Text("Moe")
-                                    .font(.headline)
-                                Spacer()
-                                Image(systemName: "02.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
+                        
+                        Spacer()
+                            .padding()
+                    } else {
+                        
+                        List {
+                            ForEach(friends, id: \.id) { friend in
+                                NavigationLink(
+                                    destination: ChatWindowView(friend: friend).environmentObject(userAuth)
+                                ){
+                                    HStack{
+                                        AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .cornerRadius(30)
+                                                .frame(width: 50, height: 50)
+                                        } placeholder: {
+                                            Image("userprofile")
+                                                .resizable()
+                                                .frame(width: 50, height: 50)
+                                                .cornerRadius(30)
+                                        }
+                                        
+                                        Text(friend.profiles.username ?? friend.profiles.id.uuidString)
+                                            .font(.headline)
+                                        
+                                        Spacer()
+                                        
+                                        CircleWithTextView(content: "\(friend.totalInventory)")
+                                        
+                                    }
+                                    .padding(.vertical, 8)
+                                }
                             }
-                            .padding(.vertical, 8)
                         }
-                        NavigationLink(destination: ChatWindowView()){
-                            HStack{
-                                Image("userprofile")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(30)
-                                Text("Yoe")
-                                    .font(.headline)
-                                Spacer()
-                                Image(systemName: "03.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
-                            }
-                            .padding(.vertical, 8)
-                        }
-                        NavigationLink(destination: ChatWindowView()){
-                            HStack{
-                                Image("userprofile")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(30)
-                                Text("Qoe")
-                                    .font(.headline)
-                            }
-                            .padding(.vertical, 8)
-                        }
-                        NavigationLink(destination: ChatWindowView()){
-                            HStack{
-                                Image("userprofile")
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(30)
-                                Text("Poe")
-                                    .font(.headline)
-                            }
-                            .padding(.vertical, 8)
+                        .listStyle(PlainListStyle())
+                        .background(Color(red: 0xF3 / 255, green: 0xEB / 255, blue: 0xD8 / 255))
+                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                        .padding(.horizontal)
+                        .padding(.vertical)
+                        .refreshable {
+                            loading = true
+                            self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                            loading = false
                         }
                     }
-                    .listStyle(PlainListStyle())
-                    .background(Color(red: 0xF3 / 255, green: 0xEB / 255, blue: 0xD8 / 255))
-                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                    .padding(.horizontal)
-                    .padding(.vertical)
                 }
+                .foregroundColor(Color("Text"))
                 .padding(.vertical, 15)
             }
         }
-    }
-}
-
-struct ChatsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChatsView()
+        .onAppear {
+            Task {
+//                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+            }
+        }
     }
 }
