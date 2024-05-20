@@ -7,6 +7,7 @@ struct ContentView: View {
     @StateObject private var appLockManager = AppLockManager()
     @StateObject private var userAuth = UserAuth()
     @StateObject private var friendManager = FriendManager()
+    @StateObject private var locationManager = LocationManager()
 
     var body: some View {
         Group {
@@ -18,7 +19,7 @@ struct ContentView: View {
                             Text("Chat")
                         }
                         .tag("Chat")
-                    MapView(mapViewRepresentable: MapViewRepresentable(locationManager: LocationManager()))
+                    MapView(mapViewRepresentable: MapViewRepresentable(locationManager: locationManager))
                     .tabItem {
                             Image(systemName: "map")
                             Text("Map")
