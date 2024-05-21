@@ -40,7 +40,7 @@ struct ChatsView: View {
                                     .frame(width: 25, height: 25)
                         }
                         Spacer()
-                        NavigationLink(destination: ProfileView()/*.environmentObject(userAuth)*/){
+                        NavigationLink(destination: ProfileView().environmentObject(userAuth)){
                             Image("userprofile")
                                 .resizable()
                                 .frame(width: 50, height: 50)
@@ -114,7 +114,7 @@ struct ChatsView: View {
         }
         .onAppear {
             Task {
-//                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
             }
         }
     }

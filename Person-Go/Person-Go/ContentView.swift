@@ -5,7 +5,7 @@ struct ContentView: View {
     @AppStorage("isFaceIDOrTouchIDEnabled") var isFaceIDOrTouchIDEnabled: Bool = false
     @State private var isUnlocked = false
     @StateObject private var appLockManager = AppLockManager()
-    @StateObject private var userAuth = UserAuth()
+    @EnvironmentObject var userAuth: UserAuth
 
     var body: some View {
 
@@ -13,30 +13,31 @@ struct ContentView: View {
             if appLockManager.isUnlocked || !isFaceIDOrTouchIDEnabled {
                 TabView(selection: $selectedTab) {
                     ChatsView()
-                            .tabItem {
-                                Image(systemName: "message")
-                                Text("Chat")
-                            }
-                            .tag("Chat")
+                        .environmentObject(userAuth)
+                        .tabItem {
+                            Image(systemName: "message")
+                            Text("Chat")
+                        }
+                        .tag("Chat")
                     MapView()
-                            .tabItem {
-                                Image(systemName: "map")
-                                Text("Map")
-                            }
-                            .tag("Map")
+                        .tabItem {
+                            Image(systemName: "map")
+                            Text("Map")
+                        }
+                        .tag("Map")
                     InventoryView()
-                            .tabItem {
-                                Image(systemName: selectedTab == "Inventory" ? "door.garage.open" : "door.garage.closed")
-                                Text("Inventory")
-                            }
-                            .tag("Inventory")
+                        .tabItem {
+                            Image(systemName: selectedTab == "Inventory" ? "door.garage.open" : "door.garage.closed")
+                            Text("Inventory")
+                        }
+                        .tag("Inventory")
                     SettingView()
-                            .environmentObject(userAuth)
-                            .tabItem {
-                                Image(systemName: "gearshape")
-                                Text("Setting")
-                            }
-                            .tag("Setting")
+                        .environmentObject(userAuth)
+                        .tabItem {
+                            Image(systemName: "gearshape")
+                            Text("Setting")
+                        }
+                        .tag("Setting")
                 }
                         .onAppear() {
                             UITabBar.appearance().backgroundColor = UIColor(Color("Background"))
@@ -48,6 +49,7 @@ struct ContentView: View {
             }
         }
             .environmentObject(appLockManager)
+            .environmentObject(userAuth)
                 .onAppear{
                     if isFaceIDOrTouchIDEnabled {
                         appLockManager.isUnlocked = false
