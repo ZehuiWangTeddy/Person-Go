@@ -11,6 +11,7 @@ struct Person_GoApp: App {
         WindowGroup {
             if userAuth.isLoggedin {
                 ContentView()
+                    .environmentObject(userAuth)
             } else {
                 LoginView()
                     .environmentObject(userAuth)
