@@ -5,9 +5,9 @@ struct LaunchListView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var friends: [Friend] = []
     @State private var selectedFriends: Set<UUID> = []
-//    @ObservedObject var selectedFriendsStore = SelectedFriends()
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
+    var selectedSize: String?
 
     var body: some View {
         VStack {
@@ -49,6 +49,7 @@ struct LaunchListView: View {
         let selected = friends.filter { selectedFriends.contains($0.id) }
         print("Selected friends: \(selected.map { $0.name })")
         selectedFriendsStore.friends = selected
+        selectedFriendsStore.selectedSize = selectedSize
         DispatchQueue.main.async {
             selectedFriendsStore.friends = selected
         }
@@ -56,21 +57,22 @@ struct LaunchListView: View {
     }
 
     private func loadFriends() async {
-        friends = []
-        let fetchedFriends = await fetchFriends(for: UUID(uuidString: user_id)!)
-        let profiles = await fetchProfile()
-        let locations = await fetchLocation()
+    friends = []
+    let fetchedFriends = await fetchFriends(for: UUID(uuidString: user_id)!)
+    let profiles = await fetchProfile()
+    let locations = await fetchLocation()
 
-        for fetchedFriend in fetchedFriends {
-            if let profile = profiles.first(where: { $0.id == fetchedFriend.friendId }),
-               let location = locations.first(where: { $0.userId == fetchedFriend.friendId }) {
-                let friendLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
-                let distance = locationManager.calculateDistance(from: locationManager.currentLocation!, to: friendLocation)
-                let friend = Friend(name: profile.username ?? "No username", distance: distance, avatar: "userprofile")
-                friends.append(friend)
-            }
+    for fetchedFriend in fetchedFriends {
+        if let profile = profiles.first(where: { $0.id == fetchedFriend.friendId }),
+           let location = locations.first(where: { $0.userId == fetchedFriend.friendId }),
+           let currentLocation = locationManager.currentLocation {
+            let friendLocation = CLLocation(latitude: location.latitude, longitude: location.longitude)
+            let distance = locationManager.calculateDistance(from: currentLocation, to: friendLocation)
+            let friend = Friend(name: profile.username ?? "No username", distance: distance, avatar: "userprofile")
+            friends.append(friend)
         }
     }
+}
 }
 
 struct FriendRow: View {
@@ -105,5 +107,6 @@ struct FriendRow: View {
 
 class SelectedFriends: ObservableObject {
     @Published var friends: [Friend] = []
+    @Published var selectedSize: String?
 }
 

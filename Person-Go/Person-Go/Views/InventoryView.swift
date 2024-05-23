@@ -1,4 +1,5 @@
 import SwiftUI
+import Supabase
 
 struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -6,7 +7,7 @@ struct InventoryView: View {
     @State private var navigateToLaunchListView = false // State to trigger navigation
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
-
+    @State private var inventory: Inventory? // State to store the fetched inventory data
 
     var body: some View {
         NavigationStack { // Use NavigationStack instead of NavigationView
@@ -31,7 +32,7 @@ struct InventoryView: View {
                                 Text(size)
                                     .font(.system(size: 25))
                                 Spacer() // Pushes the number to the right
-                                Text("1") // Replace with actual number
+                                Text("\(inventoryValue(for: size))") // Replace with actual number
                                     .font(.system(size: 25))
                             }
                             .padding()
@@ -66,8 +67,27 @@ struct InventoryView: View {
             .background(colorScheme == .light ? Color(hexString: "#F3EBD8") : Color(hexString: "#271F0C")) // Change the background color based on the color scheme
             .navigationBarHidden(true) // Hide the navigation bar
             .navigationDestination(isPresented: $navigateToLaunchListView) {
-                LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore)
+                LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
             }
+            .onAppear {
+                Task {
+//                    let inventoryInstance = Inventory(userID: UUID(uuidString: user_id)!, small: 0, medium: 0, large: 0)
+                    inventory = await fetchInventory(for: UUID(uuidString: user_id)!)
+                }
+            }
+        }
+    }
+
+    private func inventoryValue(for size: String) -> Int {
+        switch size {
+        case "Small":
+            return inventory?.small ?? 0
+        case "Medium":
+            return inventory?.medium ?? 0
+        case "Large":
+            return inventory?.large ?? 0
+        default:
+            return 0
         }
     }
 }

@@ -12,6 +12,8 @@
 		271E22652BF9E288008FCA91 /* LocationCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E22642BF9E288008FCA91 /* LocationCRUD.swift */; };
 		271E22672BF9E292008FCA91 /* ProfileCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E22662BF9E292008FCA91 /* ProfileCRUD.swift */; };
 		271E22692BF9E4F4008FCA91 /* FriendsCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E22682BF9E4F4008FCA91 /* FriendsCRUD.swift */; };
+		273BB1382BFAC27800649311 /* InventoryCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273BB1372BFAC27800649311 /* InventoryCRUD.swift */; };
+		273BB13A2BFFEBBC00649311 /* MapViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 273BB1392BFFEBBC00649311 /* MapViewHelper.swift */; };
 		27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FFF3DA2BE40F940008B22B /* AppLockManager.swift */; };
 		27FFF3E32BE50DC10008B22B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */; };
 		3693DFF62BE40892003F83BD /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3693DFF52BE40892003F83BD /* Supabase */; };
@@ -49,6 +51,8 @@
 		271E22642BF9E288008FCA91 /* LocationCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCRUD.swift; sourceTree = "<group>"; };
 		271E22662BF9E292008FCA91 /* ProfileCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCRUD.swift; sourceTree = "<group>"; };
 		271E22682BF9E4F4008FCA91 /* FriendsCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCRUD.swift; sourceTree = "<group>"; };
+		273BB1372BFAC27800649311 /* InventoryCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryCRUD.swift; sourceTree = "<group>"; };
+		273BB1392BFFEBBC00649311 /* MapViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHelper.swift; sourceTree = "<group>"; };
 		27FFF3DA2BE40F940008B22B /* AppLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockManager.swift; sourceTree = "<group>"; };
 		27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3693DFF92BE41215003F83BD /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				271E22642BF9E288008FCA91 /* LocationCRUD.swift */,
 				271E22662BF9E292008FCA91 /* ProfileCRUD.swift */,
 				271E22682BF9E4F4008FCA91 /* FriendsCRUD.swift */,
+				273BB1372BFAC27800649311 /* InventoryCRUD.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -107,6 +112,7 @@
 			children = (
 				36B218992BE91F4C00CAE5AB /* LocationManager.swift */,
 				27FFF3DA2BE40F940008B22B /* AppLockManager.swift */,
+				273BB1392BFFEBBC00649311 /* MapViewHelper.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 				36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
+				273BB13A2BFFEBBC00649311 /* MapViewHelper.swift in Sources */,
 				36B2188F2BE91F3600CAE5AB /* AddFriendsView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
 				271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */,
@@ -305,6 +312,7 @@
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
 				36B218942BE91F3600CAE5AB /* SettingView.swift in Sources */,
 				36B218902BE91F3600CAE5AB /* FriendProfileView.swift in Sources */,
+				273BB1382BFAC27800649311 /* InventoryCRUD.swift in Sources */,
 				7F8D6C252BF901C80035DF7B /* AboutView.swift in Sources */,
 				36B2188C2BE91F3600CAE5AB /* PasswordResetView.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,

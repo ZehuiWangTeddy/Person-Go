@@ -30,22 +30,31 @@ struct MapViewRepresentable: UIViewRepresentable {
     }
 
     func drawFlightPath(to destination: CLLocationCoordinate2D) {
-    guard let sourceLocation = locationManager.currentLocation else { return }
-    let sourceCoordinate = sourceLocation.coordinate
-    let polyline = MKPolyline(coordinates: [sourceCoordinate, destination], count: 2)
-    mapView.addOverlay(polyline)
-}
-
-func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-    if overlay is MKPolyline {
-        let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = .red // Change the color to red
-        renderer.lineDashPattern = [2, 5] // Make the line dashed
-        renderer.lineWidth = 2
-        return renderer
+        guard let sourceLocation = locationManager.currentLocation else {
+            return
+        }
+        let sourceCoordinate = sourceLocation.coordinate
+        let polyline = MKPolyline(coordinates: [sourceCoordinate, destination], count: 2)
+        mapView.addOverlay(polyline)
     }
-    return MKOverlayRenderer()
-}
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKPolyline {
+            let renderer = MKPolylineRenderer(overlay: overlay)
+            renderer.strokeColor = .red // Change the color to red
+            renderer.lineDashPattern = [2, 5] // Make the line dashed
+            renderer.lineWidth = 2
+            return renderer
+            
+        } else if overlay is MKCircle {
+            let renderer = MKCircleRenderer(overlay: overlay)
+            renderer.fillColor = UIColor.red.withAlphaComponent(0.1)
+            renderer.strokeColor = UIColor.red
+            renderer.lineWidth = 1
+            return renderer
+        }
+        return MKOverlayRenderer()
+    }
 }
 extension MapViewRepresentable {
     class MapCoordinator: NSObject, MKMapViewDelegate{
@@ -64,9 +73,16 @@ extension MapViewRepresentable {
                 renderer.lineDashPattern = [2, 5] // Make the line dashed
                 renderer.lineWidth = 2
                 return renderer
+            } else if overlay is MKCircle {
+                let renderer = MKCircleRenderer(overlay: overlay)
+                renderer.fillColor = UIColor.red.withAlphaComponent(0.1)
+                renderer.strokeColor = UIColor.red
+                renderer.lineWidth = 1
+                return renderer
             }
             return MKOverlayRenderer()
         }
+
         func zoomIn() {
             guard let userLocation = parent.locationManager.currentLocation else { return }
             let zoomedRegion = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
