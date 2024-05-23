@@ -4,103 +4,80 @@ struct SettingView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var showLoginView = false
     @EnvironmentObject var userAuth: UserAuth
+    
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack {
-                    VStack(alignment: .leading) {
-                        Text("Setting")
-                                .font(.system(size: 30)) // Increased font size
-                                .fontWeight(.bold)
-                                .padding(.bottom)
-                        Divider()
-                                .frame(height: 2) // Increase the height to make the divider thicker
-                    }
-                            .padding(.bottom, 90) // Apply padding only to the bottom
-                            .padding(.horizontal) // Add horizontal padding
-
-                    VStack(alignment: .leading) {
-                        ForEach(["Notification", "Security", "About"], id: \.self) { size in
-                            if size == "Security" {
-                                NavigationLink(destination: SecurityView()) {
-                                    Text(size)
-                                            .font(.system(size: 25))
-                                }
-                                .padding()
-                                .background(Color.clear) // Make the button background transparent
-                                .foregroundColor(.primary) // Use the primary color for the text
-                            } else if size == "About" {
-                                NavigationLink(destination: AboutView()) {
-                                    
-                                    Text(size)
-                                            .font(.system(size: 25))
-                                }
-                                .padding()
-                                .background(Color.clear) // Make the button background transparent
-                                .foregroundColor(.primary) // Use the primary color for the text
-                            } else if size == "Notification" {
-                                NavigationLink(destination: NotificationView()) {
-                                Text(size)
-                                .font(.system(size: 25))
-                                }
-                                .padding()
-                                .background(Color.clear) // Make the button background transparent
-                                .foregroundColor(.primary) // Use the primary color for the text
-                            }
-                            Divider()
-                                    .frame(height: 2) // Increase the height to make the divider thicker
-                        }
-                                .padding(.bottom, 90) // Apply padding only to the bottom
-                                .padding(.horizontal) // Add horizontal padding
-
+        ZStack {
+            Color("Background")
+                .edgesIgnoringSafeArea(.all)
+            NavigationView {
+                ScrollView {
+                    VStack {
                         VStack(alignment: .leading) {
-                            ForEach(["Notification", "Security", "About"], id: \.self) { size in
-                                if size == "Security" {
+                            Text("Settings")
+                                .font(.largeTitle)
+                                .bold()
+                            Divider()
+                                .frame(height: 2)
+                        }
+                        .padding(.bottom, 0)
+                        .padding(.horizontal)
+                        
+                        VStack(alignment: .leading) {
+                            ForEach(["Notification", "Security", "About"], id: \.self) { item in
+                                if item == "Security" {
                                     NavigationLink(destination: SecurityView()) {
-                                        Text(size)
-                                                .font(.system(size: 25))
-                                    }
+                                        Text(item)
+                                            .font(.title2)
                                             .padding()
-                                            .background(Color.clear) // Make the button background transparent
-                                            .foregroundColor(.primary) // Use the primary color for the text
-                                } else {
-                                    Button(action: {
-                                        // Add your action here
-                                    }) {
-                                        Text(size)
-                                                .font(.system(size: 25))
                                     }
+                                    .background(Color.clear)
+                                    .foregroundColor(Color("Text"))
+                                } else if item == "Notification" {
+                                    NavigationLink(destination: NotificationView()) {
+                                        Text(item)
+                                            .font(.title2)
                                             .padding()
-                                            .background(Color.clear) // Make the button background transparent
-                                            .foregroundColor(.primary) // Use the primary color for the text
+                                    }
+                                    .background(Color.clear)
+                                    .foregroundColor(Color("Text"))
+                                } else if item == "About" {
+                                    NavigationLink(destination: AboutView()) {
+                                        Text(item)
+                                            .font(.title2)
+                                            .padding()
+                                    }
+                                    .background(Color.clear)
+                                    .foregroundColor(Color("Text"))
                                 }
                                 Divider()
                             }
                         }
-                                .padding(.horizontal) // Add horizontal padding
-
+                        .padding(.horizontal)
+                        
                         Button(action: {
-                            // Add your action here
                             showLoginView = true
                         }) {
                             Text("Log out")
-                                    .font(.title)
-                                    .padding()
-                                    .background(Color(hex: "#EC9583")) // Change the background color to #EC9583
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
+                                .font(.title3)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color("Primary"))
+                                .foregroundColor(Color("Text"))
+                                .cornerRadius(4)
                         }
-                                .fullScreenCover(isPresented: $showLoginView) {
-                                    LoginView()
-                                }
-                                    .padding(.top, 80) // Add some space above the button some space above the button
+                        .fullScreenCover(isPresented: $showLoginView) {
+                            LoginView()
                         }
+                        .padding(.top, 40)
                     }
+                    .padding()
                 }
+                .background(Color("Background"))
             }
-                .background(colorScheme == .light ? Color(hex: "#F3EBD8") : Color(hex: "#271F0C"))
-                .edgesIgnoringSafeArea(.all) // This line m
         }
-
     }
+}
 
+#Preview {
+    SettingView()
+}

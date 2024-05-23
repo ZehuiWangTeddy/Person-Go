@@ -4,15 +4,19 @@ import CoreLocation
 struct LaunchListView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var friends: [Friend] = []
+    @Environment(\.colorScheme) var colorScheme
     @State private var selectedFriends: Set<UUID> = []
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
     var selectedSize: String?
 
     var body: some View {
-        VStack {
-            List(friends) { friend in
-                FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
+        ZStack {
+            Color("Background")
+                .edgesIgnoringSafeArea(.all)
+            VStack {
+                List(friends, id: \.id) { friend in
+                    FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
                         .onTapGesture {
                             if self.selectedFriends.contains(friend.id) {
                                 self.selectedFriends.remove(friend.id)
@@ -25,24 +29,33 @@ struct LaunchListView: View {
                         await loadFriends()
                     }
 
-            Button(action: {
-                confirmAction()
-            }) {
-                Text("Confirm")
+                        .listRowBackground(Color("Background"))
+                }
+                .listStyle(PlainListStyle()) // Ensures the list style is consistent with the app's design
+                
+                Button(action: {
+                    confirmAction()
+                }) {
+                    Text("Send Missile")
                         .frame(maxWidth: .infinity)
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
+                        .background(Color("Primary"))
+                        .foregroundColor(Color("Text"))
                         .cornerRadius(8)
                         .padding()
+                }
             }
+            .padding()
         }
-                .navigationTitle("List")
-                .onAppear {
+
+        .navigationTitle("Friend List")
+        .foregroundColor(Color("Text"))
+        .onAppear {
                     Task {
                         await loadFriends()
                     }
                 }
+       
     }
 
     private func confirmAction() {
@@ -71,7 +84,6 @@ struct LaunchListView: View {
             let friend = Friend(name: profile.username ?? "No username", distance: distance, avatar: "userprofile")
             friends.append(friend)
         }
-    }
 }
 }
 
@@ -90,17 +102,19 @@ struct FriendRow: View {
             VStack(alignment: .leading) {
                 Text(friend.name)
                     .font(.headline)
+                    .foregroundColor(Color("Text"))
             }
             Spacer() // Pushes the distance to the right
             Text("\(friend.distance, specifier: "%.1f") km")
                 .font(.subheadline)
+                .foregroundColor(Color("Text"))
             if isSelected {
                 Image(systemName: "checkmark")
                     .foregroundColor(.blue)
             }
         }
         .padding()
-        .background(isSelected ? Color.blue.opacity(0.1) : Color.clear)
+        .background(isSelected ? Color("Primary").opacity(0.1) : Color.clear)
         .cornerRadius(8)
     }
 }
@@ -109,4 +123,10 @@ class SelectedFriends: ObservableObject {
     @Published var friends: [Friend] = []
     @Published var selectedSize: String?
 }
-
+      
+struct LaunchListView_Previews: PreviewProvider {
+    static var previews: some View {
+        LaunchListView()
+            .environmentObject(UserAuth())
+    }
+}

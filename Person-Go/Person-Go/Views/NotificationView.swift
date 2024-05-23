@@ -8,17 +8,12 @@ struct NotificationView: View {
 
     var body: some View {
         ScrollView {
-            VStack {
-                VStack(alignment: .leading) {
-                    Text("Notifications")
-                        .font(.system(size: 30)) // Increased font size
-                        .fontWeight(.bold)
-                        .padding(.bottom)
-                    Divider()
-                        .frame(height: 2) // Increase the height to make the divider thicker
-                }
-                .padding(.bottom, 90) // Apply padding only to the bottom
-                .padding(.horizontal) // Add horizontal padding
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Notifications")
+                    .font(.largeTitle)
+                    .bold()
+                    .padding(.bottom, 20)
+                    .foregroundColor(Color("Text"))
 
                 // Notification settings content
                 VStack(alignment: .leading, spacing: 20) {
@@ -27,6 +22,8 @@ struct NotificationView: View {
                             .font(.headline)
                     }
                     .padding()
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(10)
 
                     Picker("Notification Sound", selection: $notificationSound) {
                         Text("Chime").tag("Chime")
@@ -35,19 +32,24 @@ struct NotificationView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(10)
 
                     Toggle(isOn: $showPreviews) {
                         Text("Show Previews")
                             .font(.headline)
                     }
                     .padding()
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .cornerRadius(10)
 
                     Divider()
 
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 10) {
                         Text("Notification Preferences")
                             .font(.headline)
                             .padding(.bottom, 5)
+                            .foregroundColor(Color("Text"))
 
                         HStack {
                             Image(systemName: "bell.fill")
@@ -56,6 +58,7 @@ struct NotificationView: View {
                             VStack(alignment: .leading) {
                                 Text("App Notifications")
                                     .font(.headline)
+                                    .foregroundColor(Color("Text"))
                                 Text("Customize notifications for this app.")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -67,12 +70,13 @@ struct NotificationView: View {
                         .cornerRadius(10)
                     }
                 }
-                .padding(.horizontal) // Add horizontal padding
+                .padding(.horizontal)
             }
             .padding()
         }
-        .background(colorScheme == .light ? Color(hexString: "#F3EBD8") : Color(hexString: "#271F0C")) // Change the background color based on the color scheme
+        .background(Color("Background"))
         .navigationTitle("Notifications")
+        .foregroundColor(Color("Text"))
     }
 }
 
@@ -81,4 +85,3 @@ struct NotificationView_Previews: PreviewProvider {
         NotificationView()
     }
 }
-

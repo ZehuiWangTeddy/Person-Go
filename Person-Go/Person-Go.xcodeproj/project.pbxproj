@@ -36,6 +36,11 @@
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
 		792A4A5C2BDAEB0800CBCCB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A5B2BDAEB0800CBCCB1 /* Preview Assets.xcassets */; };
+
+		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
+		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
+		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
+		79F660D22BFBA93200B28D79 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660D12BFBA93200B28D79 /* Profile.swift */; };
 		7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C202BF8F0B30035DF7B /* Friend.swift */; };
 		7F8D6C232BF8F0EF0035DF7B /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */; };
 		7F8D6C252BF901C80035DF7B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C242BF901C80035DF7B /* AboutView.swift */; };
@@ -76,6 +81,10 @@
 		792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		792A4A5B2BDAEB0800CBCCB1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		792A4A6B2BDB056D00CBCCB1 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		79F660CB2BFBA2D800B28D79 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
+		79F660CD2BFBA84500B28D79 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		79F660CF2BFBA87000B28D79 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		79F660D12BFBA93200B28D79 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		7F8D6C202BF8F0B30035DF7B /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
 		7F8D6C242BF901C80035DF7B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -110,6 +119,8 @@
 			children = (
 				36B218992BE91F4C00CAE5AB /* LocationManager.swift */,
 				27FFF3DA2BE40F940008B22B /* AppLockManager.swift */,
+				79F660CB2BFBA2D800B28D79 /* ChatManager.swift */,
+				79F660CD2BFBA84500B28D79 /* UserManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -136,6 +147,8 @@
 				36B2189B2BE91F6D00CAE5AB /* Message.swift */,
 				3693DFF92BE41215003F83BD /* UserAuth.swift */,
 				7F8D6C202BF8F0B30035DF7B /* Friend.swift */,
+				79F660CF2BFBA87000B28D79 /* ChatMessage.swift */,
+				79F660D12BFBA93200B28D79 /* Profile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -291,14 +304,18 @@
 				36B2188E2BE91F3600CAE5AB /* SecurityView.swift in Sources */,
 				36B218982BE91F3600CAE5AB /* ChatWindowView.swift in Sources */,
 				36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */,
+				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
 				36B2188F2BE91F3600CAE5AB /* AddFriendsView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
+				79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */,
+				79F660D22BFBA93200B28D79 /* Profile.swift in Sources */,
 				271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */,
 				36B2188D2BE91F3600CAE5AB /* MapView.swift in Sources */,
 				36B2189A2BE91F4C00CAE5AB /* LocationManager.swift in Sources */,
 				36B218952BE91F3600CAE5AB /* ProflieView.swift in Sources */,
+				79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */,
 				7F8D6C272BF9079A0035DF7B /* NotificationView.swift in Sources */,
 				36B218962BE91F3600CAE5AB /* AuthenticationView.swift in Sources */,
 				36B218912BE91F3600CAE5AB /* LoginView.swift in Sources */,
@@ -450,7 +467,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Person-Go/Preview Content\"";
-				DEVELOPMENT_TEAM = 8M25VBMKB9;
+				DEVELOPMENT_TEAM = TXZN6TW5YU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
@@ -472,7 +489,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = personGo.GeraldPersonGO;
+				PRODUCT_BUNDLE_IDENTIFIER = "dddtga-gmail.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -488,7 +505,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Person-Go/Preview Content\"";
-				DEVELOPMENT_TEAM = 8M25VBMKB9;
+				DEVELOPMENT_TEAM = TXZN6TW5YU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
@@ -510,7 +527,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = personGo.GeraldPersonGO;
+				PRODUCT_BUNDLE_IDENTIFIER = "dddtga-gmail.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
