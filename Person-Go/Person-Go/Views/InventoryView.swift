@@ -1,9 +1,13 @@
 import SwiftUI
+import Supabase
 
 struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil // State to track selected size
     @State private var navigateToLaunchListView = false // State to trigger navigation
+    @Binding var selectedTab: String
+    @ObservedObject var selectedFriendsStore: SelectedFriends
+    @State private var inventory: Inventory? // State to store the fetched inventory data
 
     let missileData = [
         ("Quickstrike", "5km"),
@@ -28,6 +32,7 @@ struct InventoryView: View {
                             HStack {
                                 Image(systemName: "missile")
                                     .rotationEffect(.degrees(-45))
+
                                     .foregroundColor(Color("Text"))
                                 VStack(alignment: .leading) {
                                     Text(missile)
@@ -38,7 +43,7 @@ struct InventoryView: View {
                                         .foregroundColor(.secondary)
                                 }
                                 Spacer()
-                                Text("1") // Replace with actual number
+                                Text("\(inventoryValue(for: size))") 
                                     .font(.title2)
                                     .foregroundColor(Color("Text"))
                             }
@@ -74,14 +79,26 @@ struct InventoryView: View {
             .background(Color("Background"))
             .navigationBarHidden(true)
             .navigationDestination(isPresented: $navigateToLaunchListView) {
-                LaunchListView()
+                LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
+            }
+            .onAppear {
+                Task {
+                    inventory = await fetchInventory(for: UUID(uuidString: user_id)!)
+                }
             }
         }
     }
-}
 
-struct InventoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        InventoryView()
+    private func inventoryValue(for size: String) -> Int {
+        switch size {
+        case "Small":
+            return inventory?.small ?? 0
+        case "Medium":
+            return inventory?.medium ?? 0
+        case "Large":
+            return inventory?.large ?? 0
+        default:
+            return 0
+        }
     }
 }

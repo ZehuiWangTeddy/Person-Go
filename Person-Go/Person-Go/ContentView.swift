@@ -5,6 +5,9 @@ struct ContentView: View {
     @AppStorage("isFaceIDOrTouchIDEnabled") var isFaceIDOrTouchIDEnabled: Bool = false
     @State private var isUnlocked = false
     @StateObject private var appLockManager = AppLockManager()
+    @StateObject private var userAuth = UserAuth()
+    @StateObject private var selectedFriendsStore = SelectedFriends()
+
     @EnvironmentObject var userAuth: UserAuth
 
     var body: some View {
@@ -19,13 +22,13 @@ struct ContentView: View {
                             Text("Chat")
                         }
                         .tag("Chat")
-                    MapView()
-                        .tabItem {
-                            Image(systemName: "map")
-                            Text("Map")
-                        }
-                        .tag("Map")
-                    InventoryView()
+                    MapView(selectedFriendsStore: selectedFriendsStore)
+                            .tabItem {
+                                Image(systemName: "map")
+                                Text("Map")
+                            }
+                            .tag("Map")
+                    InventoryView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore)
                         .tabItem {
                             Image(systemName: selectedTab == "Inventory" ? "door.garage.open" : "door.garage.closed")
                             Text("Inventory")
