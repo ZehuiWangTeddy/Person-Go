@@ -16,27 +16,27 @@ struct FriendProfileView: View {
                 VStack {
                     VStack(alignment: .leading) {
                         Text("Username")
-                            .font(.title)
+                            .font(.title2)
                             .padding(.bottom)
                         Divider()
 
                         Text("Email")
-                            .font(.title)
+                            .font(.title2)
                             .padding(.bottom)
                         Divider()
 
-                        Text("Small")
-                            .font(.title)
+                        Text("Quickstrike")
+                            .font(.title2)
                             .padding(.bottom)
                         Divider()
 
-                        Text("Medium")
-                            .font(.title)
+                        Text("Blaze Rocket")
+                            .font(.title2)
                             .padding(.bottom)
                         Divider()
 
-                        Text("Large")
-                            .font(.title)
+                        Text("Phoenix Inferno")
+                            .font(.title2)
                             .padding(.bottom)
                         Divider()
                     }

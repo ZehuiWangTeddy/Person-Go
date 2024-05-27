@@ -29,11 +29,11 @@ struct ChatsView: View {
             ZStack {
                 Color("Background")
                     .edgesIgnoringSafeArea(.all)
-                
                 VStack {
                     HStack {
                         Text("Chats")
-                            .font(.title)
+                            .font(.largeTitle)
+                            .bold()
                         NavigationLink(destination: AddFriendsView()) {
                             Image(systemName: "plus.circle")
                                     .resizable()
@@ -46,14 +46,16 @@ struct ChatsView: View {
                                 .frame(width: 50, height: 50)
                                 .cornerRadius(30)
                         }
+                        Divider()
+                            .frame(height: 2)
                     }
-                    .padding(25)
+                    .padding(.horizontal)
                     
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.black)
+                        .foregroundColor(.gray)
                         .padding(.horizontal)
-                    
+                                        
                     if (friends.isEmpty) {
                         if (loading) {
                             Text("loadings...").padding()
@@ -93,11 +95,12 @@ struct ChatsView: View {
                                         
                                     }
                                     .padding(.vertical, 8)
+//                                    .background(Color("Background"))
                                 }
                             }
                         }
                         .listStyle(PlainListStyle())
-                        .background(Color(red: 0xF3 / 255, green: 0xEB / 255, blue: 0xD8 / 255))
+                        .background(Color("Background"))
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         .padding(.horizontal)
                         .padding(.vertical)
@@ -119,3 +122,4 @@ struct ChatsView: View {
         }
     }
 }
+

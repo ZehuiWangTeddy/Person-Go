@@ -25,30 +25,37 @@ struct ProfileView: View {
                     HStack{
                         Text("User Name")
                             .font(.title2)
+//                            .padding(.bottom)
                         Spacer()
                         Text(userAuth.username())
-                            .padding(.horizontal,50)
+                            .font(.title2)
+//                            .padding(.bottom)
                     }
                     .padding(.horizontal, 25)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                        .padding(.vertical, 15)
+//                        .padding(.vertical, 15)
                     HStack{
                         Text("Email")
                             .font(.title2)
+//                            .padding(.bottom)
                         Spacer()
                         Text(email())
-                            .padding(.horizontal,50)
+                            .font(.title2)
+//                            .padding(.bottom)
                     }
                     .padding(.horizontal, 25)
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                    Text("EDIT")
-                        .font(.title2)
-                        .underline(true, color: Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                        .padding(.vertical, 50)
+//                        .padding(.vertical, 15)
+                    NavigationLink(destination: EditProfileView().environmentObject(userAuth)){
+                        Text("EDIT")
+                            .font(.title2)
+                            .underline(true, color: Color("Primary"))
+                            .padding(.vertical, 50)
+                    }
                 }
             )
         }
