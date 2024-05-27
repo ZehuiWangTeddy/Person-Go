@@ -3,7 +3,7 @@ import Supabase
 import MapKit
 import Combine
 
-let supabase = SupabaseClient(supabaseURL: URL(string: "https://ecqmicvfzypcomzptfbt.supabase.co")!, supabaseKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVjcW1pY3ZmenlwY29tenB0ZmJ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM3OTI1MTYsImV4cCI6MjAyOTM2ODUxNn0.PAGUfx8yBhzaXWa2g72G_udiuCjfMYezweu6EasRFg0")
+let supabase = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
 var user_id = "1b73cd77-6a5d-4504-a00c-748f9a148058"
 
 struct MapView: View {
@@ -24,10 +24,8 @@ struct MapView: View {
                 .ignoresSafeArea()
                 .onAppear {
                     Task {
-                        let locations = await fetchLocation()
-                        let profiles = await fetchProfile()
-                        let friends = await fetchFriends(for: UUID(uuidString: user_id)!)
-                        compareAndAddAnnotations(for: locations, with: profiles, friends: friends)
+                        await fetchFriendsForMap(for: UUID(uuidString: user_id)!)
+                        await addFriendsAsPins()
                     }
                     selectedFriendsStore.$friends
                         .sink { newValue in
@@ -35,10 +33,7 @@ struct MapView: View {
 
                                 Task {
                                     await drawFlightPaths()
-                                    let locations = await fetchLocation()
-                                    let profiles = await fetchProfile()
-                                    let friends = await fetchFriends(for: UUID(uuidString: user_id)!)
-                                    compareAndAddAnnotations(for: locations, with: profiles, friends: friends, timeRemaining: timeRemaining)
+                                    await addFriendsAsPins()
                                 }
                                 updateTimeRemaining()
                                 showTimer = true
@@ -50,18 +45,7 @@ struct MapView: View {
                 }
             VStack {
                 Spacer()
-                if showTimer {
-                    VStack {
-                        Text("Time remaining: \(timeRemaining / 60) minutes, \(timeRemaining % 60) seconds")
-                            .font(.largeTitle)
-                            .padding()
-                            .onReceive(timer) { _ in
-                                if timeRemaining > 0 {
-                                    timeRemaining -= 1
-                                }
-                            }
-                    }
-                }
+
                 HStack {
                     Spacer()
 
@@ -95,77 +79,73 @@ struct MapView: View {
         }
     }
 
-    private func compareAndAddAnnotations(for locations: [Location], with profiles: [Profile], friends: [Friends]) {
-        let friendIds = friends.map { $0.friendId }
-        for location in locations {
-            if friendIds.contains(location.userId), let matchingProfile = profiles.first(where: { $0.id == location.userId }) {
-                let coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = matchingProfile.username ?? "No username"
-                let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
-                mapViewContainer.mapViewRepresentable.mapView.addAnnotation(marker.annotation!)
-            }
-        }
-    }
 
-    private func compareAndAddAnnotations(for locations: [Location], with profiles: [Profile], friends: [Friends], timeRemaining: Int) {
-        let friendIds = friends.map { $0.friendId }
-        for location in locations {
-            if friendIds.contains(location.userId), let matchingProfile = profiles.first(where: { $0.id == location.userId }) {
-                let coordinate = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = matchingProfile.username ?? "No username"
-                annotation.subtitle = "Time remaining: \(timeRemaining / 60) minutes, \(timeRemaining % 60) seconds"
-                let marker = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: nil)
-                marker.canShowCallout = true
-                mapViewContainer.mapViewRepresentable.mapView.addAnnotation(marker.annotation!)
-            }
-        }
+    func addFriendsAsPins() async {
+    // Fetch friends for map
+    let friendsForMap = await fetchFriendsForMap(for: UUID(uuidString: user_id)!) ?? []
+
+    // Clear existing annotations
+    let allAnnotations = self.mapViewContainer.mapViewRepresentable.mapView.annotations
+    self.mapViewContainer.mapViewRepresentable.mapView.removeAnnotations(allAnnotations)
+
+    // Add new annotations
+    for friend in friendsForMap {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: friend.latitude ?? 0, longitude: friend.longitude ?? 0)
+        annotation.title = friend.username
+        self.mapViewContainer.mapViewRepresentable.mapView.addAnnotation(annotation)
     }
+}
+
+
 
     private func drawFlightPaths() async {
-        let profiles = await fetchProfile()
-        let locations = await fetchLocation()
+    // Fetch friends for map
+    let friendsForMap = await fetchFriendsForMap(for: UUID(uuidString: user_id)!) ?? []
 
-        // Remove existing overlays
-        mapViewContainer.mapViewRepresentable.mapView.removeOverlays(mapViewContainer.mapViewRepresentable.mapView.overlays)
+    // Remove existing overlays
+    mapViewContainer.mapViewRepresentable.mapView.removeOverlays(mapViewContainer.mapViewRepresentable.mapView.overlays)
 
-        for friend in selectedFriendsStore.friends {
-            if let matchingProfile = profiles.first(where: { $0.username == friend.name }),
-               let matchingLocation = locations.first(where: { $0.userId == matchingProfile.id }) {
-                let coordinate = CLLocationCoordinate2D(latitude: matchingLocation.latitude, longitude: matchingLocation.longitude)
-                mapViewContainer.mapViewRepresentable.drawFlightPath(to: coordinate)
+    for friend in selectedFriendsStore.friends {
+        if let matchingFriend = friendsForMap.first(where: { $0.username == friend.name }) {
+            let coordinate = CLLocationCoordinate2D(latitude: matchingFriend.latitude ?? 0, longitude: matchingFriend.longitude ?? 0)
+            mapViewContainer.mapViewRepresentable.drawFlightPath(to: coordinate)
 
-                // Draw radius
-                let radius = getRadius()
-                let circle = MKCircle(center: coordinate, radius: radius)
-                mapViewContainer.mapViewRepresentable.mapView.addOverlay(circle)
-            }
+            // Draw radius
+            let radius = getRadius()
+            let circle = MKCircle(center: coordinate, radius: radius)
+            mapViewContainer.mapViewRepresentable.mapView.addOverlay(circle)
         }
     }
+}
 
     private func getRadius() -> CLLocationDistance {
         switch selectedFriendsStore.selectedSize {
-        case "Small":
+        case "Quickstrike":
             return 100 // 100m
-        case "Medium":
+        case "Blaze Rocket":
             return 500 // 500m
-        case "Large":
+        case "Phoenix Inferno":
             return 1000 // 1km
         default:
             return 0
         }
     }
 
-    func reloadMap() async {
-        let locations = await fetchLocation()
-        let profiles = await fetchProfile()
-        let friends = await fetchFriends(for: UUID(uuidString: user_id)!)
-        compareAndAddAnnotations(for: locations, with: profiles, friends: friends)
-        await drawFlightPaths()
-    }
+func reloadMap() async {
+    // Fetch friends for map
+    let friendsForMap = await fetchFriendsForMap(for: UUID(uuidString: user_id)!) ?? []
+
+    // Clear existing annotations
+    let allAnnotations = self.mapViewContainer.mapViewRepresentable.mapView.annotations
+    self.mapViewContainer.mapViewRepresentable.mapView.removeAnnotations(allAnnotations)
+
+    // Add new annotations
+    await addFriendsAsPins()
+
+    // Draw flight paths
+    await drawFlightPaths()
+}
 
     private func updateTimeRemaining() {
         switch selectedFriendsStore.selectedSize {
@@ -181,9 +161,4 @@ struct MapView: View {
     }
 }
 
-extension Friend: Equatable {
-    static func == (lhs: Friend, rhs: Friend) -> Bool {
-        return lhs.name == rhs.name && lhs.distance == rhs.distance && lhs.avatar == rhs.avatar
-    }
-}
 
