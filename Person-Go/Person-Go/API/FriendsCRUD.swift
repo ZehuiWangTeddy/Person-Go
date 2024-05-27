@@ -7,21 +7,52 @@
 
 import Foundation
 
-public struct Friends: Codable {
-    let userId: UUID
-    let friendId: UUID
+public struct FriendsForLaunchList: Identifiable, Decodable {
+    public var id: UUID
+    var username: String?
+    var fullName: String?
+    var avatarUrl: String?
+    var userId: UUID?
+    var latitude: Double?
+    var longitude: Double?
 
     enum CodingKeys: String, CodingKey {
+        case id
+        case username
+        case fullName = "full_name"
+        case avatarUrl = "avatar_url"
         case userId = "user_id"
-        case friendId = "friend_id"
+        case latitude
+        case longitude
     }
 }
 
-public func fetchFriends() async -> [Friends] {
+public struct FriendsForMap: Identifiable, Decodable {
+    public var id: UUID
+    var latitude: Double?
+    var longitude: Double?
+    var username: String?
+    var avatarUrl: String?
+    var friendId: UUID?
+    var userId: UUID?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case latitude
+        case longitude
+        case username
+        case avatarUrl = "avatar_url"
+        case friendId = "friend_id"
+        case userId = "user_id"
+    }
+}
+
+public func fetchFriendsForLaunchList(for userId: UUID) async -> [FriendsForLaunchList]? {
     do {
-        let friends: [Friends] = try await supabase
-            .from("friends")
+        let friends: [FriendsForLaunchList] = try await supabase
+            .from("friends_for_launch_list")
             .select()
+            .eq("user_id", value: userId)
             .execute()
             .value
         return friends
@@ -31,10 +62,10 @@ public func fetchFriends() async -> [Friends] {
     }
 }
 
-public func fetchFriends(for userId: UUID) async -> [Friends] {
+public func fetchFriendsForMap(for userId: UUID) async -> [FriendsForMap]? {
     do {
-        let friends: [Friends] = try await supabase
-            .from("friends")
+        let friends: [FriendsForMap] = try await supabase
+            .from("friends_for_map")
             .select()
             .eq("user_id", value: userId)
             .execute()

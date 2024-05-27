@@ -1,13 +1,16 @@
 import SwiftUI
 import Supabase
 
+
+
 struct LoginView: View {
+    
+    let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
     @EnvironmentObject var userAuth: UserAuth
     @State private var email: String = "test@test.com"
     @State private var password: String = "1234"
 
-    let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
 
     var body: some View {
         NavigationView {

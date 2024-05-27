@@ -36,7 +36,6 @@
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
 		792A4A5C2BDAEB0800CBCCB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A5B2BDAEB0800CBCCB1 /* Preview Assets.xcassets */; };
-
 		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
 		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
@@ -50,12 +49,12 @@
 /* Begin PBXFileReference section */
 		271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
 		271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
-		271E22612BF93C6B008FCA91 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		271E22622BF93C80008FCA91 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		271E22642BF9E288008FCA91 /* LocationCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCRUD.swift; sourceTree = "<group>"; };
 		271E22662BF9E292008FCA91 /* ProfileCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCRUD.swift; sourceTree = "<group>"; };
 		271E22682BF9E4F4008FCA91 /* FriendsCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCRUD.swift; sourceTree = "<group>"; };
 		273BB1372BFAC27800649311 /* InventoryCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryCRUD.swift; sourceTree = "<group>"; };
+		279836B02C007BA00015D59B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		279836B22C007BB60015D59B /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		27FFF3DA2BE40F940008B22B /* AppLockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLockManager.swift; sourceTree = "<group>"; };
 		27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3693DFF92BE41215003F83BD /* UserAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuth.swift; sourceTree = "<group>"; };
@@ -156,8 +155,8 @@
 		792A4A482BDAEB0500CBCCB1 = {
 			isa = PBXGroup;
 			children = (
-				271E22622BF93C80008FCA91 /* Release.xcconfig */,
-				271E22612BF93C6B008FCA91 /* Debug.xcconfig */,
+				279836B02C007BA00015D59B /* Release.xcconfig */,
+				279836B22C007BB60015D59B /* Debug.xcconfig */,
 				792A4A532BDAEB0500CBCCB1 /* Person-Go */,
 				792A4A522BDAEB0500CBCCB1 /* Products */,
 			);
@@ -342,6 +341,7 @@
 /* Begin XCBuildConfiguration section */
 		792A4A5D2BDAEB0800CBCCB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 279836B22C007BB60015D59B /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -405,6 +405,7 @@
 		};
 		792A4A5E2BDAEB0800CBCCB1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 279836B02C007BA00015D59B /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -467,7 +468,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Person-Go/Preview Content\"";
-				DEVELOPMENT_TEAM = TXZN6TW5YU;
+				DEVELOPMENT_TEAM = 8M25VBMKB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
@@ -505,7 +506,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Person-Go/Preview Content\"";
-				DEVELOPMENT_TEAM = TXZN6TW5YU;
+				DEVELOPMENT_TEAM = 8M25VBMKB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";

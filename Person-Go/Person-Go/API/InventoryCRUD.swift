@@ -8,7 +8,7 @@
 import Foundation
 
 public struct Inventory: Codable {
-    let userID: UUID
+    let userID: UUID?
     let small: Int
     let medium: Int
     let large: Int
@@ -30,6 +30,7 @@ public struct Inventory: Codable {
             .eq("user_id", value: userId)
             .execute()
             .value
+        print("Fetched inventory: \(inventory)")
         return inventory.first
     } catch {
         print("Failed to decode: \(error)")

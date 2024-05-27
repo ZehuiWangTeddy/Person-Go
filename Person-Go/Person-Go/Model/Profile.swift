@@ -1,8 +1,9 @@
 import Foundation
 
-struct Profile: Hashable, Decodable {
+public struct Profile: Hashable, Decodable {
     var id: UUID
     var username: String?
     var fullName: String?
     var avatarUrl: String?
 }
+

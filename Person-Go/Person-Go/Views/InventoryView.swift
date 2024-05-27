@@ -1,6 +1,7 @@
 import SwiftUI
 import Supabase
 
+
 struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil // State to track selected size
@@ -43,7 +44,7 @@ struct InventoryView: View {
                                         .foregroundColor(.secondary)
                                 }
                                 Spacer()
-                                Text("\(inventoryValue(for: size))") 
+                                Text("\(inventoryValue(for: missile))")
                                     .font(.title2)
                                     .foregroundColor(Color("Text"))
                             }
@@ -91,11 +92,11 @@ struct InventoryView: View {
 
     private func inventoryValue(for size: String) -> Int {
         switch size {
-        case "Small":
+        case "Quickstrike":
             return inventory?.small ?? 0
-        case "Medium":
+        case "Blaze Rocket":
             return inventory?.medium ?? 0
-        case "Large":
+        case "Phoenix Inferno":
             return inventory?.large ?? 0
         default:
             return 0

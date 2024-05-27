@@ -8,11 +8,6 @@
 import Foundation
 
 
-public struct Profile: Codable {
-    let id: UUID
-    let username: String?
-}
-
 public func fetchProfile() async -> [Profile] {
     do {
         let profiles: [Profile] = try await supabase
