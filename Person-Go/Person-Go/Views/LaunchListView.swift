@@ -8,7 +8,6 @@ struct Friend1: Identifiable {
     var avatar: String // Assume this is the name of an image in Assets.xcassets
 }
 
-
 struct LaunchListView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var friends: [Friend1] = []
@@ -18,13 +17,20 @@ struct LaunchListView: View {
     @ObservedObject var selectedFriendsStore: SelectedFriends
     var selectedSize: String?
 
-
     var body: some View {
-
         ZStack {
             Color("Background")
                 .edgesIgnoringSafeArea(.all)
-            VStack {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("Friend List")
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundColor(Color("Text"))
+                    .padding(.bottom, 0)
+                
+                Divider()
+                    .frame(height: 2)
+                
                 List(friends, id: \.id) { friend in
                     FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
                         .onTapGesture {
@@ -34,37 +40,38 @@ struct LaunchListView: View {
                                 self.selectedFriends.insert(friend.id)
                             }
                         }
+                        .listRowBackground(Color("Background"))
                 }
                 .refreshable {
                     await loadFriends()
                 }
-
-                .listRowBackground(Color("Background"))
+                .listStyle(PlainListStyle())
+                
+                Button(action: {
+                    confirmAction()
+                }) {
+                    Text("Send Missile")
+                        .font(.title3)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(selectedFriends.isEmpty ? Color.gray : Color("Primary"))
+                        .foregroundColor(Color("Text"))
+                        .cornerRadius(10)
+                }
+                .padding(.top, 40)
+                .disabled(selectedFriends.isEmpty)
             }
-            .listStyle(PlainListStyle()) // Ensures the list style is consistent with the app's design
-
-            Button(action: {
-                confirmAction()
-            }) {
-                Text("Send Missile")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color("Primary"))
-                    .foregroundColor(Color("Text"))
-                    .cornerRadius(8)
-                    .padding()
+            .padding()
+            .background(Color("Background"))
+            .foregroundColor(Color("Text"))
+            .onAppear {
+                Task {
+                    await loadFriends()
+                }
             }
         }
-        .padding()
-        .navigationTitle("Friend List")
-        .foregroundColor(Color("Text"))
-        .onAppear {
-            Task {
-                await loadFriends()
-            }
-        }
+        .background(Color("Background")) // Ensuring the background color is consistent
     }
-
 
     private func confirmAction() {
         let selected = friends.filter { selectedFriends.contains($0.id) }
@@ -76,29 +83,31 @@ struct LaunchListView: View {
         }
         selectedTab = "Map"
     }
+
     private func loadFriends() async {
-    do {
-        // Fetch the friends list
-        let friendsList: [FriendsForMap] = try await fetchFriendsForMap(for: UUID(uuidString: user_id)!)!
+        do {
+            // Fetch the friends list
+            let friendsList: [FriendsForMap] = try await fetchFriendsForMap(for: UUID(uuidString: user_id)!)!
 
-        // Clear the existing friends list
-        friends.removeAll()
+            // Clear the existing friends list
+            friends.removeAll()
 
-        // For each friend in the list, calculate the distance from the user's current location
-        for friend in friendsList {
-            if let latitude = friend.latitude, let longitude = friend.longitude {
-                let friendLocation = CLLocation(latitude: latitude, longitude: longitude)
-                let distance = locationManager.calculateDistance(from: locationManager.currentLocation!, to: friendLocation)
+            // For each friend in the list, calculate the distance from the user's current location
+            for friend in friendsList {
+                if let latitude = friend.latitude, let longitude = friend.longitude {
+                    let friendLocation = CLLocation(latitude: latitude, longitude: longitude)
+                    let distance = locationManager.calculateDistance(from: locationManager.currentLocation!, to: friendLocation)
 
-                // Create a new Friend1 object with the calculated distance and add it to the friends array
-                let newFriend = Friend1(name: friend.username ?? "", distance: distance, avatar: friend.avatarUrl ?? "sample")
-                friends.append(newFriend)
+                    // Create a new Friend1 object with the calculated distance and add it to the friends array
+                    let newFriend = Friend1(name: friend.username ?? "", distance: distance, avatar: friend.avatarUrl ?? "sample")
+                    friends.append(newFriend)
+                }
             }
+        } catch {
+            print("Failed to load friends: \(error)")
         }
-    } catch {
-        print("Failed to load friends: \(error)")
     }
-}
+
     struct FriendRow: View {
         let friend: Friend1
         let isSelected: Bool

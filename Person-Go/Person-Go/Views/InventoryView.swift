@@ -39,7 +39,7 @@ struct InventoryView: View {
                                     Text(missile)
                                         .font(.title2)
                                         .foregroundColor(Color("Text"))
-                                    Text("Max Range: \(range)")
+                                    Text("Impact Range: \(range)")
                                         .font(.subheadline)
                                         .foregroundColor(.secondary)
                                 }
