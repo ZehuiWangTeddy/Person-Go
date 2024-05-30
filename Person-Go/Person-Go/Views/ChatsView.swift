@@ -18,7 +18,7 @@ struct CircleWithTextView: View {
 
 struct ChatsView: View {
     @EnvironmentObject var userAuth: UserAuth
-
+    
     var chatManager = ChatManager()
     @State private var friends: [Friend] = []
     
@@ -29,15 +29,15 @@ struct ChatsView: View {
             ZStack {
                 Color("Background")
                     .edgesIgnoringSafeArea(.all)
-                
                 VStack {
                     HStack {
                         Text("Chats")
-                            .font(.title)
+                            .font(.largeTitle)
+                            .bold()
                         NavigationLink(destination: AddFriendsView()) {
                             Image(systemName: "plus.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
+                                .resizable()
+                                .frame(width: 25, height: 25)
                         }
                         Spacer()
                         NavigationLink(destination: ProfileView().environmentObject(userAuth)){
@@ -46,12 +46,14 @@ struct ChatsView: View {
                                 .frame(width: 50, height: 50)
                                 .cornerRadius(30)
                         }
+                        Divider()
+                            .frame(height: 2)
                     }
-                    .padding(25)
+                    .padding(.horizontal)
                     
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.black)
+                        .foregroundColor(.gray)
                         .padding(.horizontal)
                     
                     if (friends.isEmpty) {
@@ -90,14 +92,16 @@ struct ChatsView: View {
                                         Spacer()
                                         
                                         CircleWithTextView(content: "\(friend.totalInventory)")
-                                        
                                     }
                                     .padding(.vertical, 8)
                                 }
+                                //                                .background(Color("Background"))
+                                .listRowBackground(Color("Background"))
+                                .listRowSeparator(.automatic)
                             }
                         }
                         .listStyle(PlainListStyle())
-                        .background(Color(red: 0xF3 / 255, green: 0xEB / 255, blue: 0xD8 / 255))
+                        .background(Color("Background"))
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         .padding(.horizontal)
                         .padding(.vertical)
@@ -119,3 +123,4 @@ struct ChatsView: View {
         }
     }
 }
+
