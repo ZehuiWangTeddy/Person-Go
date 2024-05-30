@@ -23,8 +23,16 @@ struct SettingView: View {
                         .padding(.horizontal)
                         
                         VStack(alignment: .leading) {
-                            ForEach(["Notification", "Security", "About"], id: \.self) { item in
-                                if item == "Security" {
+                            ForEach(["Account", "Notification", "Security", "About"], id: \.self) { item in
+                                if item == "Account" {
+                                    NavigationLink(destination: AccountView()) {
+                                        Text(item)
+                                            .font(.title2)
+                                            .padding()
+                                    }
+                                    .background(Color.clear)
+                                    .foregroundColor(Color("Text"))
+                                } else if item == "Security" {
                                     NavigationLink(destination: SecurityView()) {
                                         Text(item)
                                             .font(.title2)

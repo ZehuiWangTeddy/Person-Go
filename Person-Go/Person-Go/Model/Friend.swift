@@ -1,8 +1,10 @@
-import SwiftUI
+import Foundation
 
-struct Friend: Identifiable {
-    let id = UUID()
-    let name: String
-    let distance: Double
-    let avatar: String // Assume this is the name of an image in Assets.xcassets
+struct Friend: Identifiable, Hashable, Decodable {
+    var id: Int
+    var name: String
+    var friendId: UUID
+    var distance: Double // Distance in kilometers
+    var totalInventory: Int
+    var profiles: Profile
 }
