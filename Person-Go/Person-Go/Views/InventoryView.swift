@@ -1,11 +1,12 @@
 import SwiftUI
 import Supabase
-
+import MapKit
 
 struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil // State to track selected size
     @State private var navigateToLaunchListView = false // State to trigger navigation
+    @State private var navigateToMissileMapView = false // State to trigger navigation to missile map view
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
     @State private var inventory: Inventory? // State to store the fetched inventory data
@@ -33,7 +34,6 @@ struct InventoryView: View {
                             HStack {
                                 Image(systemName: "missile")
                                     .rotationEffect(.degrees(-45))
-
                                     .foregroundColor(Color("Text"))
                                 VStack(alignment: .leading) {
                                     Text(missile)
@@ -78,9 +78,17 @@ struct InventoryView: View {
                 .padding()
             }
             .background(Color("Background"))
-            .navigationBarHidden(true)
+            .navigationBarItems(trailing: Button(action: {
+                navigateToMissileMapView = true
+            }) {
+                Text("Add Missile")
+                    .foregroundColor(Color("Primary"))
+            })
             .navigationDestination(isPresented: $navigateToLaunchListView) {
                 LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
+            }
+            .navigationDestination(isPresented: $navigateToMissileMapView) {
+                MissileMapView()
             }
             .onAppear {
                 Task {
