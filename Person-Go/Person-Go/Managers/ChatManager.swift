@@ -15,6 +15,7 @@ let decoder: JSONDecoder = {
 
 class ChatManager: NSObject, ObservableObject{
     
+    let chatListChannelName = "chat-list"
     
     let client = SupabaseClient(
         supabaseURL: URL(string: "https://" + apiUrl)!,
@@ -50,6 +51,26 @@ class ChatManager: NSObject, ObservableObject{
         } catch {
             print(error)
             return []
+        }
+    }
+    
+    func fetchFriendInfo(id: UUID) async -> FriendInfo? {
+        print("load friend profile...")
+        
+        do {
+            let friends: [FriendInfo] = try await client.from("friends_with_different_inventories")
+              .select()
+              .eq("id", value: id)
+              .execute()
+              .value
+            
+            guard !friends.isEmpty else {
+                return nil
+            }
+            
+            return friends[0]
+        } catch {
+            return nil
         }
     }
 

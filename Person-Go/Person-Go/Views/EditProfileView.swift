@@ -2,6 +2,7 @@ import SwiftUI
 import Supabase
 
 struct EditProfileView: View {
+    @Environment(\.presentationMode) var presentationMode
     @EnvironmentObject var userAuth: UserAuth
     @State private var name: String = ""
     @State private var email: String = ""
@@ -15,7 +16,7 @@ struct EditProfileView: View {
                     .frame(width: 200, height: 200)
                     .cornerRadius(100)
                     .padding(.vertical, 30)
-    
+                
                 HStack {
                     Text("User Name")
                         .font(.title2)
@@ -26,7 +27,10 @@ struct EditProfileView: View {
                     .padding()
                     .border(Color.gray, width: 0.5)
                 Spacer().frame(height: 20)
-                Button(action: {}, label: {
+                Button(action: {
+                    userAuth.updateUserProfile(username: name)
+                    presentationMode.wrappedValue.dismiss()
+                }, label: {
                     Text("Confirm")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -42,6 +46,3 @@ struct EditProfileView: View {
     }
 }
 
-#Preview {
-    EditProfileView()
-}

@@ -18,7 +18,7 @@ struct CircleWithTextView: View {
 
 struct ChatsView: View {
     @EnvironmentObject var userAuth: UserAuth
-
+    
     var chatManager = ChatManager()
     @State private var friends: [Friend] = []
     
@@ -36,8 +36,8 @@ struct ChatsView: View {
                             .bold()
                         NavigationLink(destination: AddFriendsView()) {
                             Image(systemName: "plus.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
+                                .resizable()
+                                .frame(width: 25, height: 25)
                         }
                         Spacer()
                         NavigationLink(destination: ProfileView().environmentObject(userAuth)){
@@ -55,7 +55,7 @@ struct ChatsView: View {
                         .frame(height: 1)
                         .foregroundColor(.gray)
                         .padding(.horizontal)
-                                        
+                    
                     if (friends.isEmpty) {
                         if (loading) {
                             Text("loadings...").padding()
@@ -92,11 +92,12 @@ struct ChatsView: View {
                                         Spacer()
                                         
                                         CircleWithTextView(content: "\(friend.totalInventory)")
-                                        
                                     }
                                     .padding(.vertical, 8)
-//                                    .background(Color("Background"))
                                 }
+                                //                                .background(Color("Background"))
+                                .listRowBackground(Color("Background"))
+                                .listRowSeparator(.automatic)
                             }
                         }
                         .listStyle(PlainListStyle())
