@@ -11,13 +11,13 @@ struct Friend: Identifiable, Hashable, Decodable {
 
     var profiles: Profile
 }
-
-extension Friend {
-    func username() -> String {
-        let profile = self.profiles
-        
-        guard profile.username != nil else { return "" }
-        
-        return profile.username!
-    }
-}
+//
+//extension Friend {
+//    func username() -> String {
+//        let profile = self.profiles
+//        
+//        guard profile.username != nil else { return "" }
+//        
+//        return profile.username!
+//    }
+//}
