@@ -43,6 +43,7 @@ class ChatManager: NSObject, ObservableObject{
                 .select(
                  "*, profiles(*)")
                 .eq("user_id", value: currentUser.id)
+                .order("total_unread", ascending: false)
                 .order("total_inventory", ascending: false)
                 .execute()
                 .value
@@ -93,10 +94,29 @@ class ChatManager: NSObject, ObservableObject{
                 cmessages.append(ChatMessage(message: message))
             }
             
+            if !cmessages.isEmpty {
+                await updateMessageAsReaded(lastMessageId: messages.last!.messageId, from: friendId, to: currentUser.id)
+            }
+            
             return cmessages
         } catch {
             print(error)
             return []
+        }
+    }
+    
+    func updateMessageAsReaded(lastMessageId: Int, from: UUID, to: UUID) async {
+        do {
+            print("receiver_id: \(to), sent_id: \(from), message_id: \(lastMessageId)")
+            try await client
+                .from("chats")
+                .update(["is_read": true])
+                .eq("receiver_id", value: to)
+                .eq("sent_id", value: from)
+                .lte("message_id", value: lastMessageId)
+                .execute()
+        } catch {
+            print("\(error)")
         }
     }
     
@@ -107,7 +127,7 @@ class ChatManager: NSObject, ObservableObject{
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
         let dateString = formatter.string(from: now)
-        let message = Message(message: content, sentId: sentId, receiverId: receiverId, sentAt: dateString)
+        let message = MessageSenderStruct(message: content, sentId: sentId, receiverId: receiverId, sentAt: dateString)
         
         return try await client.from("chats")
                  .insert(message)
@@ -132,6 +152,15 @@ class ChatManager: NSObject, ObservableObject{
                     "message": newMessage
                 ]
             )
+            
+            let uchannel = await client.channel(newMessage.receiverId.uuidString)
+            await uchannel.subscribe()
+            try await uchannel.broadcast(
+                event: "new-message",
+                message: [
+                    "from": newMessage.sentId
+                ]
+            )
         }
     }
     
@@ -147,7 +176,7 @@ class ChatManager: NSObject, ObservableObject{
         
         do {
             let publicURL = try client.storage
-              .from("upload-avatars")
+              .from("avatars")
               .getPublicURL(
                 path: path
 //                ,options: TransformOptions(

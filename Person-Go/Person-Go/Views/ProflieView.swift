@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
+    let chatManager = ChatManager()
     
     func email() -> String
     {
@@ -16,11 +17,8 @@ struct ProfileView: View {
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
                     VStack{
-                        Image("userprofile")
-                            .resizable()
-                            .frame(width: 200, height: 200)
-                            .cornerRadius(100)
-                            .padding(.vertical, 30)
+                        userAuth.getUserAvatar()
+                        
                         HStack{
                             Text("User Name")
                                 .font(.title2)

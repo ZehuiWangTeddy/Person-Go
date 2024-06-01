@@ -11,6 +11,11 @@ class UserManager: NSObject, ObservableObject{
             db: .init(encoder: encoder, decoder: decoder)
         )
     )
+
+    func getClient() -> SupabaseClient
+    {
+        return client
+    }
     
     func getUserProfile(user: UUID) async -> Profile? {
         print("load profile...")
@@ -34,11 +39,18 @@ class UserManager: NSObject, ObservableObject{
         }
     }
     
-    func updateUserProfile(user: UUID, username: String) async -> Bool {
+    func updateUserProfile(user: UUID, username: String, filename: String?) async -> Bool {
+        var datas = [
+            "username": username
+        ]
+        
+        if filename != nil {
+            datas["avatar_url"] = filename
+        }
         do {
             try await client
               .from("profiles")
-              .update(["username": username])
+              .update(datas)
               .eq("id", value: user)
               .execute()
             
