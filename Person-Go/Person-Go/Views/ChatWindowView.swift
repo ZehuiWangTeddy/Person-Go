@@ -19,12 +19,14 @@ class TextFieldObserver : ObservableObject {
 }
 
 struct ChatBubbleView: View {
+    @EnvironmentObject var userAuth: UserAuth
+    
     var message: ChatMessage
     var friend: Friend
     var chatManager = ChatManager()
     
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             if !message.isUserMessage(uid: friend.friendId) {
                 Spacer()
                 HStack(alignment: .top) {
@@ -35,32 +37,30 @@ struct ChatBubbleView: View {
                             .background(Color(red: 0xEC / 255, green: 0x95 / 255, blue: 0x83 / 255))
                             .cornerRadius(10)
                     }
-                    Image("userprofile")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 8)
+                    userAuth.getUserAvatar(width: 30, height: 30, radius: 0, padding: 8, edges: .trailing)
                 }
             } else {
-                AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
-                    image.resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 8)
-                } placeholder: {
-                    Image("userprofile")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 30, height: 30)
-                        .padding(.trailing, 8)
-                }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(message.message.message)
-                        .padding(15)
-                        .foregroundColor(.white)
-                        .background(Color(red: 128 / 255, green: 228 / 255, blue: 132 / 255))
-                        .cornerRadius(10)
+                HStack(alignment: .top, spacing: 0) {
+                    AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
+                        image.resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .padding(.trailing, 8)
+                    } placeholder: {
+                        Image("userprofile")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30, height: 30)
+                            .padding(.trailing, 8)
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text(message.message.message)
+                            .padding(15)
+                            .foregroundColor(.white)
+                            .background(Color(red: 128 / 255, green: 228 / 255, blue: 132 / 255))
+                            .cornerRadius(10)
+                    }
                 }
             }
         }
@@ -101,11 +101,16 @@ struct ChatWindowView: View {
         
         if (temp.count > 0) {
             Task {
+                print("send messages...")
                 // sleep
-                let message = try await chatManager.sendMessage(sentId: userAuth.user!.id, receiverId: friend.friendId, content: temp)
-                chatManager.broadcastNewMessageEvent(channel: self.channel!, newMessage: message)
-                await loadMessage()
-                try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+                do {
+                    let message = try await chatManager.sendMessage(sentId: userAuth.user!.id, receiverId: friend.friendId, content: temp)
+                    chatManager.broadcastNewMessageEvent(channel: self.channel!, newMessage: message)
+                    await loadMessage()
+                    try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
+                } catch {
+                    print("\(error)")
+                }
             }
         }
     }
@@ -120,7 +125,9 @@ struct ChatWindowView: View {
         
         Task {
             self.channel = await client.channel(channelName)
-            guard channel != nil else {return}
+            guard channel != nil else {
+                return
+            }
             
             await channel!.subscribe()
             print("join channel \(channelName)")
@@ -136,7 +143,6 @@ struct ChatWindowView: View {
                 Task {
                     await loadMessage()
                 }
-                
             }
         }
     }
@@ -165,6 +171,7 @@ struct ChatWindowView: View {
                                     ForEach(messages, id: \.id) { message in
                                         ChatBubbleView(message: message, friend: friend)
                                             .id(message.id)
+                                            .environmentObject(userAuth)
                                     }.onChange(of: messages.count) { _ in
                                         value.scrollTo(messages.last?.id)
                                     }
@@ -206,19 +213,20 @@ struct ChatWindowView: View {
                         .padding()
                     }
                 }
-                    .onAppear {
-                        Task {
-                            await loadMessage()
-                        }
-                        joinRoom()
-                    }
-                    .onDisappear {
-                        chatManager.clearChannel()
-                        // unset channel
-                        self.channel = nil
-                    }
+                
             )
             .toolbar(.hidden, for: .tabBar)
             .foregroundColor(Color("Text"))
+            .onAppear {
+                Task {
+                    await loadMessage()
+                }
+                joinRoom()
+            }
+            .onDisappear {
+                chatManager.clearChannel()
+                // unset channel
+                self.channel = nil
+            }
     }
 }
