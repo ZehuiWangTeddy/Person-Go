@@ -1,16 +1,12 @@
 import SwiftUI
 import Supabase
 
-
-
 struct LoginView: View {
-    
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
     @EnvironmentObject var userAuth: UserAuth
     @State private var email: String = "test@test.com"
     @State private var password: String = "1234"
-
 
     var body: some View {
         NavigationView {
@@ -43,10 +39,9 @@ struct LoginView: View {
                         .border(Color.gray, width: 0.5)
                     Spacer().frame(height: 20)
                     Button(action: {
-//                        Task {
-//                            await signIn()
-//                        }
-                        signInButtonTapped()
+                        Task {
+                            await signIn()
+                        }
                     }, label: {
                         Text("Sign In")
                             .frame(maxWidth: .infinity)
@@ -75,24 +70,6 @@ struct LoginView: View {
         }
         .foregroundColor(Color("Text"))
     }
-    
-    func signInButtonTapped() {
-        Task {
-//            defer { userAuth.isLoggedin = false }
-              do {
-                let response = try await client.auth.signIn (
-                    email: email,
-                    password: password
-                )
-                
-                userAuth.isLoggedin = true
-                userAuth.updateCurrentUser(user: response.user)
-              } catch {
-                print("error: \(error)")
-              }
-            
-        }
-      }
 
     private func signIn() async {
         do {
@@ -100,11 +77,10 @@ struct LoginView: View {
                 email: email,
                 password: password
             )
-            let user = response.user
-            print(user)
             userAuth.isLoggedin = true
+            userAuth.updateCurrentUser(user: response.user)
         } catch {
-            print("Failed to sign in with error: \(error)")
+            print("error: \(error)")
         }
     }
 }
