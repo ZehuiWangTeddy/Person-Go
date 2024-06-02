@@ -37,7 +37,12 @@ struct RegistrationView: View {
                     .padding()
                     .border(Color.gray, width: 0.5)
                 Spacer().frame(height: 20)
-                Button(action: {}, label: {
+                Button(action: {
+                    Task {
+                        await register()
+                    }
+
+                }, label: {
                     Text("Create Account")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -50,6 +55,18 @@ struct RegistrationView: View {
         }
         .background(Color("Background"))
         .foregroundColor(Color("Text"))
+    }
+
+    private func register() async {
+        do {
+            let response = try await client.auth.signUp(
+                email: email,
+                password: password
+            )
+            print(response)
+        } catch {
+            print("error: \(error)")
+        }
     }
 }
 
