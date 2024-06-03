@@ -29,7 +29,11 @@ struct PasswordResetView: View {
                     .padding()
                     .border(Color.gray, width: 0.5)
                 Spacer().frame(height: 20)
-                Button(action: {}, label: {
+                Button(action: {
+                    Task {
+                        await resetPassword()
+                    }
+                }, label: {
                     Text("Send Email")
                         .frame(maxWidth: .infinity)
                         .padding()
@@ -42,6 +46,17 @@ struct PasswordResetView: View {
         }
         .background(Color("Background"))
         .foregroundColor(Color("Text"))
+    }
+    
+    private func resetPassword() async {
+        do {
+            try await supabase.auth.resetPasswordForEmail(
+                email
+            )
+        } catch {
+            print("error: \(error)")
+        }
+
     }
 }
 

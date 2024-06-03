@@ -1,6 +1,26 @@
 import SwiftUI
 import Supabase
 
+struct FriendAvatarView: View {
+    let chatManager = ChatManager()
+    var avatarUrl: String
+    
+    var body: some View {
+        AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: avatarUrl)){ image in
+            image
+                .resizable()
+                .scaledToFill()
+                .cornerRadius(30)
+                .frame(width: 50, height: 50)
+        } placeholder: {
+            Image("userprofile")
+                .resizable()
+                .frame(width: 50, height: 50)
+                .cornerRadius(30)
+        }
+    }
+}
+
 struct CircleWithTextView: View {
     var content: String
     
@@ -8,7 +28,7 @@ struct CircleWithTextView: View {
         ZStack {
             Circle()
                 .stroke(lineWidth: 2)
-                .frame(width: 25, height: 25)
+                .frame(width: 30, height: 30)
             
             Text(content)
                 .font(.system(size: 12, weight: .bold))
@@ -16,42 +36,50 @@ struct CircleWithTextView: View {
     }
 }
 
+struct UnreadView: View {
+    var body: some View {
+        Circle()
+            .fill(.red)
+            .frame(width: 10, height: 10)
+    }
+}
+
 struct ChatsView: View {
     @EnvironmentObject var userAuth: UserAuth
-
+    
     var chatManager = ChatManager()
     @State private var friends: [Friend] = []
-    
     @State var loading = false
+    
+    @State var channel: Supabase.RealtimeChannelV2?
     
     var body: some View {
         NavigationStack {
             ZStack {
                 Color("Background")
                     .edgesIgnoringSafeArea(.all)
-                
                 VStack {
                     HStack {
                         Text("Chats")
-                            .font(.title)
+                            .font(.largeTitle)
+                            .bold()
                         NavigationLink(destination: AddFriendsView()) {
                             Image(systemName: "plus.circle")
-                                    .resizable()
-                                    .frame(width: 25, height: 25)
+                                .resizable()
+                                .frame(width: 25, height: 25)
                         }
                         Spacer()
                         NavigationLink(destination: ProfileView().environmentObject(userAuth)){
-                            Image("userprofile")
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .cornerRadius(30)
+                            userAuth.getUserAvatar(width: 50, height: 50, radius: 30)
                         }
+                        Divider()
+                            .frame(height: 2)
                     }
-                    .padding(25)
+                    .padding(.horizontal)
                     
                     Rectangle()
                         .frame(height: 1)
-                        .foregroundColor(.black)
+                        .foregroundColor(.gray)
                         .padding(.horizontal)
                     
                     if (friends.isEmpty) {
@@ -71,19 +99,8 @@ struct ChatsView: View {
                                     destination: ChatWindowView(friend: friend).environmentObject(userAuth)
                                 ){
                                     HStack{
-                                        AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
-                                            image
-                                                .resizable()
-                                                .scaledToFill()
-                                                .cornerRadius(30)
-                                                .frame(width: 50, height: 50)
-                                        } placeholder: {
-                                            Image("userprofile")
-                                                .resizable()
-                                                .frame(width: 50, height: 50)
-                                                .cornerRadius(30)
-                                        }
                                         
+                                        FriendAvatarView(avatarUrl: friend.profiles.avatarUrl ?? "")
                                         Text(friend.profiles.username ?? friend.profiles.id.uuidString)
                                             .font(.headline)
                                         
@@ -91,13 +108,18 @@ struct ChatsView: View {
                                         
                                         CircleWithTextView(content: "\(friend.totalInventory)")
                                         
+                                        if (friend.totalUnread > 0) {
+                                            UnreadView()
+                                        }
                                     }
                                     .padding(.vertical, 8)
                                 }
+                                .listRowBackground(Color("Background"))
+                                .listRowSeparator(.automatic)
                             }
                         }
                         .listStyle(PlainListStyle())
-                        .background(Color(red: 0xF3 / 255, green: 0xEB / 255, blue: 0xD8 / 255))
+                        .background(Color("Background"))
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         .padding(.horizontal)
                         .padding(.vertical)
@@ -110,12 +132,34 @@ struct ChatsView: View {
                 }
                 .foregroundColor(Color("Text"))
                 .padding(.vertical, 15)
-            }
-        }
-        .onAppear {
-            Task {
-                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                .onAppear {
+                    Task {
+                        self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                        
+                        let uchannel = await chatManager.getClient().channel(userAuth.user!.id.uuidString)
+                        self.channel = uchannel
+                        await self.channel!.subscribe()
+                        
+                        let broadcastStream = await self.channel!.broadcastStream(event: "new-message")
+                        for await _ in broadcastStream {
+                            Task {
+                                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                            }
+                        }
+                    }
+                }
+                .onDisappear {
+                    Task {
+                        self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                        if self.channel != nil {
+                            await self.channel!.unsubscribe()
+                            self.channel = nil
+                        }
+                        
+                    }
+                }
             }
         }
     }
 }
+
