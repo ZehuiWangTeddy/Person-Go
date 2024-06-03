@@ -10,7 +10,7 @@ struct MapView: View {
     @StateObject var mapViewContainer = MapViewContainer()
     @ObservedObject var selectedFriendsStore: SelectedFriends
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    @State private var timeRemaining = 60
+    @State private var timeRemaining = 0
     @State private var showTimer = false
     @State private var cancellables = Set<AnyCancellable>()
 
@@ -90,9 +90,9 @@ struct MapView: View {
 
     // Add new annotations
     for friend in friendsForMap {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: friend.latitude ?? 0, longitude: friend.longitude ?? 0)
-        annotation.title = friend.username
+        let coordinate = CLLocationCoordinate2D(latitude: friend.latitude ?? 0, longitude: friend.longitude ?? 0)
+        let annotation = TimerAnnotation(coordinate: coordinate, title: friend.username ?? "", subtitle: "", countdown: timeRemaining)
+        annotation.startTimer()
         self.mapViewContainer.mapViewRepresentable.mapView.addAnnotation(annotation)
     }
 }
@@ -149,11 +149,11 @@ func reloadMap() async {
 
     private func updateTimeRemaining() {
         switch selectedFriendsStore.selectedSize {
-        case "Small":
+        case "Quickstrike":
             timeRemaining = 60
-        case "Medium":
+        case "Blaze Rocket":
             timeRemaining = 120
-        case "Large":
+        case "Phoenix Inferno":
             timeRemaining = 180
         default:
             timeRemaining = 0
@@ -161,4 +161,64 @@ func reloadMap() async {
     }
 }
 
+class TimerAnnotation: NSObject, MKAnnotation {
+    dynamic var coordinate: CLLocationCoordinate2D
+    var title: String?
+    var subtitle: String?
+    var countdown: Int
+    var timer: Timer?
+
+    init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, countdown: Int) {
+        self.coordinate = coordinate
+        self.title = title
+        self.subtitle = "\(countdown)"
+        self.countdown = countdown
+        if self.countdown == 0 {
+            self.subtitle = nil
+        }
+    }
+
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if self.countdown > 0 {
+                self.countdown -= 1
+                self.subtitle = "Time remaining: \(self.countdown) seconds"
+            } else {
+                self.subtitle = nil
+                self.timer?.invalidate()
+                self.timer = nil
+            }
+
+        }
+    }
+}
+
+class TimerAnnotationView: MKAnnotationView {
+    var imageView: UIImageView?
+
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+        super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
+        self.setupImageView()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setupImageView()
+    }
+
+    func setupImageView() {
+        imageView = UIImageView(image: UIImage(systemName: "mappin.circle.fill")?.withTintColor(.red, renderingMode: .alwaysOriginal))
+        if let imageView = imageView {
+            imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30) // Change the width and height values to increase or decrease the size of the pin
+            imageView.contentMode = .scaleAspectFit // Ensure the pin image scales correctly
+            self.addSubview(imageView)
+        }
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        imageView?.center = CGPoint(x: bounds.midX, y: bounds.midY)
+    }
+}
 
