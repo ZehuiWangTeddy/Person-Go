@@ -1,10 +1,23 @@
 import SwiftUI
 
 struct NotificationView: View {
-    @Environment(\.colorScheme) var colorScheme
-    @State private var enableNotifications = true
-    @State private var notificationSound = "Chime"
-    @State private var showPreviews = true
+    @State private var enableNotifications = true {
+        didSet {
+            if enableNotifications {
+                NotificationManager.shared.requestNotificationPermissions()
+            }
+        }
+    }
+    @State private var notificationSound = "Chime" {
+        didSet {
+            configureNotificationSettings()
+        }
+    }
+    @State private var showPreviews = true {
+        didSet {
+            configureNotificationSettings()
+        }
+    }
 
     var body: some View {
         ScrollView {
@@ -15,7 +28,6 @@ struct NotificationView: View {
                     .padding(.bottom, 20)
                     .foregroundColor(Color("Text"))
 
-                // Notification settings content
                 VStack(alignment: .leading, spacing: 20) {
                     Toggle(isOn: $enableNotifications) {
                         Text("Enable Notifications")
@@ -26,9 +38,9 @@ struct NotificationView: View {
                     .cornerRadius(10)
 
                     Picker("Notification Sound", selection: $notificationSound) {
+                        Text("None").tag("None")
                         Text("Chime").tag("Chime")
                         Text("Alert").tag("Alert")
-                        Text("Silent").tag("Silent")
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .padding()
@@ -69,6 +81,31 @@ struct NotificationView: View {
                         .background(Color(UIColor.secondarySystemBackground))
                         .cornerRadius(10)
                     }
+                    
+                    // Testing Buttons
+                    VStack(alignment: .leading, spacing: 20) {
+                        Button(action: {
+                            NotificationManager.shared.testChatNotification()
+                        }) {
+                            Text("Test Chat Notification")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                        }
+
+                        Button(action: {
+                            NotificationManager.shared.testMissileNotification()
+                        }) {
+                            Text("Test Missile Notification")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.red)
+                                .cornerRadius(10)
+                        }
+                    }
                 }
                 .padding(.horizontal)
             }
@@ -77,6 +114,14 @@ struct NotificationView: View {
         .background(Color("Background"))
         .navigationTitle("Notifications")
         .foregroundColor(Color("Text"))
+        .onAppear {
+            configureNotificationSettings()
+        }
+    }
+
+    private func configureNotificationSettings() {
+        let enableSound = notificationSound != "None"
+        NotificationManager.shared.configureNotificationSettings(enableSound: enableSound, showPreviews: showPreviews, notificationSound: notificationSound)
     }
 }
 
