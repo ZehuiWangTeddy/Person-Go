@@ -12,9 +12,9 @@ Deno.serve(async (req) => {
     },
   );
 
-  const { userEmail } = await req.json();
+  const { email } = await req.json();
 
-  const { data, error } = await supabaseClient.auth.admin.inviteUserByEmail(userEmail);
+  const { data, error } = await supabaseClient.auth.admin.inviteUserByEmail(email);
 
   return new Response(
     JSON.stringify({data, error}),

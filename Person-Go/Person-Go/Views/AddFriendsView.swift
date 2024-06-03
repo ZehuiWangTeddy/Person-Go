@@ -48,7 +48,7 @@ struct AddFriendsView: View {
 
     private func sendInvite() async {
         do {
-            let response: String = try await supabase.functions
+            let response: AnyJSON = try await supabase.functions
                 .invoke(
                     "send-invite",
                     options: FunctionInvokeOptions(
