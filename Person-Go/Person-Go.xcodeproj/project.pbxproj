@@ -44,6 +44,14 @@
 		7F3420A12C07864B00323B0F /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3420A02C07864B00323B0F /* ChangeEmailView.swift */; };
 		7F3420A32C07867200323B0F /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3420A22C07867200323B0F /* ChangePasswordView.swift */; };
 		7F6937DA2C091D5B0043B740 /* MissileMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6937D92C091D5B0043B740 /* MissileMapView.swift */; };
+		7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81FBE62C0D963400494DA8 /* NotificationManager.swift */; };
+		7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0C2C0D2B370065F261 /* InventoryManager.swift */; };
+		7F821D0F2C0D2F3F0065F261 /* UserInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */; };
+		7F821D112C0D30610065F261 /* Missile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D102C0D30610065F261 /* Missile.swift */; };
+		7F821D142C0D48970065F261 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7F821D132C0D48970065F261 /* SDWebImageSwiftUI */; };
+		7F821D1A2C0D4CE50065F261 /* quickstrike.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F821D192C0D4CE50065F261 /* quickstrike.gif */; };
+		7F821D1C2C0D4CF10065F261 /* phoenix_inferno.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F821D1B2C0D4CF10065F261 /* phoenix_inferno.gif */; };
+		7F821D1E2C0D4CFD0065F261 /* blaze_rocket.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */; };
 		7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C202BF8F0B30035DF7B /* Friend.swift */; };
 		7F8D6C232BF8F0EF0035DF7B /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */; };
 		7F8D6C252BF901C80035DF7B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C242BF901C80035DF7B /* AboutView.swift */; };
@@ -92,6 +100,13 @@
 		7F3420A02C07864B00323B0F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		7F3420A22C07867200323B0F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		7F6937D92C091D5B0043B740 /* MissileMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissileMapView.swift; sourceTree = "<group>"; };
+		7F81FBE62C0D963400494DA8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		7F821D0C2C0D2B370065F261 /* InventoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryManager.swift; sourceTree = "<group>"; };
+		7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInventory.swift; sourceTree = "<group>"; };
+		7F821D102C0D30610065F261 /* Missile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
+		7F821D192C0D4CE50065F261 /* quickstrike.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = quickstrike.gif; sourceTree = "<group>"; };
+		7F821D1B2C0D4CF10065F261 /* phoenix_inferno.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = phoenix_inferno.gif; sourceTree = "<group>"; };
+		7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blaze_rocket.gif; sourceTree = "<group>"; };
 		7F8D6C202BF8F0B30035DF7B /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
 		7F8D6C242BF901C80035DF7B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -103,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F821D142C0D48970065F261 /* SDWebImageSwiftUI in Frameworks */,
 				3693DFF62BE40892003F83BD /* Supabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +144,8 @@
 				27FFF3DA2BE40F940008B22B /* AppLockManager.swift */,
 				79F660CB2BFBA2D800B28D79 /* ChatManager.swift */,
 				79F660CD2BFBA84500B28D79 /* UserManager.swift */,
+				7F821D0C2C0D2B370065F261 /* InventoryManager.swift */,
+				7F81FBE62C0D963400494DA8 /* NotificationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -156,6 +174,8 @@
 				7F8D6C202BF8F0B30035DF7B /* Friend.swift */,
 				79F660CF2BFBA87000B28D79 /* ChatMessage.swift */,
 				79F660D12BFBA93200B28D79 /* Profile.swift */,
+				7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */,
+				7F821D102C0D30610065F261 /* Missile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -181,6 +201,7 @@
 		792A4A532BDAEB0500CBCCB1 /* Person-Go */ = {
 			isa = PBXGroup;
 			children = (
+				7F821D182C0D4C6B0065F261 /* MissileLogos */,
 				271E22632BF9E247008FCA91 /* API */,
 				3693DFFC2BE41AC3003F83BD /* Info.plist */,
 				27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */,
@@ -233,6 +254,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7F821D182C0D4C6B0065F261 /* MissileLogos */ = {
+			isa = PBXGroup;
+			children = (
+				7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */,
+				7F821D1B2C0D4CF10065F261 /* phoenix_inferno.gif */,
+				7F821D192C0D4CE50065F261 /* quickstrike.gif */,
+			);
+			path = MissileLogos;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -251,6 +282,7 @@
 			name = "Person-Go";
 			packageProductDependencies = (
 				3693DFF52BE40892003F83BD /* Supabase */,
+				7F821D132C0D48970065F261 /* SDWebImageSwiftUI */,
 			);
 			productName = "Person-Go";
 			productReference = 792A4A512BDAEB0500CBCCB1 /* Person-Go.app */;
@@ -282,6 +314,7 @@
 			mainGroup = 792A4A482BDAEB0500CBCCB1;
 			packageReferences = (
 				3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */,
+				7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 792A4A522BDAEB0500CBCCB1 /* Products */;
 			projectDirPath = "";
@@ -298,7 +331,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				27FFF3E32BE50DC10008B22B /* LaunchScreen.storyboard in Resources */,
+				7F821D1E2C0D4CFD0065F261 /* blaze_rocket.gif in Resources */,
+				7F821D1C2C0D4CF10065F261 /* phoenix_inferno.gif in Resources */,
 				792A4A5C2BDAEB0800CBCCB1 /* Preview Assets.xcassets in Resources */,
+				7F821D1A2C0D4CE50065F261 /* quickstrike.gif in Resources */,
 				792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +362,8 @@
 				36B2188D2BE91F3600CAE5AB /* MapView.swift in Sources */,
 				36B2189A2BE91F4C00CAE5AB /* LocationManager.swift in Sources */,
 				36B218952BE91F3600CAE5AB /* ProflieView.swift in Sources */,
+				7F821D112C0D30610065F261 /* Missile.swift in Sources */,
+				7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */,
 				79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */,
 				7F8D6C272BF9079A0035DF7B /* NotificationView.swift in Sources */,
 				36B218962BE91F3600CAE5AB /* AuthenticationView.swift in Sources */,
@@ -336,7 +374,9 @@
 				7F6937DA2C091D5B0043B740 /* MissileMapView.swift in Sources */,
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
 				7F34209D2C077E6C00323B0F /* AccountView.swift in Sources */,
+				7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */,
 				36B218942BE91F3600CAE5AB /* SettingView.swift in Sources */,
+				7F821D0F2C0D2F3F0065F261 /* UserInventory.swift in Sources */,
 				36B218902BE91F3600CAE5AB /* FriendProfileView.swift in Sources */,
 				273BB1382BFAC27800649311 /* InventoryCRUD.swift in Sources */,
 				7F8D6C252BF901C80035DF7B /* AboutView.swift in Sources */,
@@ -586,6 +626,14 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -593,6 +641,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		7F821D132C0D48970065F261 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

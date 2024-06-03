@@ -135,9 +135,9 @@ final class MissileMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
 
             // Update missile coordinates relative to the user's location
             self.missiles = [
-                Missile(name: "Quickstrike", coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude + 0.0018, longitude: location.coordinate.longitude)),
-                Missile(name: "Blaze Rocket", coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude + 0.0027, longitude: location.coordinate.longitude)),
-                Missile(name: "Phoenix Inferno", coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude + 0.0036, longitude: location.coordinate.longitude))
+                Missile(name: "Quickstrike", coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude + 0.0001, longitude: location.coordinate.longitude)),
+                Missile(name: "Blaze Rocket", coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude + 0.0002, longitude: location.coordinate.longitude)),
+                Missile(name: "Phoenix Inferno", coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude + 0.0003, longitude: location.coordinate.longitude))
             ]
         }
     }
@@ -164,14 +164,28 @@ final class MissileMapViewModel: NSObject, ObservableObject, CLLocationManagerDe
     }
 
     private func addMissileToInventory(_ missile: Missile) {
-        // Implement the logic to add the missile to the user's inventory
-        print("\(missile.name) added to inventory")
+        guard let userID = UUID(uuidString: "user_id") else { return }
+        
+        Task {
+            if var inventory = await InventoryManager.shared.fetchInventory(for: userID) {
+                switch missile.name {
+                case "Quickstrike":
+                    inventory.small += 1
+                case "Blaze Rocket":
+                    inventory.medium += 1
+                case "Phoenix Inferno":
+                    inventory.large += 1
+                default:
+                    return
+                }
+                
+                let success = await InventoryManager.shared.updateInventory(for: userID, inventory: inventory)
+                if success {
+                    print("\(missile.name) added to inventory")
+                } else {
+                    print("Failed to update inventory")
+                }
+            }
+        }
     }
 }
-
-struct Missile: Identifiable {
-    let id = UUID()
-    let name: String
-    let coordinate: CLLocationCoordinate2D
-}
-

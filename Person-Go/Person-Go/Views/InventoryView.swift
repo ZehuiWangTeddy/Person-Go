@@ -1,6 +1,7 @@
 import SwiftUI
 import Supabase
 import MapKit
+import SDWebImageSwiftUI
 
 struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -12,9 +13,9 @@ struct InventoryView: View {
     @State private var inventory: Inventory? // State to store the fetched inventory data
 
     let missileData = [
-        ("Quickstrike", "5km"),
-        ("Blaze Rocket", "10km"),
-        ("Phoenix Inferno", "50km")
+        ("Quickstrike", "5km", "quickstrike.gif"),
+        ("Blaze Rocket", "10km", "blaze_rocket.gif"),
+        ("Phoenix Inferno", "50km", "phoenix_inferno.gif")
     ]
 
     var body: some View {
@@ -30,11 +31,12 @@ struct InventoryView: View {
                         .frame(height: 2)
                     
                     VStack(alignment: .leading) {
-                        ForEach(missileData, id: \.0) { missile, range in
+                        ForEach(missileData, id: \.0) { missile, range, imageName in
                             HStack {
-                                Image(systemName: "missile")
-                                    .rotationEffect(.degrees(-45))
-                                    .foregroundColor(Color("Text"))
+                                missileImage(imageName: imageName)
+                                    .frame(width: 50, height: 50)
+                                    .clipShape(Circle())
+                                    .padding(.trailing, 8)
                                 VStack(alignment: .leading) {
                                     Text(missile)
                                         .font(.title2)
@@ -108,6 +110,18 @@ struct InventoryView: View {
             return inventory?.large ?? 0
         default:
             return 0
+        }
+    }
+    
+    private func missileImage(imageName: String) -> some View {
+        if let _ = Bundle.main.path(forResource: imageName, ofType: nil) {
+            return AnyView(AnimatedImage(name: imageName)
+                .resizable()
+                .aspectRatio(contentMode: .fit))
+        } else {
+            return AnyView(Text("Image not found")
+                .foregroundColor(.red)
+                .frame(width: 50, height: 50))
         }
     }
 }
