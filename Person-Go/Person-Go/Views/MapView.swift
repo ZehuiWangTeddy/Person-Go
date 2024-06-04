@@ -92,7 +92,12 @@ struct MapView: View {
     for friend in friendsForMap {
         let coordinate = CLLocationCoordinate2D(latitude: friend.latitude ?? 0, longitude: friend.longitude ?? 0)
         let annotation = TimerAnnotation(coordinate: coordinate, title: friend.username ?? "", subtitle: "", countdown: timeRemaining)
-        annotation.startTimer()
+
+        // Check if the friend is in the selectedFriendsStore
+        if selectedFriendsStore.friends.contains(where: { $0.name == friend.username }) {
+            annotation.startTimer()
+        }
+
         self.mapViewContainer.mapViewRepresentable.mapView.addAnnotation(annotation)
     }
 }
@@ -171,14 +176,12 @@ class TimerAnnotation: NSObject, MKAnnotation {
     init(coordinate: CLLocationCoordinate2D, title: String, subtitle: String, countdown: Int) {
         self.coordinate = coordinate
         self.title = title
-        self.subtitle = "\(countdown)"
+        self.subtitle = nil // Set subtitle to nil initially
         self.countdown = countdown
-        if self.countdown == 0 {
-            self.subtitle = nil
-        }
     }
 
     func startTimer() {
+        self.subtitle = "\(countdown)" // Set subtitle when timer starts
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
             guard let self = self else { return }
             if self.countdown > 0 {
@@ -189,7 +192,6 @@ class TimerAnnotation: NSObject, MKAnnotation {
                 self.timer?.invalidate()
                 self.timer = nil
             }
-
         }
     }
 }
