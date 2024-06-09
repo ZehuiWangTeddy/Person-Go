@@ -1,7 +1,7 @@
 import SwiftUI
 import Supabase
 
-struct AddFriendsView: View {
+struct InviteFriendsView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
     @State private var email: String = ""
@@ -26,6 +26,7 @@ struct AddFriendsView: View {
                 TextField("Enter friend's email", text: $email)
                     .autocapitalization(.none)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                Spacer().frame(height: 40)
                 Button(action: {
                     Task {
                         await sendInvite()
@@ -63,5 +64,5 @@ struct AddFriendsView: View {
 }
 
 #Preview {
-    AddFriendsView()
+    InviteFriendsView()
 }

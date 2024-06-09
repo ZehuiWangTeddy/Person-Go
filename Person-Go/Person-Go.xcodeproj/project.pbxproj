@@ -20,7 +20,7 @@
 		36B2188C2BE91F3600CAE5AB /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */; };
 		36B2188D2BE91F3600CAE5AB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218802BE91F3600CAE5AB /* MapView.swift */; };
 		36B2188E2BE91F3600CAE5AB /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218812BE91F3600CAE5AB /* SecurityView.swift */; };
-		36B2188F2BE91F3600CAE5AB /* AddFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218822BE91F3600CAE5AB /* AddFriendsView.swift */; };
+		36B2188F2BE91F3600CAE5AB /* InviteFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218822BE91F3600CAE5AB /* InviteFriendsView.swift */; };
 		36B218902BE91F3600CAE5AB /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218832BE91F3600CAE5AB /* FriendProfileView.swift */; };
 		36B218912BE91F3600CAE5AB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218842BE91F3600CAE5AB /* LoginView.swift */; };
 		36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218852BE91F3600CAE5AB /* RegistrationView.swift */; };
@@ -36,19 +36,18 @@
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
 		792A4A5C2BDAEB0800CBCCB1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A5B2BDAEB0800CBCCB1 /* Preview Assets.xcassets */; };
-		79641E6D2C09131A006C6F3B /* FriendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E6C2C09131A006C6F3B /* FriendInfo.swift */; };
 		79641E772C091FEE006C6F3B /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E762C091FEE006C6F3B /* ChangePasswordView.swift */; };
 		79641E792C091FF8006C6F3B /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E782C091FF8006C6F3B /* EditProfileView.swift */; };
 		79641E7B2C092016006C6F3B /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7A2C092016006C6F3B /* AccountView.swift */; };
 		79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7C2C092028006C6F3B /* ChangeEmailView.swift */; };
 		79641E7F2C092029006C6F3B /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7D2C092029006C6F3B /* ChangePasswordView.swift */; };
+		79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE802C16526300A33023 /* FriendInfo.swift */; };
+		79D9AE832C16529B00A33023 /* SearchFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* SearchFriendView.swift */; };
 		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
 		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
 		79F660D22BFBA93200B28D79 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660D12BFBA93200B28D79 /* Profile.swift */; };
 		7F34209D2C077E6C00323B0F /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F34209C2C077E6C00323B0F /* AccountView.swift */; };
-		7F3420A12C07864B00323B0F /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3420A02C07864B00323B0F /* ChangeEmailView.swift */; };
-		7F3420A32C07867200323B0F /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3420A22C07867200323B0F /* ChangePasswordView.swift */; };
 		7F6937DA2C091D5B0043B740 /* MissileMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6937D92C091D5B0043B740 /* MissileMapView.swift */; };
 		7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81FBE62C0D963400494DA8 /* NotificationManager.swift */; };
 		7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0C2C0D2B370065F261 /* InventoryManager.swift */; };
@@ -78,7 +77,7 @@
 		36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordResetView.swift; sourceTree = "<group>"; };
 		36B218802BE91F3600CAE5AB /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		36B218812BE91F3600CAE5AB /* SecurityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
-		36B218822BE91F3600CAE5AB /* AddFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendsView.swift; sourceTree = "<group>"; };
+		36B218822BE91F3600CAE5AB /* InviteFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsView.swift; sourceTree = "<group>"; };
 		36B218832BE91F3600CAE5AB /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		36B218842BE91F3600CAE5AB /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		36B218852BE91F3600CAE5AB /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
@@ -96,20 +95,20 @@
 		792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		792A4A5B2BDAEB0800CBCCB1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		792A4A6B2BDB056D00CBCCB1 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		79641E6C2C09131A006C6F3B /* FriendInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInfo.swift; sourceTree = "<group>"; };
 		79641E742C091EBF006C6F3B /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
-		79641E752C091ECD006C6F3B /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		79641E762C091FEE006C6F3B /* ChangePasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		79641E782C091FF8006C6F3B /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		79641E7A2C092016006C6F3B /* AccountView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		79641E7C2C092028006C6F3B /* ChangeEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		79641E7D2C092029006C6F3B /* ChangePasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
+		79D9AE7E2C16522B00A33023 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		79D9AE7F2C16524100A33023 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		79D9AE802C16526300A33023 /* FriendInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendInfo.swift; path = "Person-Go/Model/FriendInfo.swift"; sourceTree = SOURCE_ROOT; };
+		79D9AE822C16529B00A33023 /* SearchFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendView.swift; sourceTree = "<group>"; };
 		79F660CB2BFBA2D800B28D79 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		79F660CD2BFBA84500B28D79 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		79F660CF2BFBA87000B28D79 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		79F660D12BFBA93200B28D79 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		7F34209A2C0772B700323B0F /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		7F34209B2C0772CC00323B0F /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		7F34209C2C077E6C00323B0F /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		7F3420A02C07864B00323B0F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		7F3420A22C07867200323B0F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
@@ -188,6 +187,7 @@
 				7F8D6C202BF8F0B30035DF7B /* Friend.swift */,
 				79F660CF2BFBA87000B28D79 /* ChatMessage.swift */,
 				79F660D12BFBA93200B28D79 /* Profile.swift */,
+				79D9AE802C16526300A33023 /* FriendInfo.swift */,
 				7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */,
 				7F821D102C0D30610065F261 /* Missile.swift */,
 			);
@@ -198,9 +198,11 @@
 			isa = PBXGroup;
 			children = (
 				79641E742C091EBF006C6F3B /* Debug.xcconfig */,
-				79641E752C091ECD006C6F3B /* Release.xcconfig */,
+				79D9AE7E2C16522B00A33023 /* Debug.xcconfig */,
+				79D9AE7F2C16524100A33023 /* Release.xcconfig */,
 				792A4A532BDAEB0500CBCCB1 /* Person-Go */,
 				792A4A522BDAEB0500CBCCB1 /* Products */,
+				79D9AE7D2C1651F900A33023 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -243,7 +245,7 @@
 		792A4A622BDB04C600CBCCB1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				36B218822BE91F3600CAE5AB /* AddFriendsView.swift */,
+				36B218822BE91F3600CAE5AB /* InviteFriendsView.swift */,
 				36B218892BE91F3600CAE5AB /* AuthenticationView.swift */,
 				36B218862BE91F3600CAE5AB /* ChatsView.swift */,
 				36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */,
@@ -269,8 +271,16 @@
 				7F3420A02C07864B00323B0F /* ChangeEmailView.swift */,
 				7F3420A22C07867200323B0F /* ChangePasswordView.swift */,
 				7F6937D92C091D5B0043B740 /* MissileMapView.swift */,
+				79D9AE822C16529B00A33023 /* SearchFriendView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		79D9AE7D2C1651F900A33023 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		7F821D182C0D4C6B0065F261 /* MissileLogos */ = {
@@ -375,7 +385,8 @@
 				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
-				36B2188F2BE91F3600CAE5AB /* AddFriendsView.swift in Sources */,
+				79D9AE832C16529B00A33023 /* SearchFriendView.swift in Sources */,
+				36B2188F2BE91F3600CAE5AB /* InviteFriendsView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
 				79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */,
 				79F660D22BFBA93200B28D79 /* Profile.swift in Sources */,
@@ -388,7 +399,6 @@
 				7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */,
 				79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */,
 				7F8D6C272BF9079A0035DF7B /* NotificationView.swift in Sources */,
-				79641E6D2C09131A006C6F3B /* FriendInfo.swift in Sources */,
 				79641E7F2C092029006C6F3B /* ChangePasswordView.swift in Sources */,
 				36B218962BE91F3600CAE5AB /* AuthenticationView.swift in Sources */,
 				36B218912BE91F3600CAE5AB /* LoginView.swift in Sources */,
@@ -412,6 +422,7 @@
 				271DF0582BE199FF007DC5F7 /* MapViewContainer.swift in Sources */,
 				79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */,
 				271E22672BF9E292008FCA91 /* ProfileCRUD.swift in Sources */,
+				79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,7 +495,7 @@
 		};
 		792A4A5E2BDAEB0800CBCCB1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79641E752C091ECD006C6F3B /* Release.xcconfig */;
+			baseConfigurationReference = 79D9AE7F2C16524100A33023 /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -569,7 +580,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dddtga.gmail.com;
+				PRODUCT_BUNDLE_IDENTIFIER = "dddtga-gmail.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -607,7 +618,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dddtga.gmail.com;
+				PRODUCT_BUNDLE_IDENTIFIER = "dddtga-gmail.com";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

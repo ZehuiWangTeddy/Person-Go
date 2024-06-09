@@ -63,7 +63,7 @@ struct ChatsView: View {
                         Text("Chats")
                             .font(.largeTitle)
                             .bold()
-                        NavigationLink(destination: AddFriendsView()) {
+                        NavigationLink(destination: SearchFriendsView()) {
                             Image(systemName: "plus.circle")
                                 .resizable()
                                 .frame(width: 25, height: 25)
