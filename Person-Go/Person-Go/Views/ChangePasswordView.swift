@@ -1,30 +1,27 @@
 import SwiftUI
+import Supabase
 
 struct ChangePasswordView: View {
-    @State private var currentPassword: String = ""
     @State private var newPassword: String = ""
     @State private var confirmNewPassword: String = ""
-    @State private var isCurrentPasswordVisible: Bool = false
     @State private var isNewPasswordVisible: Bool = false
     @State private var isConfirmNewPasswordVisible: Bool = false
 
     var body: some View {
-        ScrollView { // Use ScrollView to make content start from the top
+        ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Password")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(Color("Text"))
-                
                 Divider()
                     .frame(height: 2)
-                
-                PasswordField(title: "Current Password", text: $currentPassword, isPasswordVisible: $isCurrentPasswordVisible)
                 PasswordField(title: "New Password", text: $newPassword, isPasswordVisible: $isNewPasswordVisible)
                 PasswordField(title: "Confirm New Password", text: $confirmNewPassword, isPasswordVisible: $isConfirmNewPasswordVisible)
-
                 Button(action: {
-                    // Handle password reset
+                    Task {
+                        await updatePassword()
+                    }
                 }) {
                     Text("Reset Password")
                         .font(.title3)
@@ -32,7 +29,7 @@ struct ChangePasswordView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color("Primary"))
                         .foregroundColor(Color("Text"))
-                        .cornerRadius(4)
+                        .cornerRadius(8)
                 }
             }
             .padding()
@@ -40,7 +37,26 @@ struct ChangePasswordView: View {
         }
         .background(Color("Background"))
         .navigationTitle("Change Password")
-        .navigationBarTitleDisplayMode(.inline)  // Reduces top empty space
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func updatePassword() async {
+        do {
+            if newPassword != confirmNewPassword {
+                throw NSError(domain: "", code: 1, userInfo: [NSLocalizedDescriptionKey: "The passwords do not match."])
+            }
+            
+            let response: AnyJSON = try await supabase.functions
+                .invoke(
+                    "update-password",
+                    options: FunctionInvokeOptions(
+                        body: ["password": $newPassword.wrappedValue]
+                    )
+                )
+            print("response: \(response)")
+        } catch {
+            print("error: \(error)")
+        }
     }
 }
 
@@ -51,20 +67,18 @@ struct PasswordField: View {
 
     var body: some View {
         ZStack(alignment: .trailing) {
-            if isPasswordVisible {
-                TextField(title, text: $text)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .foregroundColor(Color.gray)
-            } else {
-                SecureField(title, text: $text)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .foregroundColor(Color.gray)
+            Group {
+                if isPasswordVisible {
+                    TextField(title, text: $text)
+                } else {
+                    SecureField(title, text: $text)
+                }
             }
-            
+            .autocapitalization(.none)
+            .padding()
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(8)
+            .frame(height: 50)
             Button(action: {
                 isPasswordVisible.toggle()
             }) {
@@ -79,4 +93,3 @@ struct PasswordField: View {
 #Preview {
     ChangePasswordView()
 }
-
