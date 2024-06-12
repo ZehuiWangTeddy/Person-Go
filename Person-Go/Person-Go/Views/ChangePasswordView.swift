@@ -2,10 +2,8 @@ import SwiftUI
 import Supabase
 
 struct ChangePasswordView: View {
-    @State private var currentPassword: String = ""
     @State private var newPassword: String = ""
     @State private var confirmNewPassword: String = ""
-    @State private var isCurrentPasswordVisible: Bool = false
     @State private var isNewPasswordVisible: Bool = false
     @State private var isConfirmNewPasswordVisible: Bool = false
 
@@ -18,7 +16,6 @@ struct ChangePasswordView: View {
                     .foregroundColor(Color("Text"))
                 Divider()
                     .frame(height: 2)
-                PasswordField(title: "Current Password", text: $currentPassword, isPasswordVisible: $isCurrentPasswordVisible)
                 PasswordField(title: "New Password", text: $newPassword, isPasswordVisible: $isNewPasswordVisible)
                 PasswordField(title: "Confirm New Password", text: $confirmNewPassword, isPasswordVisible: $isConfirmNewPasswordVisible)
                 Button(action: {
@@ -32,7 +29,7 @@ struct ChangePasswordView: View {
                         .frame(maxWidth: .infinity)
                         .background(Color("Primary"))
                         .foregroundColor(Color("Text"))
-                        .cornerRadius(4)
+                        .cornerRadius(8)
                 }
             }
             .padding()
@@ -45,6 +42,10 @@ struct ChangePasswordView: View {
     
     private func updatePassword() async {
         do {
+            if newPassword != confirmNewPassword {
+                throw NSError(domain: "", code: 1, userInfo: [NSLocalizedDescriptionKey: "The passwords do not match."])
+            }
+            
             let response: AnyJSON = try await supabase.functions
                 .invoke(
                     "update-password",
@@ -66,20 +67,18 @@ struct PasswordField: View {
 
     var body: some View {
         ZStack(alignment: .trailing) {
-            if isPasswordVisible {
-                TextField(title, text: $text)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .foregroundColor(Color.gray)
-            } else {
-                SecureField(title, text: $text)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .foregroundColor(Color.gray)
+            Group {
+                if isPasswordVisible {
+                    TextField(title, text: $text)
+                } else {
+                    SecureField(title, text: $text)
+                }
             }
-            
+            .autocapitalization(.none)
+            .padding()
+            .background(Color.gray.opacity(0.2))
+            .cornerRadius(8)
+            .frame(height: 50)
             Button(action: {
                 isPasswordVisible.toggle()
             }) {
@@ -94,4 +93,3 @@ struct PasswordField: View {
 #Preview {
     ChangePasswordView()
 }
-

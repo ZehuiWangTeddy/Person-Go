@@ -18,6 +18,7 @@ struct ChangeEmailView: View {
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(8)
                     .foregroundColor(Color.gray)
+                    .autocapitalization(.none)
                 Button(action: {
                     Task {
                         await updateEmail()
