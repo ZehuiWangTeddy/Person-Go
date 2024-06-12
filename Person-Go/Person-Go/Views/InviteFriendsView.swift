@@ -1,65 +1,68 @@
 import SwiftUI
 import Supabase
 
-struct PasswordResetView: View {
-    @EnvironmentObject var userAuth: UserAuth
-    @State private var email: String = ""
-    @State private var password: String = ""
-
+struct InviteFriendsView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
+    @State private var email: String = ""
+    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.verticalSizeClass) var sizeClass
+
     var body: some View {
-        ZStack {
-            Color("Background")
-            VStack {
+        GeometryReader { geometry in
+            VStack() {
                 HStack {
-                    Text("Forgot Password")
+                    Text("Invite Your Friend")
                         .font(.largeTitle)
                         .bold()
                     Spacer()
                 }
-                Spacer().frame(height: 20)
+                Spacer().frame(height: 40)
                 HStack {
                     Text("Email")
                         .font(.title2)
                     Spacer()
                 }
-                TextField("", text: $email)
+                TextField("Enter friend's email", text: $email)
                     .autocapitalization(.none)
-                    .padding()
-                    .border(Color.gray, width: 0.5)
-                Spacer().frame(height: 20)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                Spacer().frame(height: 40)
                 Button(action: {
                     Task {
-                        await resetPassword()
+                        await sendInvite()
                     }
                 }, label: {
-                    Text("Send Email")
+                    Text("Invite")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color("Primary"))
+                        .foregroundColor(Color("Text"))
                         .cornerRadius(4)
                         .font(.title3)
                 })
+                Spacer()
             }
             .padding()
         }
         .background(Color("Background"))
-        .foregroundColor(Color("Text"))
     }
-    
-    private func resetPassword() async {
+
+    private func sendInvite() async {
         do {
-            try await supabase.auth.resetPasswordForEmail(
-                email
-            )
+            let response: AnyJSON = try await supabase.functions
+                .invoke(
+                    "send-invite",
+                    options: FunctionInvokeOptions(
+                        body: ["email": $email.wrappedValue]
+                    )
+                )
+            print("response: \(response)")
         } catch {
             print("error: \(error)")
         }
-
     }
 }
 
 #Preview {
-    PasswordResetView()
+    InviteFriendsView()
 }

@@ -83,6 +83,39 @@ extension MapViewRepresentable {
             return MKOverlayRenderer()
         }
 
+        func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+            guard let timerAnnotation = annotation as? TimerAnnotation else {
+                return nil
+            }
+
+            let identifier = "TimerAnnotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+            if annotationView == nil {
+                annotationView = TimerAnnotationView(annotation: timerAnnotation, reuseIdentifier: identifier)
+                annotationView?.canShowCallout = true
+            } else {
+                annotationView?.annotation = timerAnnotation
+            }
+
+            annotationView?.subviews.forEach { $0.removeFromSuperview() }
+
+            let label = UILabel()
+            label.text = timerAnnotation.title
+            label.sizeToFit()
+
+            label.frame = CGRect(x: -20, y: 10, width: label.frame.width, height: label.frame.height)
+
+
+            annotationView?.addSubview(label)
+
+            if let timerAnnotationView = annotationView as? TimerAnnotationView {
+                timerAnnotationView.setupImageView()
+            }
+
+            return annotationView
+        }
+
         func zoomIn() {
             guard let userLocation = parent.locationManager.currentLocation else { return }
             let zoomedRegion = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))

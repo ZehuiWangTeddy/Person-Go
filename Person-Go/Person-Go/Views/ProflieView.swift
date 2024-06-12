@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
     @EnvironmentObject var userAuth: UserAuth
+    let chatManager = ChatManager()
     
     func email() -> String
     {
@@ -16,48 +16,52 @@ struct ProfileView: View {
             Color("Background")
                 .edgesIgnoringSafeArea(.all)
                 .overlay(
-                VStack{
-                    Image("userprofile")
-                        .resizable()
-                        .frame(width: 200, height: 200)
-                        .cornerRadius(100)
-                        .padding(.vertical, 30)
-                    HStack{
-                        Text("User Name")
-                            .font(.title2)
-                        Spacer()
-                        Text(userAuth.username())
-                            .padding(.horizontal,50)
+                    VStack{
+                        userAuth.getUserAvatar()
+                        
+                        HStack{
+                            Text("User Name")
+                                .font(.title2)
+                            //                            .padding(.bottom)
+                            Spacer()
+                            Text(userAuth.username())
+                                .font(.title2)
+                            //                            .padding(.bottom)
+                        }
+                        .padding(.horizontal, 25)
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
+                        //                        .padding(.vertical, 15)
+                        HStack{
+                            Text("Email")
+                                .font(.title2)
+                            //                            .padding(.bottom)
+                            Spacer()
+                            Text(email())
+                                .font(.title2)
+                            //                            .padding(.bottom)
+                        }
+                        .padding(.horizontal, 25)
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
+                        //                        .padding(.vertical, 15)
+                        NavigationLink(destination: EditProfileView().environmentObject(userAuth)){
+                            Text("EDIT")
+                                .font(.title2)
+                                .underline(true, color: Color("Primary"))
+                                .padding(.vertical, 50)
+                        }
                     }
-                    .padding(.horizontal, 25)
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                        .padding(.vertical, 15)
-                    HStack{
-                        Text("Email")
-                            .font(.title2)
-                        Spacer()
-                        Text(email())
-                            .padding(.horizontal,50)
-                    }
-                    .padding(.horizontal, 25)
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                    Text("EDIT")
-                        .font(.title2)
-                        .underline(true, color: Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                        .padding(.vertical, 50)
-                }
-            )
+                )
         }
-            .background(Color("Background"))
+        .background(Color("Background"))
+        .onAppear {
+            Task {
+                await userAuth.getLatestProfile(id: userAuth.user!.id)
+            }
+        }
     }
 }
 
-struct Profile_Previews: PreviewProvider {
-    static var previews: some View {
-        ProfileView()
-    }
-}

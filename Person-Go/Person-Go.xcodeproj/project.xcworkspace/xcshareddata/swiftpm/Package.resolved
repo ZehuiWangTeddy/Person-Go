@@ -1,5 +1,5 @@
 {
-  "originHash" : "497b223336ae156cc4edd8c12c3d176b975452a34540e6bdf0a3cf91a248bc9c",
+  "originHash" : "024ec3d0ae96f5a26cca34d1161fd818ee8dcf9a08eda0be9fdd77bd70b48126",
   "pins" : [
     {
       "identity" : "keychainaccess",
@@ -11,12 +11,30 @@
       }
     },
     {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "b8523c1642f3c142b06dd98443ea7c48343a4dfd",
+        "version" : "5.19.3"
+      }
+    },
+    {
+      "identity" : "sdwebimageswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      "state" : {
+        "revision" : "b7af5e6bd9c2987e41730400d1baad13d74a141a",
+        "version" : "3.0.4"
+      }
+    },
+    {
       "identity" : "supabase-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/supabase-community/supabase-swift.git",
       "state" : {
-        "revision" : "98c9815c177f46ef85eefa9c4ce4f5e6ca0423ae",
-        "version" : "2.8.1"
+        "revision" : "77fb7e67537fcb3310f4f4665f212f2615af997f",
+        "version" : "2.12.0"
       }
     },
     {
@@ -33,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "f0525da24dc3c6cbb2b6b338b65042bc91cbc4bb",
-        "version" : "3.3.0"
+        "revision" : "bc1c29221f6dfeb0ebbfbc98eb95cd3d4967868e",
+        "version" : "3.4.0"
       }
     }
   ],
