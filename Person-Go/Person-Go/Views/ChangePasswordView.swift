@@ -1,4 +1,5 @@
 import SwiftUI
+import Supabase
 
 struct ChangePasswordView: View {
     @State private var currentPassword: String = ""
@@ -9,22 +10,21 @@ struct ChangePasswordView: View {
     @State private var isConfirmNewPasswordVisible: Bool = false
 
     var body: some View {
-        ScrollView { // Use ScrollView to make content start from the top
+        ScrollView {
             VStack(alignment: .leading, spacing: 20) {
                 Text("Password")
                     .font(.largeTitle)
                     .bold()
                     .foregroundColor(Color("Text"))
-                
                 Divider()
                     .frame(height: 2)
-                
                 PasswordField(title: "Current Password", text: $currentPassword, isPasswordVisible: $isCurrentPasswordVisible)
                 PasswordField(title: "New Password", text: $newPassword, isPasswordVisible: $isNewPasswordVisible)
                 PasswordField(title: "Confirm New Password", text: $confirmNewPassword, isPasswordVisible: $isConfirmNewPasswordVisible)
-
                 Button(action: {
-                    // Handle password reset
+                    Task {
+                        await updatePassword()
+                    }
                 }) {
                     Text("Reset Password")
                         .font(.title3)
@@ -40,7 +40,22 @@ struct ChangePasswordView: View {
         }
         .background(Color("Background"))
         .navigationTitle("Change Password")
-        .navigationBarTitleDisplayMode(.inline)  // Reduces top empty space
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private func updatePassword() async {
+        do {
+            let response: AnyJSON = try await supabase.functions
+                .invoke(
+                    "update-password",
+                    options: FunctionInvokeOptions(
+                        body: ["password": $newPassword.wrappedValue]
+                    )
+                )
+            print("response: \(response)")
+        } catch {
+            print("error: \(error)")
+        }
     }
 }
 
