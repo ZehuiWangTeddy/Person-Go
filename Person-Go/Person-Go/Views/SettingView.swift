@@ -1,6 +1,9 @@
 import SwiftUI
+import Supabase
 
 struct SettingView: View {
+    let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
+    
     @Environment(\.colorScheme) var colorScheme
     @State private var showLoginView = false
     @EnvironmentObject var userAuth: UserAuth
@@ -63,7 +66,9 @@ struct SettingView: View {
                         .padding(.horizontal)
                         
                         Button(action: {
-                            showLoginView = true
+                            Task {
+                                await signOut()
+                            }
                         }) {
                             Text("Log out")
                                 .font(.title3)
@@ -84,6 +89,17 @@ struct SettingView: View {
             }
         }
     }
+    
+    private func signOut() async {
+        do {
+            try await client.auth.signOut()
+            userAuth.isLoggedin = false
+            showLoginView = true
+        } catch {
+            print("error: \(error)")
+        }
+    }
+
 }
 
 #Preview {
