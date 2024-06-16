@@ -31,7 +31,7 @@ struct LaunchListView: View {
                 Divider()
                     .frame(height: 2)
                 
-                List(friends, id: \.id) { friend in
+                List(friends) { friend in
                     FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
                         .onTapGesture {
                             if self.selectedFriends.contains(friend.id) {
@@ -93,14 +93,16 @@ struct LaunchListView: View {
             friends.removeAll()
 
             // For each friend in the list, calculate the distance from the user's current location
-            for friend in friendsList {
-                if let latitude = friend.latitude, let longitude = friend.longitude {
-                    let friendLocation = CLLocation(latitude: latitude, longitude: longitude)
-                    let distance = locationManager.calculateDistance(from: locationManager.currentLocation!, to: friendLocation)
+            if let userLocation = locationManager.currentLocation {
+                for friend in friendsList {
+                    if let latitude = friend.latitude, let longitude = friend.longitude {
+                        let friendLocation = CLLocation(latitude: latitude, longitude: longitude)
+                        let distance = userLocation.distance(from: friendLocation) / 1000.0 // Convert to kilometers
 
-                    // Create a new Friend1 object with the calculated distance and add it to the friends array
-                    let newFriend = Friend1(name: friend.username ?? "", distance: distance, avatar: friend.avatarUrl ?? "sample")
-                    friends.append(newFriend)
+                        // Create a new Friend1 object with the calculated distance and add it to the friends array
+                        let newFriend = Friend1(name: friend.username ?? "", distance: distance, avatar: friend.avatarUrl ?? "sample")
+                        friends.append(newFriend)
+                    }
                 }
             }
         } catch {

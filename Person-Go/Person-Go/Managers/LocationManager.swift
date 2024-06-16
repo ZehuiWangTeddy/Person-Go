@@ -1,31 +1,48 @@
 import CoreLocation
+import Combine
 
-class LocationManager: NSObject, ObservableObject{
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let locationManager = CLLocationManager()
+    @Published var distanceMoved: Double = 0.0
+    @Published var currentLocation: CLLocation?
+    private var lastLocation: CLLocation?
+    @Published var isCalculatingDistance: Bool = false
 
-    override init(){
+    override init() {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = .fitness
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        locationManager.distanceFilter = 0.01  // meters
     }
 
-    var currentLocation: CLLocation? {
-        return locationManager.location
-    }
-
-    func calculateDistance(from userLocation: CLLocation, to friendLocation: CLLocation) -> Double {
-        let distanceInMeters = userLocation.distance(from: friendLocation)
-        let distanceInKilometers = distanceInMeters / 1000
-        return distanceInKilometers
-    }
-}
-
-extension LocationManager: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard !locations.isEmpty else { return }
-        locationManager.stopUpdatingLocation()
+        guard isCalculatingDistance, let newLocation = locations.last else { return }
+
+        if let lastLocation = lastLocation {
+            let distance = newLocation.distance(from: lastLocation)
+            distanceMoved += distance
+            print("Moved distance: \(distance) meters, Total distance: \(distanceMoved) meters")
+        } else {
+            print("Starting location tracking at: \(newLocation.coordinate)")
+        }
+
+        lastLocation = newLocation
+        currentLocation = newLocation
+    }
+
+    func resetDistanceMoved() {
+        distanceMoved = 0.0
+        lastLocation = currentLocation
+    }
+    
+    func startDistanceCalculation() {
+        isCalculatingDistance = true
+    }
+    
+    func stopDistanceCalculation() {
+        isCalculatingDistance = false
     }
 }
-
