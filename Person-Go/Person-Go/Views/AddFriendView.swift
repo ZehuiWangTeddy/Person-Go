@@ -8,8 +8,12 @@ struct User: Codable {
 
 struct AddFriendView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
-    
+
     @State private var email: String = ""
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.verticalSizeClass) var sizeClass
 
@@ -49,6 +53,9 @@ struct AddFriendView: View {
             .padding()
         }
         .background(Color("Background"))
+        .alert(isPresented: $showingAlert) {
+                Alert(title: Text(alertTitle), message: Text(alertMessage))
+            }
     }
 
     private func sendInvite() async {
@@ -63,8 +70,10 @@ struct AddFriendView: View {
                             options: FunctionInvokeOptions(body: ["email": email])
                         )
                     print("Invite sent: \(response)")
+                    showPopup(title: "Success", message: "An invite has been sent to the provided email address.")
                 } catch {
                     print("Error sending invite: \(error)")
+                    showPopup(title: "Error", message: "There was an error sending the invite. Please try again.")
                 }
             } else {
                 await addFriend(users: userData)
@@ -83,6 +92,7 @@ struct AddFriendView: View {
             return users
         } catch {
             print("Error fetching user data: \(error)")
+            showPopup(title: "Error", message: "There was an error fetching the user data. Please try again.")
             return nil
         }
     }
@@ -95,11 +105,22 @@ struct AddFriendView: View {
                     .rpc("add_friend", params: ["user_id_param": currentUserId, "friend_id_param": newFriendId])
                     .execute()
                 print("Successfully added friend")
+                showPopup(title: "Success", message: "The user has been successfully added as a friend.")
             } catch {
                 print("Error adding friend: \(error)")
+                showPopup(title: "Error", message: "There was an error adding the user as a friend. Please try again.")
             }
         } else {
             print("No user data provided")
+            showPopup(title: "Error", message: "No user data was provided to add as a friend.")
+        }
+    }
+
+    private func showPopup(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.alertTitle = title
+            self.alertMessage = message
+            self.showingAlert = true
         }
     }
 }
