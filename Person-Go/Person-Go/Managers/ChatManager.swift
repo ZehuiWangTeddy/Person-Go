@@ -2,15 +2,15 @@ import Foundation
 import Supabase
 
 let encoder: JSONEncoder = {
-  let encoder = PostgrestClient.Configuration.jsonEncoder
-  encoder.keyEncodingStrategy = .convertToSnakeCase
-  return encoder
+    let encoder = PostgrestClient.Configuration.jsonEncoder
+    encoder.keyEncodingStrategy = .convertToSnakeCase
+    return encoder
 }()
 
 let decoder: JSONDecoder = {
-  let decoder = PostgrestClient.Configuration.jsonDecoder
-  decoder.keyDecodingStrategy = .convertFromSnakeCase
-  return decoder
+    let decoder = PostgrestClient.Configuration.jsonDecoder
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
+    return decoder
 }()
 
 class ChatManager: NSObject, ObservableObject{
@@ -36,7 +36,7 @@ class ChatManager: NSObject, ObservableObject{
         isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
         
         var date = isoDateFormatter.date(from: dateString)
-   
+        
         if date == nil {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -56,7 +56,7 @@ class ChatManager: NSObject, ObservableObject{
         do {
             let data: [Friend] = try await client.from("friends_with_total_inventories")
                 .select(
-                 "*, profiles(*)")
+                    "*, profiles(*)")
                 .eq("user_id", value: currentUser.id)
                 .order("total_unread", ascending: false)
                 .order("total_inventory", ascending: false)
@@ -75,10 +75,10 @@ class ChatManager: NSObject, ObservableObject{
         
         do {
             let friends: [FriendInfo] = try await client.from("friends_with_different_inventories")
-              .select()
-              .eq("id", value: id)
-              .execute()
-              .value
+                .select()
+                .eq("id", value: id)
+                .execute()
+                .value
             
             guard !friends.isEmpty else {
                 return nil
@@ -89,13 +89,13 @@ class ChatManager: NSObject, ObservableObject{
             return nil
         }
     }
-
+    
     func fetchMessages(currentUser: Supabase.User, friendId: UUID) async -> [ChatMessage] {
         print("load messages... \(friendId) with \(currentUser.id)")
         do {
             let messages: [Message] = try await client.from("chats")
                 .select(
-                 "*")
+                    "*")
                 .in("sent_id", values: [currentUser.id, friendId])
                 .in("receiver_id", values: [currentUser.id, friendId])
                 .order("sent_at", ascending: true)
@@ -141,25 +141,25 @@ class ChatManager: NSObject, ObservableObject{
     
     func sendMessage(sentId: UUID, receiverId: UUID, content: String) async throws -> Message {
         let now = Date()
-
+        
         // let dateFormatter = ISO8601DateFormatter()
         // dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]// ISO 8601格式
         // dateFormatter.timeZone = TimeZone.current
-
+        
         // timestamptz time with current phone timezone
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         dateFormatter.timeZone = TimeZone.current
-
+        
         let dateString = dateFormatter.string(from: now)
         let message = MessageSenderStruct(message: content, sentId: sentId, receiverId: receiverId, sentAt: dateString)
         
         return try await client.from("chats")
-                 .insert(message)
-                 .select()
-                 .single()
-                 .execute()
-                 .value
+            .insert(message)
+            .select()
+            .single()
+            .execute()
+            .value
     }
     
     func clearChannel() {
@@ -193,7 +193,7 @@ class ChatManager: NSObject, ObservableObject{
         let sortedUUIDs = [u1.uuidString, u2.uuidString].sorted().joined(separator: "-")
         
         let channelName = "Channel-\(sortedUUIDs)"
-    
+        
         return channelName
     }
     
@@ -201,15 +201,15 @@ class ChatManager: NSObject, ObservableObject{
         
         do {
             let publicURL = try client.storage
-              .from("avatars")
-              .getPublicURL(
-                path: path
-//                ,options: TransformOptions(
-//                  width: 50,
-//                  height: 50
-//                )
-              )
-
+                .from("avatars")
+                .getPublicURL(
+                    path: path
+                    //                ,options: TransformOptions(
+                    //                  width: 50,
+                    //                  height: 50
+                    //                )
+                )
+            
             return publicURL
         } catch {
             return URL(string: "https://ecqmicvfzypcomzptfbt.supabase.co/storage/v1/object/public/avatars/userprofile.png?t=2024-05-20T18%3A06%3A06.725Z")!

@@ -26,7 +26,7 @@ struct ChatBubbleView: View {
     var chatManager = ChatManager()
     
     func formattime(dateString: String) -> String {
-        // 创建一个 ISO8601DateFormatter 用于解析 ISO 8601 格式的日期字符串
+        // Create an ISO8601DateFormatter for parsing a date string in ISO 8601 format
         
         let date = chatManager.parseDate(dateString: dateString)
         guard date != nil else {
@@ -93,8 +93,8 @@ struct ChatBubbleView: View {
             HStack(alignment: .center) {
                 Spacer()
                 Text(self.formattime(dateString: message.message.sentAt))
-//                    .foregroundColor(.white)
-//                    .background(Color(red: 128 / 255, green: 128 / 255, blue: 128 / 255))
+                //                    .foregroundColor(.white)
+                //                    .background(Color(red: 128 / 255, green: 128 / 255, blue: 128 / 255))
                     .padding()
                 Spacer()
             }

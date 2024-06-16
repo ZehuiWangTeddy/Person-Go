@@ -8,15 +8,15 @@ struct User: Codable {
 
 struct InviteFriendView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
-
+    
     @State private var email: String = ""
     @State private var showingAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
-
+    
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.verticalSizeClass) var sizeClass
-
+    
     var body: some View {
         GeometryReader { geometry in
             VStack() {
@@ -54,13 +54,13 @@ struct InviteFriendView: View {
         }
         .background(Color("Background"))
         .alert(isPresented: $showingAlert) {
-                Alert(title: Text(alertTitle), message: Text(alertMessage))
-            }
+            Alert(title: Text(alertTitle), message: Text(alertMessage))
+        }
     }
-
+    
     private func sendInvite() async {
         let email = $email.wrappedValue
-
+        
         if let userData = await getUser(email: email) {
             if userData.isEmpty {
                 do {
@@ -80,7 +80,7 @@ struct InviteFriendView: View {
             }
         }
     }
-
+    
     private func getUser(email: String) async -> [User]? {
         do {
             let users: [User] = try await supabase
@@ -96,7 +96,7 @@ struct InviteFriendView: View {
             return nil
         }
     }
-
+    
     private func addFriend(users: [User]) async {
         let currentUserId: UUID = supabase.auth.currentUser!.id;
         if let newFriendId = users.first?.id {
@@ -115,7 +115,7 @@ struct InviteFriendView: View {
             showPopup(title: "Error", message: "No user data was provided to add as a friend.")
         }
     }
-
+    
     private func showPopup(title: String, message: String) {
         DispatchQueue.main.async {
             self.alertTitle = title

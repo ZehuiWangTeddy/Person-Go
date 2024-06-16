@@ -16,7 +16,7 @@ struct SearchFriendsView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = "Info"
-
+    
     var body: some View {
         GeometryReader { geometry in
             VStack() {
@@ -71,7 +71,7 @@ struct SearchFriendsView: View {
             )
         }
     }
-
+    
     private func addFriend() async -> Bool {
         let friend = await userManager.findUserByEmail(email: self.email)
         guard friend != nil else {
@@ -112,3 +112,4 @@ struct SearchFriendsView: View {
 #Preview {
     SearchFriendsView()
 }
+
