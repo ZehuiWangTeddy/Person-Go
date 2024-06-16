@@ -20,7 +20,6 @@
 		36B2188C2BE91F3600CAE5AB /* PasswordResetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */; };
 		36B2188D2BE91F3600CAE5AB /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218802BE91F3600CAE5AB /* MapView.swift */; };
 		36B2188E2BE91F3600CAE5AB /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218812BE91F3600CAE5AB /* SecurityView.swift */; };
-		36B2188F2BE91F3600CAE5AB /* InviteFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218822BE91F3600CAE5AB /* InviteFriendsView.swift */; };
 		36B218902BE91F3600CAE5AB /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218832BE91F3600CAE5AB /* FriendProfileView.swift */; };
 		36B218912BE91F3600CAE5AB /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218842BE91F3600CAE5AB /* LoginView.swift */; };
 		36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218852BE91F3600CAE5AB /* RegistrationView.swift */; };
@@ -41,7 +40,7 @@
 		79641E7B2C092016006C6F3B /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7A2C092016006C6F3B /* AccountView.swift */; };
 		79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7C2C092028006C6F3B /* ChangeEmailView.swift */; };
 		79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE802C16526300A33023 /* FriendInfo.swift */; };
-		79D9AE832C16529B00A33023 /* SearchFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* SearchFriendView.swift */; };
+		79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* AddFriendView.swift */; };
 		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
 		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
@@ -75,7 +74,6 @@
 		36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordResetView.swift; sourceTree = "<group>"; };
 		36B218802BE91F3600CAE5AB /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		36B218812BE91F3600CAE5AB /* SecurityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
-		36B218822BE91F3600CAE5AB /* InviteFriendsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendsView.swift; sourceTree = "<group>"; };
 		36B218832BE91F3600CAE5AB /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		36B218842BE91F3600CAE5AB /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		36B218852BE91F3600CAE5AB /* RegistrationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
@@ -99,7 +97,7 @@
 		79D9AE7E2C16522B00A33023 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		79D9AE7F2C16524100A33023 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		79D9AE802C16526300A33023 /* FriendInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendInfo.swift; path = "Person-Go/Model/FriendInfo.swift"; sourceTree = SOURCE_ROOT; };
-		79D9AE822C16529B00A33023 /* SearchFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendView.swift; sourceTree = "<group>"; };
+		79D9AE822C16529B00A33023 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		79F660CB2BFBA2D800B28D79 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		79F660CD2BFBA84500B28D79 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		79F660CF2BFBA87000B28D79 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -237,6 +235,7 @@
 			children = (
 				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
 				79641E7A2C092016006C6F3B /* AccountView.swift */,
+				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				36B218892BE91F3600CAE5AB /* AuthenticationView.swift */,
 				79641E7C2C092028006C6F3B /* ChangeEmailView.swift */,
 				79641E762C091FEE006C6F3B /* ChangePasswordView.swift */,
@@ -245,7 +244,6 @@
 				79641E782C091FF8006C6F3B /* EditProfileView.swift */,
 				36B218832BE91F3600CAE5AB /* FriendProfileView.swift */,
 				36B2188A2BE91F3600CAE5AB /* InventoryView.swift */,
-				36B218822BE91F3600CAE5AB /* InviteFriendsView.swift */,
 				7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */,
 				36B218842BE91F3600CAE5AB /* LoginView.swift */,
 				36B218802BE91F3600CAE5AB /* MapView.swift */,
@@ -254,7 +252,6 @@
 				36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */,
 				36B218882BE91F3600CAE5AB /* ProflieView.swift */,
 				36B218852BE91F3600CAE5AB /* RegistrationView.swift */,
-				79D9AE822C16529B00A33023 /* SearchFriendView.swift */,
 				36B218812BE91F3600CAE5AB /* SecurityView.swift */,
 				36B218872BE91F3600CAE5AB /* SettingView.swift */,
 			);
@@ -363,8 +360,7 @@
 				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
-				79D9AE832C16529B00A33023 /* SearchFriendView.swift in Sources */,
-				36B2188F2BE91F3600CAE5AB /* InviteFriendsView.swift in Sources */,
+				79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
 				79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */,
 				79F660D22BFBA93200B28D79 /* Profile.swift in Sources */,
