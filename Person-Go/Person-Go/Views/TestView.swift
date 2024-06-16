@@ -10,11 +10,12 @@ struct TestView: View {
     @State private var showAdditionalButtonMedium = false
     @State private var showAdditionalButtonLarge = false
     @State private var showCelebration = false
+    @State private var celebrationGif: String?
 
     let missileData = [
-        ("Quickstrike", "Walk 50m", "quickstrike.gif", "small"),
-        ("Blaze Rocket", "Walk 100m", "blaze_rocket.gif", "medium"),
-        ("Phoenix Inferno", "Walk 150m", "phoenix_inferno.gif", "large")
+        ("Quickstrike", "Walk 50m", "quickstrike.gif", "small", "Quickstrike_walking.gif"),
+        ("Blaze Rocket", "Walk 100m", "blaze_rocket.gif", "medium", "Blaze_rocket_walking.gif"),
+        ("Phoenix Inferno", "Walk 150m", "phoenix_inferno.gif", "large", "Phoenix_inferno_walking.gif")
     ]
 
     var body: some View {
@@ -42,7 +43,7 @@ struct TestView: View {
                                     .padding()
                                     .foregroundColor(Color("Text"))
 
-                                ForEach(missileData, id: \.0) { missile, distance, imageName, itemType in
+                                ForEach(missileData, id: \.0) { missile, distance, imageName, itemType, _ in
                                     Button(action: {
                                         selectedItemType = itemType
                                         locationManager.resetDistanceMoved()
@@ -69,10 +70,11 @@ struct TestView: View {
                                     }
                                 }
                             } else {
+                                displayGif()
                                 if selectedItemType == "small" && showAdditionalButtonSmall {
                                     Button(action: {
                                         Task {
-                                            await claimMissile(item: "small", imageName: "quickstrike.gif", message: "Quickstrike")
+                                            await claimMissile(item: "small", imageName: "quickstrike.gif", message: "Quickstrike", celebrationGif: "Quickstrike_celebration.gif")
                                         }
                                     }) {
                                         HStack {
@@ -99,7 +101,7 @@ struct TestView: View {
                                 if selectedItemType == "medium" && showAdditionalButtonMedium {
                                     Button(action: {
                                         Task {
-                                            await claimMissile(item: "medium", imageName: "blaze_rocket.gif", message: "Blaze Rocket")
+                                            await claimMissile(item: "medium", imageName: "blaze_rocket.gif", message: "Blaze Rocket", celebrationGif: "Blaze_rocket_celebration.gif")
                                         }
                                     }) {
                                         HStack {
@@ -126,7 +128,7 @@ struct TestView: View {
                                 if selectedItemType == "large" && showAdditionalButtonLarge {
                                     Button(action: {
                                         Task {
-                                            await claimMissile(item: "large", imageName: "phoenix_inferno.gif", message: "Phoenix Inferno")
+                                            await claimMissile(item: "large", imageName: "phoenix_inferno.gif", message: "Phoenix Inferno", celebrationGif: "Phoenix_inferno_celebration.gif")
                                         }
                                     }) {
                                         HStack {
@@ -169,10 +171,15 @@ struct TestView: View {
                             .font(.largeTitle)
                             .bold()
                             .foregroundColor(.white)
-                            .padding()
-                            .background(Color.green)
-                            .cornerRadius(10)
-                            .transition(.scale)
+                            .padding(.bottom, 10)
+
+                        if let celebrationGif = celebrationGif {
+                            AnimatedImage(name: celebrationGif)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 200, height: 200)
+                                .padding()
+                        }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.black.opacity(0.5))
@@ -210,6 +217,27 @@ struct TestView: View {
         }
     }
 
+    private func displayGif() -> some View {
+        let gifName: String
+        switch selectedItemType {
+        case "small":
+            gifName = "Quickstrike_walking.gif"
+        case "medium":
+            gifName = "Blaze_rocket_walking.gif"
+        case "large":
+            gifName = "Phoenix_inferno_walking.gif"
+        default:
+            gifName = ""
+        }
+        return gifName.isEmpty ? AnyView(EmptyView()) : AnyView(
+            AnimatedImage(name: gifName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200, height: 200)
+                .padding()
+        )
+    }
+
     func incrementInventoryItemForUser(userId: UUID, item: String) async -> Bool {
         do {
             let success = try await incrementInventoryItem(for: userId, item: item)
@@ -235,15 +263,17 @@ struct TestView: View {
         }
     }
 
-    func claimMissile(item: String, imageName: String, message: String) async {
+    func claimMissile(item: String, imageName: String, message: String, celebrationGif: String) async {
         let success = await incrementInventoryItemForUser(userId: userId, item: item)
         if success {
             withAnimation {
+                self.celebrationGif = celebrationGif
                 showCelebration = true
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation {
                     showCelebration = false
+                    self.celebrationGif = nil
                 }
             }
         }
