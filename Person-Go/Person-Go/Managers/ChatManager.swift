@@ -31,6 +31,21 @@ class ChatManager: NSObject, ObservableObject{
         super.init()
     }
     
+    func parseDate(dateString: String) -> Date? {
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        
+        var date = isoDateFormatter.date(from: dateString)
+   
+        if date == nil {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+            date = dateFormatter.date(from: dateString)
+        }
+        
+        return date
+    }
+    
     func getClient() -> SupabaseClient {
         return client
     }
@@ -77,7 +92,6 @@ class ChatManager: NSObject, ObservableObject{
 
     func fetchMessages(currentUser: Supabase.User, friendId: UUID) async -> [ChatMessage] {
         print("load messages... \(friendId) with \(currentUser.id)")
-        
         do {
             let messages: [Message] = try await client.from("chats")
                 .select(
@@ -90,12 +104,17 @@ class ChatManager: NSObject, ObservableObject{
             
             var cmessages: [ChatMessage] = []
             
-            for message in messages {
-                cmessages.append(ChatMessage(message: message))
+            for (index, message) in messages.enumerated() {
+                cmessages.append(ChatMessage(message: message, type: .message))
+                if (index + 1) % 5 == 0 {
+                    cmessages.append(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: message.sentAt), type: .system))
+                }
             }
             
             if !cmessages.isEmpty {
                 await updateMessageAsReaded(lastMessageId: messages.last!.messageId, from: friendId, to: currentUser.id)
+                
+                cmessages.insert(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: messages.first!.sentAt), type: .system), at: 0)
             }
             
             return cmessages
@@ -122,11 +141,17 @@ class ChatManager: NSObject, ObservableObject{
     
     func sendMessage(sentId: UUID, receiverId: UUID, content: String) async throws -> Message {
         let now = Date()
-        let formatter = DateFormatter()
-        formatter.timeZone = TimeZone.current
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-        let dateString = formatter.string(from: now)
+        // let dateFormatter = ISO8601DateFormatter()
+        // dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]// ISO 8601格式
+        // dateFormatter.timeZone = TimeZone.current
+
+        // timestamptz time with current phone timezone
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.timeZone = TimeZone.current
+
+        let dateString = dateFormatter.string(from: now)
         let message = MessageSenderStruct(message: content, sentId: sentId, receiverId: receiverId, sentAt: dateString)
         
         return try await client.from("chats")

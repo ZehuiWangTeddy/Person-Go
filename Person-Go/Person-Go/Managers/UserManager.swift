@@ -3,6 +3,7 @@ import Supabase
 
 class UserManager: NSObject, ObservableObject{
     
+    protocol AnyType {}
     
     let client = SupabaseClient(
         supabaseURL: URL(string: "https://" + apiUrl)!,
@@ -59,6 +60,91 @@ class UserManager: NSObject, ObservableObject{
             print(error)
 //            return nil
             
+            return false
+        }
+    }
+    
+    func checkUserNameIsAvaliable(name: String) async -> Bool {
+        do {
+            let data: [Profile] = try await client
+                .from("profiles")
+                .select()
+                .eq("username", value: name)
+                .execute()
+                .value
+            
+            if (data.isEmpty) {
+                return true
+            }
+            
+            return false
+        } catch {
+            print(error)
+            return false
+        }
+    }
+    
+    func findUserByEmail(email: String) async -> UUID? {
+        do {
+            let data: [Profile] = try await client
+                .from("users_view")
+                .select("id")
+                .eq("email", value: email)
+                .execute()
+                .value
+            
+            if (data.isEmpty) {
+                return nil
+            }
+            
+            return data.first?.id
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func isFriendAlready(user: UUID, friend: UUID) async -> Bool {
+        do {
+            let data: [Profile] = try await client
+                .from("friends")
+                .select("id")
+                .eq("user_id", value: user)
+                .eq("friend_id", value: friend)
+                .execute()
+                .value
+            
+            if (data.isEmpty) {
+                return false
+            }
+            
+            return true
+        } catch {
+            print(error)
+            return true
+        }
+    }
+    
+    func addFriendShip(user: UUID, friend: UUID) async -> Bool {
+        struct FriendShip :Encodable {
+            let userId: UUID
+            let friendId: UUID
+        }
+        
+        let friendships = [
+            FriendShip(userId: user, friendId: friend),
+            FriendShip(userId: friend, friendId: user),
+        ]
+
+        do {
+            try await supabase
+                .from("friends")
+                .insert(friendships)
+                .execute()
+            
+            return true
+        } catch {
+            print(error)
             return false
         }
     }

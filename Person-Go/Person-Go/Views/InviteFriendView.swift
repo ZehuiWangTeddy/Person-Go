@@ -6,7 +6,7 @@ struct User: Codable {
     let email: String
 }
 
-struct AddFriendView: View {
+struct InviteFriendView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
 
     @State private var email: String = ""
@@ -125,6 +125,3 @@ struct AddFriendView: View {
     }
 }
 
-#Preview {
-    AddFriendView()
-}
