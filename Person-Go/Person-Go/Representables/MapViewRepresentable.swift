@@ -5,6 +5,7 @@ struct MapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
     let locationManager = LocationManager()
     @State var mapRegion = MKCoordinateRegion()
+    var polylines: [String: MKPolyline] = [:]
 
     func makeUIView(context: Context) -> MKMapView {
         mapView.delegate = context.coordinator
@@ -29,13 +30,24 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.addAnnotation(annotation)
     }
 
-    func drawFlightPath(to destination: CLLocationCoordinate2D) {
+    mutating func drawFlightPath(to destination: CLLocationCoordinate2D, color: UIColor, identifier: String) {
         guard let sourceLocation = locationManager.currentLocation else {
             return
         }
         let sourceCoordinate = sourceLocation.coordinate
-        let polyline = MKPolyline(coordinates: [sourceCoordinate, destination], count: 2)
+        let polyline = ColoredPolyline(coordinates: [sourceCoordinate, destination], count: 2)
+        polyline.color = color
         mapView.addOverlay(polyline)
+        polylines[identifier] = polyline
+        print(identifier + " added to map")
+    }
+
+    mutating func removePolyline(identifier: String) {
+        if let polyline = polylines[identifier] {
+            mapView.removeOverlay(polyline)
+            polylines.removeValue(forKey: identifier)
+            print(identifier + " removed from map")
+        }
     }
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -45,7 +57,7 @@ struct MapViewRepresentable: UIViewRepresentable {
             renderer.lineDashPattern = [2, 5] // Make the line dashed
             renderer.lineWidth = 2
             return renderer
-            
+
         } else if overlay is MKCircle {
             let renderer = MKCircleRenderer(overlay: overlay)
             renderer.fillColor = UIColor.red.withAlphaComponent(0.1)
@@ -56,8 +68,9 @@ struct MapViewRepresentable: UIViewRepresentable {
         return MKOverlayRenderer()
     }
 }
+
 extension MapViewRepresentable {
-    class MapCoordinator: NSObject, MKMapViewDelegate{
+    class MapCoordinator: NSObject, MKMapViewDelegate {
         let parent: MapViewRepresentable
         @State private var mapRegion = MKCoordinateRegion()
 
@@ -67,9 +80,9 @@ extension MapViewRepresentable {
         }
 
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            if overlay is MKPolyline {
-                let renderer = MKPolylineRenderer(overlay: overlay)
-                renderer.strokeColor = .red // Change the color to red
+            if let coloredPolyline = overlay as? ColoredPolyline {
+                let renderer = MKPolylineRenderer(overlay: coloredPolyline)
+                renderer.strokeColor = coloredPolyline.color ?? .red // Use the color of the polyline if it's set, otherwise default to red
                 renderer.lineDashPattern = [2, 5] // Make the line dashed
                 renderer.lineWidth = 2
                 return renderer
@@ -98,7 +111,9 @@ extension MapViewRepresentable {
                 annotationView?.annotation = timerAnnotation
             }
 
-            annotationView?.subviews.forEach { $0.removeFromSuperview() }
+            annotationView?.subviews.forEach {
+                $0.removeFromSuperview()
+            }
 
             let label = UILabel()
             label.text = timerAnnotation.title
@@ -117,9 +132,15 @@ extension MapViewRepresentable {
         }
 
         func zoomIn() {
-            guard let userLocation = parent.locationManager.currentLocation else { return }
+            guard let userLocation = parent.locationManager.currentLocation else {
+                return
+            }
             let zoomedRegion = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             parent.mapView.setRegion(zoomedRegion, animated: true)
-}
+        }
     }
+}
+
+class ColoredPolyline: MKPolyline {
+    var color: UIColor?
 }

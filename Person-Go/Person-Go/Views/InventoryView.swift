@@ -11,6 +11,12 @@ struct InventoryView: View {
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
     @State private var inventory: Inventory? // State to store the fetched inventory data
+    @EnvironmentObject var userAuth: UserAuth
+
+    var user_id: String {
+        return userAuth.user!.id.uuidString
+    }
+
 
     let missileData = [
         ("Quickstrike", "5km", "quickstrike.gif"),
@@ -23,80 +29,80 @@ struct InventoryView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
                     Text("Inventory")
-                        .font(.largeTitle)
-                        .bold()
-                        .padding(.bottom, 0)
-                        .foregroundColor(Color("Text"))
+                            .font(.largeTitle)
+                            .bold()
+                            .padding(.bottom, 0)
+                            .foregroundColor(Color("Text"))
                     Divider()
-                        .frame(height: 2)
-                    
+                            .frame(height: 2)
+
                     VStack(alignment: .leading) {
                         ForEach(missileData, id: \.0) { missile, range, imageName in
                             HStack {
                                 missileImage(imageName: imageName)
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
-                                    .padding(.trailing, 8)
+                                        .frame(width: 50, height: 50)
+                                        .clipShape(Circle())
+                                        .padding(.trailing, 8)
                                 VStack(alignment: .leading) {
                                     Text(missile)
-                                        .font(.title2)
-                                        .foregroundColor(Color("Text"))
+                                            .font(.title2)
+                                            .foregroundColor(Color("Text"))
                                     Text("Impact Range: \(range)")
-                                        .font(.subheadline)
-                                        .foregroundColor(.secondary)
+                                            .font(.subheadline)
+                                            .foregroundColor(.secondary)
                                 }
                                 Spacer()
                                 Text("\(inventoryValue(for: missile))")
-                                    .font(.title2)
-                                    .foregroundColor(Color("Text"))
+                                        .font(.title2)
+                                        .foregroundColor(Color("Text"))
                             }
-                            .padding()
-                            .background(self.selectedSize == missile ? Color.gray.opacity(0.2) : Color.clear)
-                            .cornerRadius(8)
-                            .onTapGesture {
-                                self.selectedSize = missile
-                            }
+                                    .padding()
+                                    .background(self.selectedSize == missile ? Color.gray.opacity(0.2) : Color.clear)
+                                    .cornerRadius(8)
+                                    .onTapGesture {
+                                        self.selectedSize = missile
+                                    }
                             Divider()
                         }
                     }
-                    .padding(.horizontal)
-                    
+                            .padding(.horizontal)
+
                     Button(action: {
                         if selectedSize != nil {
                             navigateToLaunchListView = true
                         }
                     }) {
                         Text("Launch")
-                            .font(.title3)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(selectedSize != nil ? Color("Primary") : Color.gray)
-                            .foregroundColor(Color("Text"))
-                            .cornerRadius(10)
+                                .font(.title3)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(selectedSize != nil ? Color("Primary") : Color.gray)
+                                .foregroundColor(Color("Text"))
+                                .cornerRadius(10)
                     }
-                    .padding(.top, 40)
-                    .disabled(selectedSize == nil)
+                            .padding(.top, 40)
+                            .disabled(selectedSize == nil)
                 }
-                .padding()
+                        .padding()
             }
-            .background(Color("Background"))
-            .navigationBarItems(trailing: Button(action: {
-                navigateToMissileMapView = true
-            }) {
-                Text("Add Missile")
-                    .foregroundColor(Color("Primary"))
-            })
-            .navigationDestination(isPresented: $navigateToLaunchListView) {
-                LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
-            }
-            .navigationDestination(isPresented: $navigateToMissileMapView) {
-                MissileMapView()
-            }
-            .onAppear {
-                Task {
-                    inventory = await fetchInventory(for: UUID(uuidString: user_id)!)
-                }
-            }
+                    .background(Color("Background"))
+                    .navigationBarItems(trailing: Button(action: {
+                        navigateToMissileMapView = true
+                    }) {
+                        Text("Add Missile")
+                                .foregroundColor(Color("Primary"))
+                    })
+                    .navigationDestination(isPresented: $navigateToLaunchListView) {
+                        LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
+                    }
+                    .navigationDestination(isPresented: $navigateToMissileMapView) {
+                        MissileMapView()
+                    }
+                    .onAppear {
+                        Task {
+                            inventory = await fetchInventory(for: UUID(uuidString: user_id)!)
+                        }
+                    }
         }
     }
 
@@ -112,16 +118,16 @@ struct InventoryView: View {
             return 0
         }
     }
-    
+
     private func missileImage(imageName: String) -> some View {
         if let _ = Bundle.main.path(forResource: imageName, ofType: nil) {
             return AnyView(AnimatedImage(name: imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit))
+                    .resizable()
+                    .aspectRatio(contentMode: .fit))
         } else {
             return AnyView(Text("Image not found")
-                .foregroundColor(.red)
-                .frame(width: 50, height: 50))
+                    .foregroundColor(.red)
+                    .frame(width: 50, height: 50))
         }
     }
 }

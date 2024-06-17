@@ -21,6 +21,23 @@ public struct Location: Codable {
     }
 }
 
+public struct LaunchView: Codable {
+    var user_id: UUID?
+    var target_id: UUID?
+    var longitude: Double?
+    var latitude: Double?
+    var username: String?
+    var launcy_type: String?
+
+    enum CodingKeys: String, CodingKey {
+        case user_id
+        case target_id
+        case longitude
+        case latitude
+        case username
+        case launcy_type
+    }
+}
 
 public func fetchLocation() async -> [Location] {
     do {
@@ -33,5 +50,66 @@ public func fetchLocation() async -> [Location] {
     } catch {
         print("Failed to decode: \(error)")
         return []
+    }
+}
+
+public func fetchSenderLocation(receiverId: UUID) async -> [LaunchView] {
+    do {
+        let launches: [LaunchView] = try await supabase
+                .from("launch_view")
+                .select()
+                .eq("target_id", value: receiverId)
+                .execute()
+                .value
+        return launches
+    } catch {
+        print("Failed to decode: \(error)")
+        return []
+    }
+}
+
+struct AnyEncodable: Encodable {
+    let value: Encodable
+
+    init(_ value: Encodable) {
+        self.value = value
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try value.encode(to: encoder)
+    }
+}
+
+public struct launchData: Codable {
+    var user_id: UUID?
+    var target_id: UUID?
+    var launch_type: String?
+}
+
+
+public func insertLaunch(user_id: UUID, target_id: UUID, launch_type: String) async {
+    do {
+        let _ = try await supabase
+                .from("launches")
+                .insert(launchData(user_id: user_id, target_id: target_id, launch_type: launch_type))
+                .execute()
+                .value
+        print("Launch inserted successfully")
+    } catch {
+        print("Failed to insert launch: \(error)")
+    }
+}
+
+public func deleteLaunch(launch_id: Int) async {
+    do {
+        let _ = try await supabase
+                .from("launches")
+                .delete()
+                .eq("launch_id", value: launch_id)
+                .execute()
+        print("Launch deleted successfully")
+    } catch {
+        print("Failed to delete launch: \(error)")
     }
 }
