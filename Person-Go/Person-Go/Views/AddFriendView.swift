@@ -1,21 +1,25 @@
 import SwiftUI
 import Supabase
 
-struct User: Codable {
-    let id: UUID
-    let email: String
+enum AddFriendError: Error {
+    case userNotFound
+    case alreadyFriends
+    case unknownError
+    case emptyField
 }
 
 struct AddFriendView: View {
+    @Environment(\.presentationMode) var presentationMode
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
+    @EnvironmentObject var userAuth: UserAuth
+
+    let userManager = UserManager()
 
     @State private var email: String = ""
     @State private var showingAlert = false
+    @State private var showingChoice = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
-
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.verticalSizeClass) var sizeClass
 
     var body: some View {
         GeometryReader { geometry in
@@ -38,7 +42,7 @@ struct AddFriendView: View {
                 Spacer().frame(height: 40)
                 Button(action: {
                     Task {
-                        await sendInvite()
+                        await addFriend()
                     }
                 }, label: {
                     Text("Add")
@@ -54,65 +58,76 @@ struct AddFriendView: View {
         }
         .background(Color("Background"))
         .alert(isPresented: $showingAlert) {
+            if showingChoice {
+                Alert(title: Text(alertTitle), message: Text(alertMessage), primaryButton: .default(Text("Send Invite"), action: {
+                    Task {
+                        await sendInvite()
+                        self.showingChoice = false
+                    }
+                }), secondaryButton: .cancel(Text("Cancel"), action: {
+                    print("cancel")
+                    self.showingChoice = false
+                }))
+            } else {
                 Alert(title: Text(alertTitle), message: Text(alertMessage))
             }
+        }
+    }
+
+    private func addFriend() async {
+        do {
+            guard !email.isEmpty else {
+                throw AddFriendError.emptyField
+            }
+
+            guard let friend = try await userManager.findUserByEmail(email: self.email) else {
+                throw AddFriendError.userNotFound
+            }
+
+            if try await userManager.isFriendAlready(user: userAuth.user!.id, friend: friend) {
+                throw AddFriendError.alreadyFriends
+            }
+
+            let success = try await userManager.addFriendShip(user: userAuth.user!.id, friend: friend)
+            if !success {
+                throw AddFriendError.unknownError
+            }
+
+            showPopup(title: "Success", message: "Friend added!")
+        } catch let error as AddFriendError {
+            handleAddFriendError(error) 
+        } catch {
+            print("Unexpected error: \(error.localizedDescription)")
+            showPopup(title: "Error", message: "An unexpected error occurred.")
+        }
+    }
+
+    private func handleAddFriendError(_ error: AddFriendError) {
+        switch error {
+        case .emptyField:
+            showPopup(title: "Empty Field", message: "Please enter an email address")
+        case .userNotFound:
+            showChoice(title: "User not found", message: "No user with this email exists. Do you want to invite them?")
+        case .alreadyFriends:
+            showPopup(title: "Error", message: "You're already friends.")
+        case .unknownError:
+            showPopup(title: "Error", message: "An error occurred while adding the friend.")
+        }
     }
 
     private func sendInvite() async {
-        let email = $email.wrappedValue
-
-        if let userData = await getUser(email: email) {
-            if userData.isEmpty {
-                do {
-                    let response: AnyJSON = try await supabase.functions
-                        .invoke(
-                            "send-invite",
-                            options: FunctionInvokeOptions(body: ["email": email])
-                        )
-                    print("Invite sent: \(response)")
-                    showPopup(title: "Success", message: "An invite has been sent to the provided email address.")
-                } catch {
-                    print("Error sending invite: \(error)")
-                    showPopup(title: "Error", message: "There was an error sending the invite. Please try again.")
-                }
-            } else {
-                await addFriend(users: userData)
-            }
-        }
-    }
-
-    private func getUser(email: String) async -> [User]? {
         do {
-            let users: [User] = try await supabase
-                .from("users")
-                .select("id, email")
-                .eq("email", value: email)
-                .execute()
-                .value
-            return users
+            let response: AnyJSON = try await supabase
+                .functions
+                .invoke(
+                    "send-invite",
+                    options: FunctionInvokeOptions(body: ["email": email])
+                )
+            print("Invite sent: \(response)")
+            showPopup(title: "Success", message: "An invite has been sent to the provided email address.")
         } catch {
-            print("Error fetching user data: \(error)")
-            showPopup(title: "Error", message: "There was an error fetching the user data. Please try again.")
-            return nil
-        }
-    }
-
-    private func addFriend(users: [User]) async {
-        let currentUserId: UUID = supabase.auth.currentUser!.id;
-        if let newFriendId = users.first?.id {
-            do {
-                try await supabase
-                    .rpc("add_friend", params: ["user_id_param": currentUserId, "friend_id_param": newFriendId])
-                    .execute()
-                print("Successfully added friend")
-                showPopup(title: "Success", message: "The user has been successfully added as a friend.")
-            } catch {
-                print("Error adding friend: \(error)")
-                showPopup(title: "Error", message: "There was an error adding the user as a friend. Please try again.")
-            }
-        } else {
-            print("No user data provided")
-            showPopup(title: "Error", message: "No user data was provided to add as a friend.")
+            print("Error sending invite: \(error)")
+            showPopup(title: "Error", message: "There was an error sending the invite. Please try again.")
         }
     }
 
@@ -122,6 +137,11 @@ struct AddFriendView: View {
             self.alertMessage = message
             self.showingAlert = true
         }
+    }
+
+    private func showChoice(title: String, message: String) {
+        self.showingChoice = true
+        showPopup(title: title, message: message)
     }
 }
 
