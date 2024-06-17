@@ -40,8 +40,7 @@
 		79641E7B2C092016006C6F3B /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7A2C092016006C6F3B /* AccountView.swift */; };
 		79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7C2C092028006C6F3B /* ChangeEmailView.swift */; };
 		79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE802C16526300A33023 /* FriendInfo.swift */; };
-		79D9AE832C16529B00A33023 /* InviteFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* InviteFriendView.swift */; };
-		79D9AE892C1FAA0200A33023 /* SearchFriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE882C1FAA0100A33023 /* SearchFriendsView.swift */; };
+		79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* AddFriendView.swift */; };
 		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
 		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
@@ -98,8 +97,7 @@
 		79D9AE7E2C16522B00A33023 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		79D9AE7F2C16524100A33023 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		79D9AE802C16526300A33023 /* FriendInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendInfo.swift; path = "Person-Go/Model/FriendInfo.swift"; sourceTree = SOURCE_ROOT; };
-		79D9AE822C16529B00A33023 /* InviteFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteFriendView.swift; sourceTree = "<group>"; };
-		79D9AE882C1FAA0100A33023 /* SearchFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFriendsView.swift; sourceTree = "<group>"; };
+		79D9AE822C16529B00A33023 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		79F660CB2BFBA2D800B28D79 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		79F660CD2BFBA84500B28D79 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		79F660CF2BFBA87000B28D79 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
@@ -237,7 +235,7 @@
 			children = (
 				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
 				79641E7A2C092016006C6F3B /* AccountView.swift */,
-				79D9AE822C16529B00A33023 /* InviteFriendView.swift */,
+				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				36B218892BE91F3600CAE5AB /* AuthenticationView.swift */,
 				79641E7C2C092028006C6F3B /* ChangeEmailView.swift */,
 				79641E762C091FEE006C6F3B /* ChangePasswordView.swift */,
@@ -256,7 +254,6 @@
 				36B218852BE91F3600CAE5AB /* RegistrationView.swift */,
 				36B218812BE91F3600CAE5AB /* SecurityView.swift */,
 				36B218872BE91F3600CAE5AB /* SettingView.swift */,
-				79D9AE882C1FAA0100A33023 /* SearchFriendsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -363,11 +360,10 @@
 				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
-				79D9AE832C16529B00A33023 /* InviteFriendView.swift in Sources */,
+				79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
 				79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */,
 				79F660D22BFBA93200B28D79 /* Profile.swift in Sources */,
-				79D9AE892C1FAA0200A33023 /* SearchFriendsView.swift in Sources */,
 				271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */,
 				36B2188D2BE91F3600CAE5AB /* MapView.swift in Sources */,
 				79641E7B2C092016006C6F3B /* AccountView.swift in Sources */,
