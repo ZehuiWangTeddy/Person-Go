@@ -87,6 +87,24 @@ public struct launchData: Codable {
     var launch_type: String?
 }
 
+public struct locationData: Codable {
+    var user_id: UUID?
+    var latitude: Double?
+    var longitude: Double?
+}
+
+public func insertLocation(user_id: UUID, latitude: Double, longitude: Double) async {
+    do {
+        let _ = try await supabase
+                .from("locations")
+                .upsert(locationData(user_id: user_id, latitude: latitude, longitude: longitude))
+                .execute()
+        print("Location inserted successfully")
+    } catch {
+        print("Failed to insert location: \(error)")
+    }
+}
+
 
 public func insertLaunch(user_id: UUID, target_id: UUID, launch_type: String) async {
     do {
@@ -94,7 +112,6 @@ public func insertLaunch(user_id: UUID, target_id: UUID, launch_type: String) as
                 .from("launches")
                 .insert(launchData(user_id: user_id, target_id: target_id, launch_type: launch_type))
                 .execute()
-                .value
         print("Launch inserted successfully")
     } catch {
         print("Failed to insert launch: \(error)")
