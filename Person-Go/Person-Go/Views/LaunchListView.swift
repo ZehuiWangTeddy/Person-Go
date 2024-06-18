@@ -11,7 +11,6 @@ struct Friend1: Identifiable {
 struct LaunchListView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var friends: [Friend1] = []
-    @Environment(\.colorScheme) var colorScheme
     @State private var selectedFriends: Set<UUID> = []
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
