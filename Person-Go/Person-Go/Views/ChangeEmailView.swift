@@ -9,40 +9,42 @@ struct ChangeEmailView: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+        VStack(spacing: 20) {
+            HStack {
                 Text("Email")
                     .font(.largeTitle)
                     .bold()
-                    .foregroundColor(Color("Text"))
-                Divider()
-                    .frame(height: 2)
-                TextField("New Email", text: $email)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
-                    .foregroundColor(Color.gray)
-                    .autocapitalization(.none)
-                Button(action: {
-                    Task {
-                        await updateEmail()
-                    }
-                }) {
-                    Text("Update Email")
-                        .font(.title3)
+                Spacer()
+            }
+            Divider()
+            ScrollView {
+                VStack(spacing: 20) {
+                    TextField("New Email", text: $email)
                         .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color("Primary"))
+                        .background(Color.gray.opacity(0.2))
                         .foregroundColor(Color("Text"))
-                        .cornerRadius(4)
+                        .cornerRadius(8)
+                        .foregroundColor(Color.gray)
+                        .autocapitalization(.none)
+                    Button(action: {
+                        Task {
+                            await updateEmail()
+                        }
+                    }) {
+                        Text("Update Email")
+                            .font(.title3)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color("Primary"))
+                            .foregroundColor(Color("Text"))
+                            .cornerRadius(8)
+                    }
                 }
             }
-            .padding()
-            .background(Color("Background"))
         }
+        .padding()
         .background(Color("Background"))
-        .navigationTitle("Change Email")
-        .navigationBarTitleDisplayMode(.inline)
+        .foregroundColor(Color("Text"))
         .alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage))
         }

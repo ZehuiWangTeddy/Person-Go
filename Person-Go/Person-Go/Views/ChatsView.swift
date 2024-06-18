@@ -140,11 +140,15 @@ struct ChatsView: View {
                         self.channel = uchannel
                         await self.channel!.subscribe()
                         
-                        let broadcastStream = await self.channel!.broadcastStream(event: "new-message")
-                        for await _ in broadcastStream {
-                            Task {
-                                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                        do {
+                            let broadcastStream = await self.channel!.broadcastStream(event: "new-message")
+                            for await _ in broadcastStream {
+                                Task {
+                                    self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                                }
                             }
+                        } catch {
+                            print("There was an error fetching messages")
                         }
                     }
                 }
@@ -162,4 +166,3 @@ struct ChatsView: View {
         }
     }
 }
-

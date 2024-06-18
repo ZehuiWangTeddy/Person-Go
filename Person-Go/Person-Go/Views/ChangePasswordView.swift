@@ -12,36 +12,37 @@ struct ChangePasswordView: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+        VStack(spacing: 20) {
+            HStack {
                 Text("Password")
                     .font(.largeTitle)
                     .bold()
-                    .foregroundColor(Color("Text"))
-                Divider()
-                    .frame(height: 2)
-                PasswordField(title: "New Password", text: $newPassword, isPasswordVisible: $isNewPasswordVisible)
-                PasswordField(title: "Confirm New Password", text: $confirmNewPassword, isPasswordVisible: $isConfirmNewPasswordVisible)
-                Button(action: {
-                    Task {
-                        await updatePassword()
+                Spacer()
+            }
+            Divider()
+            ScrollView {
+                VStack(spacing: 20) {
+                    PasswordField(title: "New Password", text: $newPassword, isPasswordVisible: $isNewPasswordVisible)
+                    PasswordField(title: "Confirm New Password", text: $confirmNewPassword, isPasswordVisible: $isConfirmNewPasswordVisible)
+                    Button(action: {
+                        Task {
+                            await updatePassword()
+                        }
+                    }) {
+                        Text("Reset Password")
+                            .font(.title3)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color("Primary"))
+                            .foregroundColor(Color("Text"))
+                            .cornerRadius(8)
                     }
-                }) {
-                    Text("Reset Password")
-                        .font(.title3)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color("Primary"))
-                        .foregroundColor(Color("Text"))
-                        .cornerRadius(8)
                 }
             }
-            .padding()
-            .background(Color("Background"))
         }
+        .padding()
         .background(Color("Background"))
-        .navigationTitle("Change Password")
-        .navigationBarTitleDisplayMode(.inline)
+        .foregroundColor(Color("Text"))
         .alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage))
         }
@@ -92,10 +93,12 @@ struct PasswordField: View {
                     SecureField(title, text: $text)
                 }
             }
-            .autocapitalization(.none)
             .padding()
             .background(Color.gray.opacity(0.2))
+            .foregroundColor(Color("Text"))
             .cornerRadius(8)
+            .foregroundColor(Color.gray)
+            .autocapitalization(.none)
             .frame(height: 50)
             Button(action: {
                 isPasswordVisible.toggle()

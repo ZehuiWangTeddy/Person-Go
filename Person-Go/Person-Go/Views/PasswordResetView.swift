@@ -13,37 +13,36 @@ struct PasswordResetView: View {
     @State private var alertMessage = ""
     
     var body: some View {
-        ZStack {
-            Color("Background")
-            VStack {
+        ScrollView {
+            VStack(spacing: 20) {
                 HStack {
-                    Text("Forgot Password")
+                    Text("Forgot Password?")
                         .font(.largeTitle)
                         .bold()
                     Spacer()
                 }
-                Spacer().frame(height: 20)
-                HStack {
-                    Text("Email")
-                        .font(.title2)
-                    Spacer()
-                }
-                TextField("", text: $email)
-                    .autocapitalization(.none)
+                Divider()
+                    .frame(height: 2)
+                TextField("Email", text: $email)
                     .padding()
-                    .border(Color.gray, width: 0.5)
-                Spacer().frame(height: 20)
+                    .background(Color.gray.opacity(0.2))
+                    .foregroundColor(Color("Text"))
+                    .cornerRadius(8)
+                    .foregroundColor(Color.gray)
+                    .autocapitalization(.none)
+                    .frame(height: 50)
                 Button(action: {
                     Task {
                         await resetPassword()
                     }
                 }, label: {
                     Text("Send Email")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("Primary"))
-                        .cornerRadius(4)
                         .font(.title3)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color("Primary"))
+                        .foregroundColor(Color("Text"))
+                        .cornerRadius(8)
                 })
             }
             .padding()

@@ -22,41 +22,42 @@ struct AddFriendView: View {
     @State private var alertMessage = ""
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack() {
+        ScrollView {
+            VStack(spacing: 20) {
                 HStack {
                     Text("Add Your Friend")
                         .font(.largeTitle)
                         .bold()
                     Spacer()
                 }
-                Spacer().frame(height: 40)
-                HStack {
-                    Text("Email")
-                        .font(.title2)
-                    Spacer()
-                }
-                TextField("Enter friend's email", text: $email)
+                Divider()
+                    .frame(height: 2)
+                TextField("Friend's email", text: $email)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .foregroundColor(Color("Text"))
+                    .cornerRadius(8)
+                    .foregroundColor(Color.gray)
                     .autocapitalization(.none)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                Spacer().frame(height: 40)
+                    .frame(height: 50)                    
                 Button(action: {
                     Task {
                         await addFriend()
                     }
                 }, label: {
                     Text("Add")
-                        .frame(maxWidth: .infinity)
+                        .font(.title3)
                         .padding()
+                        .frame(maxWidth: .infinity)
                         .background(Color("Primary"))
                         .foregroundColor(Color("Text"))
-                        .cornerRadius(4)
-                        .font(.title3)
+                        .cornerRadius(8)
                 })
             }
             .padding()
         }
         .background(Color("Background"))
+        .foregroundColor(Color("Text"))
         .alert(isPresented: $showingAlert) {
             if showingChoice {
                 Alert(title: Text(alertTitle), message: Text(alertMessage), primaryButton: .default(Text("Send Invite"), action: {

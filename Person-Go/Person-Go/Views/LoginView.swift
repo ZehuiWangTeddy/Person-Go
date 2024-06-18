@@ -16,51 +16,44 @@ struct LoginView: View {
         NavigationView {
             ZStack {
                 Color("Background")
-                VStack {
+                VStack(spacing: 20) {
                     HStack {
                         Text("Sign In")
                             .font(.largeTitle)
                             .bold()
                         Spacer()
                     }
-                    Spacer().frame(height: 20)
-                    HStack {
-                        Text("Email")
-                            .font(.title2)
-                        Spacer()
+                    Divider()
+                        .frame(height: 2)
+                    Group {
+                        TextField("Email", text: $email)
+                        SecureField("Password", text: $password)
                     }
-                    TextField("", text: $email)
-                        .autocapitalization(.none)
-                        .padding()
-                        .border(Color.gray, width: 0.5)
-                    HStack {
-                        Text("Password")
-                            .font(.title2)
-                        Spacer()
-                    }
-                    SecureField("", text: $password)
-                        .padding()
-                        .border(Color.gray, width: 0.5)
-                    Spacer().frame(height: 20)
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .foregroundColor(Color("Text"))
+                    .cornerRadius(8)
+                    .foregroundColor(Color.gray)
+                    .autocapitalization(.none)
+                    .frame(height: 50)
                     Button(action: {
                         Task {
                             await signIn()
                         }
                     }, label: {
                         Text("Sign In")
-                            .frame(maxWidth: .infinity)
+                            .font(.title3)
                             .padding()
+                            .frame(maxWidth: .infinity)
                             .background(Color("Primary"))
                             .foregroundColor(Color("Text"))
-                            .cornerRadius(4)
-                            .font(.title3)
+                            .cornerRadius(8)
                     })
-                    VStack {
+                    VStack(spacing: 10) {
                         NavigationLink(destination: PasswordResetView()) {
                             Text("Forgot Password?")
                                 .font(.title3)
                         }
-                        Spacer().frame(height: 10)
                         NavigationLink(destination: RegistrationView()) {
                             Text("Sign Up")
                                 .font(.title3)

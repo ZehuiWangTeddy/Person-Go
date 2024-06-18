@@ -4,7 +4,6 @@ import MapKit
 import SDWebImageSwiftUI
 
 struct InventoryView: View {
-    @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil // State to track selected size
     @State private var navigateToLaunchListView = false // State to trigger navigation
     @State private var navigateToMissileMapView = false // State to trigger navigation to missile map view
