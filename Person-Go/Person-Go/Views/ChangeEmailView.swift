@@ -4,6 +4,10 @@ import Supabase
 struct ChangeEmailView: View {
     @State private var email: String = ""
     
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -39,6 +43,9 @@ struct ChangeEmailView: View {
         .background(Color("Background"))
         .navigationTitle("Change Email")
         .navigationBarTitleDisplayMode(.inline)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage))
+        }
     }
     
     private func updateEmail() async {
@@ -50,9 +57,19 @@ struct ChangeEmailView: View {
                         body: ["email": $email.wrappedValue]
                     )
                 )
+            showPopup(title: "Success", message: "Email updated!")
             print("response: \(response)")
         } catch {
+            showPopup(title: "Error", message: "Failed to update email.")
             print("error: \(error)")
+        }
+    }
+    
+    private func showPopup(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.alertTitle = title
+            self.alertMessage = message
+            self.showingAlert = true
         }
     }
 }

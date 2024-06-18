@@ -8,6 +8,10 @@ struct LoginView: View {
     @State private var email: String = "test@test.com"
     @State private var password: String = "1234"
 
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -69,6 +73,9 @@ struct LoginView: View {
             .background(Color("Background"))
         }
         .foregroundColor(Color("Text"))
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage))
+        }
     }
 
     private func signIn() async {
@@ -80,7 +87,16 @@ struct LoginView: View {
             userAuth.isLoggedin = true
             userAuth.updateCurrentUser(user: response.user)
         } catch {
+            showPopup(title: "Error", message: "Invalid credentials.")
             print("error: \(error)")
+        }
+    }
+    
+    private func showPopup(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.alertTitle = title
+            self.alertMessage = message
+            self.showingAlert = true
         }
     }
 }

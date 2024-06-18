@@ -7,6 +7,10 @@ struct ChangePasswordView: View {
     @State private var isNewPasswordVisible: Bool = false
     @State private var isConfirmNewPasswordVisible: Bool = false
 
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -38,11 +42,15 @@ struct ChangePasswordView: View {
         .background(Color("Background"))
         .navigationTitle("Change Password")
         .navigationBarTitleDisplayMode(.inline)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage))
+        }
     }
     
     private func updatePassword() async {
         do {
             if newPassword != confirmNewPassword {
+                showPopup(title: "Error", message: "The passwords do not match.")
                 throw NSError(domain: "", code: 1, userInfo: [NSLocalizedDescriptionKey: "The passwords do not match."])
             }
             
@@ -53,9 +61,19 @@ struct ChangePasswordView: View {
                         body: ["password": $newPassword.wrappedValue]
                     )
                 )
+            showPopup(title: "Success", message: "Password reset!")
             print("response: \(response)")
         } catch {
+            showPopup(title: "Error", message: "Failed to reset password")
             print("error: \(error)")
+        }
+    }
+    
+    private func showPopup(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.alertTitle = title
+            self.alertMessage = message
+            self.showingAlert = true
         }
     }
 }
