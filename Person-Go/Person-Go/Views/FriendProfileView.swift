@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FriendProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
+    @Environment(\.colorScheme) var colorScheme
     
     var chatManager = ChatManager()
     @State var friend: Friend
@@ -16,11 +17,15 @@ struct FriendProfileView: View {
                         .cornerRadius(100)
                         .padding(.top, 100)
                 } placeholder: {
-                    Image("userprofile")
-                        .resizable()
+//                    Image("userprofile")
+//                        .resizable()
+//                        .frame(width: 200, height: 200)
+//                        .cornerRadius(100)
+//                        .padding(.top, 100)
+                    
+                    ProgressView()
+                        .controlSize(.large)
                         .frame(width: 200, height: 200)
-                        .cornerRadius(100)
-                        .padding(.top, 100)
                 }
                 
                 VStack {
@@ -90,7 +95,7 @@ struct FriendProfileView: View {
                 Spacer() // Pushes the content to the top
             }
         }
-        .background(Color("Background"))
+        .background(colorScheme == .light ? Color(hex: "#F3EBD8") : Color(hex: "#271F0C")) // Use the dynamic color
         .edgesIgnoringSafeArea(.all) // Make sure the background color fills the entire screen
         .onAppear {
             Task {
@@ -105,5 +110,31 @@ struct FriendProfileView: View {
             }
             
         }
+    }
+}
+
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue: Double(b) / 255,
+            opacity: Double(a) / 255
+        )
     }
 }

@@ -41,6 +41,8 @@
 		79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79641E7C2C092028006C6F3B /* ChangeEmailView.swift */; };
 		79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE802C16526300A33023 /* FriendInfo.swift */; };
 		79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* AddFriendView.swift */; };
+		79D9AEA02C22F04100A33023 /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 79D9AE9F2C22F04100A33023 /* Nuke */; };
+		79D9AEA22C22F04100A33023 /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 79D9AEA12C22F04100A33023 /* NukeUI */; };
 		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
 		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
@@ -121,8 +123,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79D9AEA02C22F04100A33023 /* Nuke in Frameworks */,
 				7F821D142C0D48970065F261 /* SDWebImageSwiftUI in Frameworks */,
 				3693DFF62BE40892003F83BD /* Supabase in Frameworks */,
+				79D9AEA22C22F04100A33023 /* NukeUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,6 +291,8 @@
 			packageProductDependencies = (
 				3693DFF52BE40892003F83BD /* Supabase */,
 				7F821D132C0D48970065F261 /* SDWebImageSwiftUI */,
+				79D9AE9F2C22F04100A33023 /* Nuke */,
+				79D9AEA12C22F04100A33023 /* NukeUI */,
 			);
 			productName = "Person-Go";
 			productReference = 792A4A512BDAEB0500CBCCB1 /* Person-Go.app */;
@@ -319,6 +325,7 @@
 			packageReferences = (
 				3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				79D9AE9E2C22F04100A33023 /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			productRefGroup = 792A4A522BDAEB0500CBCCB1 /* Products */;
 			projectDirPath = "";
@@ -628,6 +635,14 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		79D9AE9E2C22F04100A33023 /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.2;
+			};
+		};
 		7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -643,6 +658,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		79D9AE9F2C22F04100A33023 /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79D9AE9E2C22F04100A33023 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		79D9AEA12C22F04100A33023 /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 79D9AE9E2C22F04100A33023 /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
 		};
 		7F821D132C0D48970065F261 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

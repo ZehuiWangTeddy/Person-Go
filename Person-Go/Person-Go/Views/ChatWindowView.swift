@@ -1,4 +1,5 @@
 import SwiftUI
+import NukeUI
 import Supabase
 import Combine
 
@@ -26,7 +27,7 @@ struct ChatBubbleView: View {
     var chatManager = ChatManager()
     
     func formattime(dateString: String) -> String {
-        // Create an ISO8601DateFormatter for parsing a date string in ISO 8601 format
+        // Create an ISO8601DateFormatter that is used to parse date strings in ISO 8601 format
         
         let date = chatManager.parseDate(dateString: dateString)
         guard date != nil else {
@@ -47,6 +48,35 @@ struct ChatBubbleView: View {
         }
     }
     
+    func loadAvatar(url: URL, hasPadding: Bool = false) -> some View {
+        LazyImage(url: url) { state in
+            if let image = state.image {
+                image.resizable().frame(width: 30, height: 30).padding(.trailing, 8)
+            } else if state.error != nil {
+                AsyncImage(url: chatManager.getDefaultAvatar()){ image in
+                    if hasPadding {
+                        image
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                            .padding(.trailing, 10)
+                    } else {
+                        image
+                        .resizable()
+                        .frame(width: 30, height: 30)
+                    }
+                } placeholder: {
+                    ProgressView()
+                        .controlSize(.large)
+                        .frame(width: 30, height: 30)
+                }
+            } else {
+                ProgressView()
+                   .controlSize(.large)
+                   .frame(width: 30, height: 30)
+            }
+        }
+    }
+    
     var body: some View {
         
         if (message.type == .message) {
@@ -61,23 +91,32 @@ struct ChatBubbleView: View {
                                 .background(Color(red: 0xEC / 255, green: 0x95 / 255, blue: 0x83 / 255))
                                 .cornerRadius(10)
                         }
-                        userAuth.getUserAvatar(width: 30, height: 30, radius: 0, padding: 8, edges: .trailing)
+//                        userAuth.getUserAvatar(width: 30, height: 30, radius: 0, padding: 8, edges: .trailing)
+                        
+//                        LazyImage(request: ImageRequest(
+//                            url: chatManager.retrieveAvatarPublicUrl(path: userAuth.profile!.avatarUrl ?? ""),
+//                            processors: [.resize(height: 10)]
+//                        ))
+//                        .padding(.trailing, 8)
+                        
+                        loadAvatar(url: chatManager.retrieveAvatarPublicUrl(path: userAuth.profile!.avatarUrl ?? ""), hasPadding: false)
                     }
                 } else {
                     HStack(alignment: .top, spacing: 0) {
-                        AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
-                            image.resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .padding(.trailing, 8)
-                        } placeholder: {
-                            Image("userprofile")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .padding(.trailing, 8)
-                        }
+//                        AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
+//                            image
+//                                .resizable()
+////                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: 30, height: 30)
+//                                .padding(.trailing, 8)
+//                        } placeholder: {
+//                            ProgressView()
+//                                .controlSize(.large)
+//                                .frame(width: 30, height: 30)
+//                        }
                         
+                        loadAvatar(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? ""))
+
                         VStack(alignment: .leading) {
                             Text(message.message.message)
                                 .padding(15)
@@ -93,8 +132,8 @@ struct ChatBubbleView: View {
             HStack(alignment: .center) {
                 Spacer()
                 Text(self.formattime(dateString: message.message.sentAt))
-                //                    .foregroundColor(.white)
-                //                    .background(Color(red: 128 / 255, green: 128 / 255, blue: 128 / 255))
+//                    .foregroundColor(.white)
+//                    .background(Color(red: 128 / 255, green: 128 / 255, blue: 128 / 255))
                     .padding()
                 Spacer()
             }
@@ -110,13 +149,17 @@ struct ChatWindowView: View {
     @EnvironmentObject var userAuth: UserAuth
     var chatManager = ChatManager()
     @State var loading: Bool = false
+    @State private var keyboardHeight: CGFloat = 0
     
     var friend: Friend
     
     @StateObject var textObserver = TextFieldObserver()
+    @State private var textInput: String = ""
     
     @State var messages: [ChatMessage] = []
     
+    let columns: [GridItem] = [.init(.fixed(110)),.init(.fixed(110)),.init(.fixed(110))]
+
     func sendMessage() {
         guard !loading else { return }
         
@@ -124,78 +167,76 @@ struct ChatWindowView: View {
         
         defer {loading = false}
         
-        let temp = textObserver.debouncedText
+//        let temp = textObserver.debouncedText
+        let temp = textInput
         guard temp.count > 0 else {
             print("no input")
             return
         }
         
-        textObserver.searchText = ""
-        isFocused = false // Unfocus
+//        textObserver.searchText = ""
+
+        DispatchQueue.main.async {
+            textInput = ""
+            isFocused = false // Unfocus
+        }
         
         if (temp.count > 0) {
             Task {
-                print("send messages...")
-                // sleep
-                do {
-                    let message = try await chatManager.sendMessage(sentId: userAuth.user!.id, receiverId: friend.friendId, content: temp)
-                    chatManager.broadcastNewMessageEvent(channel: self.channel!, newMessage: message)
-                    await loadMessage()
-                    try? await Task.sleep(nanoseconds: 1 * 1_000_000_000)
-                } catch {
-                    print("\(error)")
-                }
+                let message = try await chatManager.sendMessage(sentId: userAuth.user!.id, receiverId: friend.friendId, content: temp)
+                self.messages.append(ChatMessage(message: message, type: .message))
+                let channelName = chatManager.getRoomChannel(u1: userAuth.user!.id, u2: friend.friendId)
+                await chatManager.broadcastNewMessageEvent(cname: channelName, newMessage: message)
+//                await loadMessage()
             }
         }
     }
     
     func loadMessage() async {
         self.messages = await chatManager.fetchMessages(currentUser: userAuth.user!, friendId: friend.friendId)
-        
-        let pure_messages = self.messages.filter({ $0.type == .message })
-        
-        // calc last time is over 1hour
-        if pure_messages.count > 1 {
-            let last = pure_messages.last!.message
-            let lasttime = chatManager.parseDate(dateString: last.sentAt)
-            
-            if lasttime != nil {
-                let now = Date()
-                var diff = now.timeIntervalSince(lasttime!)
-                diff = abs(diff)
-                
-                if diff > 3600 {
-                    self.messages.insert(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: now.ISO8601Format()), type: .system), at: self.messages.count - 1)
-                }
-            }
-        }
     }
     
     func joinRoom() {
-        let channelName = chatManager.getRoomChannel(u1: userAuth.user!.id, u2: friend.friendId)
-        let client = chatManager.getClient()
-        
         Task {
-            self.channel = await client.channel(channelName)
-            guard channel != nil else {
-                return
-            }
+            let channelName = chatManager.getRoomChannel(u1: userAuth.user!.id, u2: friend.friendId)
+            let channel = await chatManager.getClient().channel(channelName)
+            print(channelName)
+//            await channel.subscribe()
             
-            await channel!.subscribe()
-            print("join channel \(channelName)")
-            try await channel!.broadcast(
-                event: "online",
-                message: [
-                    "user": userAuth.user!.id
-                ]
+//            print("channel status: ", await channel.status)
+            
+            let insertions = await channel.postgresChange(
+              InsertAction.self,
+              schema: "public",
+              table: "chats"
             )
             
-            let broadcastStream = await channel!.broadcastStream(event: "new-message")
-            for await _ in broadcastStream {
-                Task {
-                    await loadMessage()
+            await channel.subscribe()
+            
+            Task {
+                for await insert in insertions {
+                    print("Inserted: \(insert.record)")
+                    guard let receiverId = insert.record["receiver_id"]?.stringValue else { return }
+                    guard let sentId = insert.record["sent_id"]?.stringValue else { return }
+                    
+                    print(userAuth.user!.id.uuidString.lowercased())
+                        if (receiverId == userAuth.user!.id.uuidString.lowercased() && sentId == friend.friendId.uuidString.lowercased()) || (sentId == userAuth.user!.id.uuidString.lowercased() && receiverId == friend.friendId.uuidString.lowercased())  {
+                        await loadMessage()
+                    }
                 }
             }
+
+            Task {
+                let broadcastStream = await channel.broadcastStream(event: "new-message")
+                for await _ in broadcastStream {
+                    print("new-message...")
+                    Task {
+                        await loadMessage()
+                    }
+                }
+            }
+            
+            self.channel = channel
         }
     }
     
@@ -219,15 +260,20 @@ struct ChatWindowView: View {
                         
                         ScrollViewReader { value in
                             ScrollView {
-                                VStack(alignment: .leading) {
-                                    ForEach(messages, id: \.id) { message in
-                                        ChatBubbleView(message: message, friend: friend)
-                                            .id(message.id)
-                                            .environmentObject(userAuth)
-                                    }.onChange(of: messages.count) { _ in
-                                        value.scrollTo(messages.last?.id)
+                                LazyVStack(alignment: .leading) {
+                                    withAnimation {
+                                        ForEach(messages, id: \.id) { message in
+                                            ChatBubbleView(message: message, friend: friend)
+                                                .id(message.id)
+                                                .environmentObject(userAuth)
+                                        }.onChange(of: messages.count) { _ in
+                                            value.scrollTo(messages.last?.id)
+                                        }.onChange(of: isFocused) { _ in
+                                            value.scrollTo(messages.last?.id)
+                                        }
                                     }
                                 }
+//                                .offset(y: isFocused ? -300 : 0)
                             }
                             .onAppear {
                                 withAnimation {
@@ -235,15 +281,15 @@ struct ChatWindowView: View {
                                 }
                             }
                         }
-                        
                     }
                     
                     Spacer()
-                    
+
                     HStack(spacing: 0) {
+
                         TextField("type...",
-                                  text: $textObserver.searchText
-                                  //                            ,onCommit: sendMessage
+//                                  text: $textObserver.searchText
+                                  text: $textInput
                         )
                         .disabled(loading)
                         .onSubmit {
@@ -264,8 +310,8 @@ struct ChatWindowView: View {
                         .controlSize(.large)
                         .padding()
                     }
+                    .padding(.bottom, keyboardHeight)
                 }
-                
             )
             .toolbar(.hidden, for: .tabBar)
             .foregroundColor(Color("Text"))
@@ -276,9 +322,12 @@ struct ChatWindowView: View {
                 joinRoom()
             }
             .onDisappear {
-                chatManager.clearChannel()
-                // unset channel
-                self.channel = nil
+                if self.channel != nil {
+                    Task {
+                        await self.channel!.unsubscribe()
+                    }
+                }
             }
+
     }
 }

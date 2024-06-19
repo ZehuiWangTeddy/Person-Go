@@ -13,6 +13,10 @@ struct Person_GoApp: App {
         
         // Request notification permissions
         NotificationManager.shared.requestNotificationPermissions()
+        
+        URLCache.shared.memoryCapacity = 10 * 1024 * 1024   // 100MB
+        URLCache.shared.diskCapacity = 20 * 1024 * 1024     // 200MB
+        URLSession.shared.configuration.requestCachePolicy = .returnCacheDataElseLoad
     }
 
     var body: some Scene {

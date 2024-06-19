@@ -25,11 +25,13 @@ struct EditProfileView: View {
     @State private var alertTitle = "Info"
     
     private func uploadFile(fileData: Data) async -> String {
+        
         // get Image file type
         let type = avatarImage.debugDescription.split(separator: "(")[1].split(separator: ")")[0]
         
         let path = "uploads/" + UUID().uuidString + ".\(type)"
         do {
+            
             let str = try await userManager.getClient().storage
                 .from("avatars")
                 .upload(
@@ -53,9 +55,10 @@ struct EditProfileView: View {
             Color("Background")
             VStack {
                 
-                if avatarImage != nil {
+                if  avatarImage != nil {
                     avatarImage?
                         .resizable()
+//                        .scaledToFit()
                         .frame(width: 200, height: 200)
                         .cornerRadius(100)
                         .padding(.vertical, 30)
@@ -64,67 +67,70 @@ struct EditProfileView: View {
                 }
                 
                 if #available(iOS 16.0, *) {
-                    PhotosPicker("Select avatar", selection: $avatarItem, matching: .images)
-                        .padding()
-                        .onChange(of: avatarItem) { newItem in
-                            Task {
-                                if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
-                                    avatarImage = loaded
+                                    VStack {
+                                        PhotosPicker("Select avatar", selection: $avatarItem, matching: .images)
+                                            .padding()
+                                        
+                                        if avatarItem != nil {
+                                            Button(action: {
+                                                avatarImage = nil
+                                                avatarItem = nil
+                                            }) {
+                                                Text("Clear")
+                                                    .frame(maxWidth: .infinity)
+                                                    .padding()
+                                                    .background(Color("Secondary"))
+                                                    .cornerRadius(4)
+                                            }
+                                        }
+                                    }
+                                    .onChange(of: avatarItem) { _ in
+                                        Task {
+                                            if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
+                                                avatarImage = loaded
+                                            } else {
+                                                print("Failed to load image")
+                                            }
+                                            
+                                            if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
+                                                imageData = loaded
+                                            } else {
+                                                print("Failed to load image data")
+                                            }
+                                        }
+                                    }
                                 } else {
-                                    print("Failed to load image as Image")
+                                    // Fallback for earlier iOS versions
                                 }
-                                
-                                if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
-                                    imageData = loaded
-                                } else {
-                                    print("Failed to load image as Data")
-                                }
-                            }
-                        }
-                    
-                    if avatarItem != nil {
-                        Button(action: {
-                            avatarImage = nil
-                            avatarItem = nil
-                        }, label: {
-                            Text("Clear")
-                                .frame(maxWidth: .infinity)
-                                .cornerRadius(4)
-                        })
-                    }
-                } else {
-                    Text("This feature requires iOS 16 or later")
-                        .padding()
-                }
                 
                 HStack {
                     Text("User Name")
                         .font(.title2)
                     Spacer()
                 }
-                TextField("New user name", text: $name)
+                TextField("new user name", text: $name)
                     .autocapitalization(.none)
                     .padding()
                     .border(Color.gray, width: 0.5)
                 Spacer().frame(height: 20)
                 Button(action: {
                     Task {
-                        let checkUsername = await userManager.checkUserNameIsAvaliable(name: name)
+                        let checkUsername = await userManager.checkUserNameIsAvaliable(user: userAuth.user!.id, name: name)
                         if !checkUsername {
                             showAlert.toggle()
-                            alertTitle = "Error"
+                            alertTitle = "error"
                             alertMessage = "Duplicate user name"
                             return
                         }
                         
-                        if name.count < 3 {
+                        if name.count <= 3 {
                             showAlert.toggle()
-                            alertTitle = "Error"
+                            alertTitle = "error"
                             alertMessage = "Minimum 3 characters required"
                             return
                         }
                         
-                        var filename = currentAvatar
+                        var filename = currentAvatar;
                         if imageData != nil {
                             filename = await uploadFile(fileData: imageData!)
                         }
@@ -149,12 +155,13 @@ struct EditProfileView: View {
             if userAuth.profile != nil && userAuth.profile!.avatarUrl != nil {
                 self.currentAvatar = userAuth.profile!.avatarUrl!
             }
+            
         }
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text(alertTitle),
                 message: Text(alertMessage),
-                dismissButton: .default(Text("Dismiss"))
+                dismissButton: .default(Text("dismiss"))
             )
         }
     }

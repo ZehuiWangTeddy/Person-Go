@@ -12,7 +12,7 @@ struct ChatMessage: Identifiable,Hashable,Decodable {
     var id = UUID()
     var message: Message
     var type: MessageType
-    
+
     func isUserMessage(uid: UUID) -> Bool {
         if (self.message.sentId == uid) {
             return true

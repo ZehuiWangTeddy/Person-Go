@@ -6,5 +6,7 @@ public struct Profile: Hashable, Decodable {
     var username: String?
     var fullName: String?
     var avatarUrl: String?
+    
+    var imageDataURL: URL?
 }
 

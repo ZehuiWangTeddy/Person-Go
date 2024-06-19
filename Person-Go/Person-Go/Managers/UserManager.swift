@@ -12,7 +12,7 @@ class UserManager: NSObject, ObservableObject{
             db: .init(encoder: encoder, decoder: decoder)
         )
     )
-    
+
     func getClient() -> SupabaseClient
     {
         return client
@@ -50,21 +50,21 @@ class UserManager: NSObject, ObservableObject{
         }
         do {
             try await client
-                .from("profiles")
-                .update(datas)
-                .eq("id", value: user)
-                .execute()
+              .from("profiles")
+              .update(datas)
+              .eq("id", value: user)
+              .execute()
             
             return true
         } catch {
             print(error)
-            //            return nil
+//            return nil
             
             return false
         }
     }
     
-    func checkUserNameIsAvaliable(name: String) async -> Bool {
+    func checkUserNameIsAvaliable(user: UUID, name: String) async -> Bool {
         do {
             let data: [Profile] = try await client
                 .from("profiles")
@@ -74,6 +74,12 @@ class UserManager: NSObject, ObservableObject{
                 .value
             
             if (data.isEmpty) {
+                return true
+            }
+            
+            let profile = data.first!
+            
+            if (profile.id == user) {
                 return true
             }
             
@@ -135,7 +141,7 @@ class UserManager: NSObject, ObservableObject{
             FriendShip(userId: user, friendId: friend),
             FriendShip(userId: friend, friendId: user),
         ]
-        
+
         do {
             try await supabase
                 .from("friends")
