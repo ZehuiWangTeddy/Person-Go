@@ -122,7 +122,7 @@ struct EditProfileView: View {
                             return
                         }
                         
-                        if name.count <= 3 {
+                        if name.count < 3 {
                             showAlert.toggle()
                             alertTitle = "error"
                             alertMessage = "Minimum 3 characters required"
