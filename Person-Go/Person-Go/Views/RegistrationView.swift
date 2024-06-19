@@ -63,7 +63,7 @@ struct RegistrationView: View {
                 email: email,
                 password: password
             )
-            showPopup(title: "Success", message: "Account created!")
+            showPopup(title: "Success", message: "Account Created! Confirm your email before logging in.")
             print(response)
         } catch {
             showPopup(title: "Error", message: "Failed to create account.")
