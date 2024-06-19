@@ -38,26 +38,7 @@ struct MapViewRepresentable: UIViewRepresentable {
         mapView.addOverlay(polyline)
     }
 
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        if overlay is MKPolyline {
-            let renderer = MKPolylineRenderer(overlay: overlay)
-            renderer.strokeColor = .red // Change the color to red
-            renderer.lineDashPattern = [2, 5] // Make the line dashed
-            renderer.lineWidth = 2
-            return renderer
-            
-        } else if overlay is MKCircle {
-            let renderer = MKCircleRenderer(overlay: overlay)
-            renderer.fillColor = UIColor.red.withAlphaComponent(0.1)
-            renderer.strokeColor = UIColor.red
-            renderer.lineWidth = 1
-            return renderer
-        }
-        return MKOverlayRenderer()
-    }
-}
-extension MapViewRepresentable {
-    class MapCoordinator: NSObject, MKMapViewDelegate{
+    class MapCoordinator: NSObject, MKMapViewDelegate {
         let parent: MapViewRepresentable
         @State private var mapRegion = MKCoordinateRegion()
 
@@ -106,7 +87,6 @@ extension MapViewRepresentable {
 
             label.frame = CGRect(x: -20, y: 10, width: label.frame.width, height: label.frame.height)
 
-
             annotationView?.addSubview(label)
 
             if let timerAnnotationView = annotationView as? TimerAnnotationView {
@@ -120,6 +100,6 @@ extension MapViewRepresentable {
             guard let userLocation = parent.locationManager.currentLocation else { return }
             let zoomedRegion = MKCoordinateRegion(center: userLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
             parent.mapView.setRegion(zoomedRegion, animated: true)
-}
+        }
     }
 }
