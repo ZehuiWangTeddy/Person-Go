@@ -8,53 +8,53 @@ struct RegistrationView: View {
 
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var body: some View {
-        ZStack {
-            Color("Background")
-            VStack {
+        ScrollView {
+            VStack(spacing: 20) {
                 HStack {
                     Text("Sign Up")
                         .font(.largeTitle)
                         .bold()
                     Spacer()
                 }
-                Spacer().frame(height: 20)
-                HStack {
-                    Text("Email")
-                        .font(.title2)
-                    Spacer()
+                Divider()
+                    .frame(height: 2)
+                Group {
+                    TextField("Email", text: $email)
+                    SecureField("Password", text: $password)
                 }
-                TextField("", text: $email)
-                    .autocapitalization(.none)
-                    .padding()
-                    .border(Color.gray, width: 0.5)
-                HStack {
-                    Text("Password")
-                        .font(.title2)
-                    Spacer()
-                }
-                SecureField("", text: $password)
-                    .padding()
-                    .border(Color.gray, width: 0.5)
-                Spacer().frame(height: 20)
+                .padding()
+                .background(Color.gray.opacity(0.2))
+                .foregroundColor(Color("Text"))
+                .cornerRadius(8)
+                .foregroundColor(Color.gray)
+                .autocapitalization(.none)
+                .frame(height: 50)
                 Button(action: {
                     Task {
                         await register()
                     }
-
                 }, label: {
                     Text("Create Account")
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color("Primary"))
-                        .cornerRadius(4)
                         .font(.title3)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color("Primary"))
+                        .foregroundColor(Color("Text"))
+                        .cornerRadius(8)
                 })
             }
             .padding()
         }
         .background(Color("Background"))
         .foregroundColor(Color("Text"))
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage))
+        }
     }
 
     private func register() async {
@@ -63,9 +63,19 @@ struct RegistrationView: View {
                 email: email,
                 password: password
             )
+            showPopup(title: "Success", message: "Account Created! Confirm your email before logging in.")
             print(response)
         } catch {
+            showPopup(title: "Error", message: "Failed to create account.")
             print("error: \(error)")
+        }
+    }
+    
+    private func showPopup(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.alertTitle = title
+            self.alertMessage = message
+            self.showingAlert = true
         }
     }
 }
