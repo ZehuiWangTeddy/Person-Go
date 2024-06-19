@@ -121,7 +121,6 @@ extension MapViewRepresentable {
 
             label.frame = CGRect(x: -20, y: 10, width: label.frame.width, height: label.frame.height)
 
-
             annotationView?.addSubview(label)
 
             if let timerAnnotationView = annotationView as? TimerAnnotationView {

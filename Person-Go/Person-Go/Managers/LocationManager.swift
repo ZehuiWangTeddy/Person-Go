@@ -42,4 +42,3 @@ extension LocationManager: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
 }
-

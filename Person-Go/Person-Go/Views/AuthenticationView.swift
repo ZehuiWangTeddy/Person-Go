@@ -3,7 +3,6 @@ import LocalAuthentication
 
 struct AuthenticationView: View {
     @Binding var isUnlocked: Bool
-    @Environment(\.colorScheme) var colorScheme
     @State private var biometricType: LABiometryType = .none
 
     var body: some View {
@@ -14,12 +13,12 @@ struct AuthenticationView: View {
                 Text(biometricType == .faceID ? "Unlock With Face ID" : "Unlock With Touch ID")
             }
             .padding()
-            .background(Color(hex: "#EC9583")) // Change the button background color to #EC9583
+            .background(Color("Primary"))
             .foregroundColor(.white)
             .cornerRadius(50)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(colorScheme == .light ? Color(hex: "#F3EBD8") : Color(hex: "#271F0C")) // Change the background color based on the color scheme
+        .background(Color("Background"))
         .edgesIgnoringSafeArea(.all)
         .onAppear {
             checkBiometricType()
