@@ -6,7 +6,7 @@ let apiKey: String = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as! Str
 @main
 struct Person_GoApp: App {
     @StateObject var userAuth = UserAuth()
-
+    
     init() {
         // Register notification delegate
         NotificationManager.shared.registerDelegate()
@@ -18,7 +18,7 @@ struct Person_GoApp: App {
         URLCache.shared.diskCapacity = 20 * 1024 * 1024     // 200MB
         URLSession.shared.configuration.requestCachePolicy = .returnCacheDataElseLoad
     }
-
+    
     var body: some Scene {
         WindowGroup {
             if userAuth.isLoggedin {

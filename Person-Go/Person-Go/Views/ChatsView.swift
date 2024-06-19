@@ -20,8 +20,8 @@ struct FriendAvatarView: View {
                 }
             } else {
                 ProgressView()
-                   .controlSize(.large)
-                   .frame(width: 30, height: 30)
+                    .controlSize(.large)
+                    .frame(width: 30, height: 30)
             }
         }
     }

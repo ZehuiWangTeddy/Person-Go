@@ -25,8 +25,6 @@ class ChatManager: NSObject, ObservableObject{
         )
     )
     
-    private let session = URLSession(configuration: .default)
-    
     @Published var friends = [Supabase.User]()
     
     override init(){
@@ -264,7 +262,13 @@ class ChatManager: NSObject, ObservableObject{
     
     func getDefaultAvatar() -> URL
     {
-        return URL(string: "https://ecqmicvfzypcomzptfbt.supabase.co/storage/v1/object/public/avatars/userprofile.png?t=2024-05-20T18%3A06%3A06.725Z")!
+        if let url = Bundle.main.url(forResource: "dog.png", withExtension: nil) {
+            print("return local image")
+            return url
+        } else {
+            print("use network default avatar")
+            return URL(string: "https://ecqmicvfzypcomzptfbt.supabase.co/storage/v1/object/public/avatars/userprofile.png?t=2024-05-20T18%3A06%3A06.725Z")!
+        }
     }
 }
 

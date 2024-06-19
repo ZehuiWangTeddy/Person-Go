@@ -1,4 +1,5 @@
 import SwiftUI
+import NukeUI
 
 struct FriendProfileView: View {
     @EnvironmentObject var userAuth: UserAuth
@@ -11,22 +12,51 @@ struct FriendProfileView: View {
     var body: some View {
         ScrollView { // Wrap the VStack in a ScrollView
             VStack {
-                AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl ?? "")){ image in
-                    image.resizable()
-                        .frame(width: 200, height: 200)
-                        .cornerRadius(100)
-                        .padding(.top, 100)
-                } placeholder: {
-//                    Image("userprofile")
-//                        .resizable()
-//                        .frame(width: 200, height: 200)
-//                        .cornerRadius(100)
-//                        .padding(.top, 100)
-                    
-                    ProgressView()
-                        .controlSize(.large)
-                        .frame(width: 200, height: 200)
+                
+                if friend.profiles.avatarUrl != nil {
+                    LazyImage(url: chatManager.retrieveAvatarPublicUrl(path: friend.profiles.avatarUrl!)) { state in
+                        if let image = state.image {
+                            image.resizable()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(100)
+                                .padding(.top, 100)
+                        } else if state.error != nil {
+                            AsyncImage(url: chatManager.getDefaultAvatar()){ image in
+                                image.resizable().frame(width: 50, height: 50).cornerRadius(30)
+                            } placeholder: {
+                                ProgressView()
+                                    .controlSize(.large)
+                                    .frame(width: 200, height: 200)
+                            }
+                        } else {
+                            ProgressView()
+                                .controlSize(.large)
+                                .frame(width: 200, height: 200)
+                        }
+                    }
+                } else {
+                    LazyImage(url: chatManager.getDefaultAvatar()) { state in
+                        if let image = state.image {
+                            image.resizable()
+                                .frame(width: 200, height: 200)
+                                .cornerRadius(100)
+                                .padding(.top, 100)
+                        } else if state.error != nil {
+                            AsyncImage(url: chatManager.getDefaultAvatar()){ image in
+                                image.resizable().frame(width: 50, height: 50).cornerRadius(30)
+                            } placeholder: {
+                                ProgressView()
+                                    .controlSize(.large)
+                                    .frame(width: 200, height: 200)
+                            }
+                        } else {
+                            ProgressView()
+                                .controlSize(.large)
+                                .frame(width: 200, height: 200)
+                        }
+                    }
                 }
+                
                 
                 VStack {
                     VStack(alignment: .leading) {

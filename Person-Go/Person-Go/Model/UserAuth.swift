@@ -9,7 +9,6 @@ class UserAuth: ObservableObject {
     @Published var user: Supabase.User?
     @Published var profile: Profile?
     
-    private let session = URLSession(configuration: .default)
     private var userManager = UserManager()
     private var chatManager = ChatManager()
 
@@ -63,53 +62,37 @@ class UserAuth: ObservableObject {
     @MainActor @ViewBuilder
     func getUserAvatar(width: CGFloat = 200, height: CGFloat = 200, radius: CGFloat = 100, padding: CGFloat = 30, edges: Edge.Set = .vertical) -> some View {
         let chatManager = ChatManager()
-        
-        if (profile == nil) || (profile != nil && profile!.avatarUrl == nil) {
-            Image("userprofile")
-                .resizable()
-                .cornerRadius(radius)
-                .frame(width: width, height: height)
-                .padding(edges, padding)
+        if (profile != nil && profile!.avatarUrl != nil) {
+            imageView(url: chatManager.retrieveAvatarPublicUrl(path: profile!.avatarUrl!), width: width, height: height, radius: radius, padding: padding, edges: edges)
         } else {
-
-            if profile!.imageDataURL != nil {
-                
-                AsyncImage(url: profile!.imageDataURL!){ image in
-                    image
-                        .resizable()
-                    //                    .scaledToFill()
-                        .cornerRadius(radius)
-                        .frame(width: width, height: height)
-                        .padding(edges, padding)
+            imageView(url: chatManager.getDefaultAvatar(), width: width, height: height, radius: radius, padding: padding, edges: edges)
+        }
+        
+        
+    }
+    
+    @MainActor
+    func imageView(url: URL, width: CGFloat = 200, height: CGFloat = 200, radius: CGFloat = 100, padding: CGFloat = 30, edges: Edge.Set = .vertical) -> some View {
+        LazyImage(url: url) { state in
+            if let image = state.image {
+                image
+                    .resizable()
+                //                    .scaledToFill()
+                    .cornerRadius(radius)
+                    .frame(width: width, height: height)
+                    .padding(edges, padding)
+            } else if state.error != nil {
+                AsyncImage(url: self.chatManager.getDefaultAvatar()){ image in
+                    image.resizable().frame(width: width, height: height).cornerRadius(radius)
                 } placeholder: {
                     ProgressView()
                         .controlSize(.large)
                         .frame(width: width, height: height)
                 }
-                
             } else {
-                LazyImage(url: chatManager.retrieveAvatarPublicUrl(path: profile!.avatarUrl!)) { state in
-                    if let image = state.image {
-                        image
-                            .resizable()
-                        //                    .scaledToFill()
-                            .cornerRadius(radius)
-                            .frame(width: width, height: height)
-                            .padding(edges, padding)
-                    } else if state.error != nil {
-                        AsyncImage(url: chatManager.getDefaultAvatar()){ image in
-                            image.resizable().frame(width: 50, height: 50).cornerRadius(30)
-                        } placeholder: {
-                            ProgressView()
-                                .controlSize(.large)
-                                .frame(width: width, height: height)
-                        }
-                    } else {
-                        ProgressView()
-                           .controlSize(.large)
-                           .frame(width: width, height: height)
-                    }
-                }
+                ProgressView()
+                   .controlSize(.large)
+                   .frame(width: width, height: height)
             }
         }
     }

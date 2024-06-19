@@ -2,6 +2,7 @@ import SwiftUI
 import UniformTypeIdentifiers
 import Supabase
 import PhotosUI
+import NukeUI
 
 struct EditProfileView: View {
     @Environment(\.presentationMode) var presentationMode
@@ -15,21 +16,24 @@ struct EditProfileView: View {
     @State private var currentAvatar: String = ""
     
     // file upload
-    @State private var avatarItem: PhotosPickerItem?
-    @State private var avatarImage: Image?
-    @State private var imageData: Data?
+    @State private var avatarImage: UIImage = UIImage(named: "dog.png")!
+    @State private var userprofile: String = ""
+    @State private var isSelectedImage: Bool = false
     
     // Sheet
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var alertTitle = "Info"
     
+    @State private var isShowingPhotoPicker = false
+    
     private func uploadFile(fileData: Data) async -> String {
         
-        // get Image file type
-        let type = avatarImage.debugDescription.split(separator: "(")[1].split(separator: ")")[0]
+        
+        let type = "jpg"
         
         let path = "uploads/" + UUID().uuidString + ".\(type)"
+        print("image path:... \(path)")
         do {
             
             let str = try await userManager.getClient().storage
@@ -54,54 +58,50 @@ struct EditProfileView: View {
         ZStack {
             Color("Background")
             VStack {
-                
-                if  avatarImage != nil {
-                    avatarImage?
-                        .resizable()
-//                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                        .cornerRadius(100)
-                        .padding(.vertical, 30)
-                } else {
-                    userAuth.getUserAvatar()
-                }
-                
-                if #available(iOS 16.0, *) {
-                                    VStack {
-                                        PhotosPicker("Select avatar", selection: $avatarItem, matching: .images)
-                                            .padding()
-                                        
-                                        if avatarItem != nil {
-                                            Button(action: {
-                                                avatarImage = nil
-                                                avatarItem = nil
-                                            }) {
-                                                Text("Clear")
-                                                    .frame(maxWidth: .infinity)
-                                                    .padding()
-                                                    .background(Color("Secondary"))
-                                                    .cornerRadius(4)
-                                            }
-                                        }
-                                    }
-                                    .onChange(of: avatarItem) { _ in
-                                        Task {
-                                            if let loaded = try? await avatarItem?.loadTransferable(type: Image.self) {
-                                                avatarImage = loaded
-                                            } else {
-                                                print("Failed to load image")
-                                            }
-                                            
-                                            if let loaded = try? await avatarItem?.loadTransferable(type: Data.self) {
-                                                imageData = loaded
-                                            } else {
-                                                print("Failed to load image data")
-                                            }
-                                        }
-                                    }
-                                } else {
-                                    // Fallback for earlier iOS versions
+                Group {
+                    if !isSelectedImage && !self.userprofile.isEmpty {
+                        LazyImage(url: chatManager.retrieveAvatarPublicUrl(path: self.userprofile)) { state in
+                            if let image = state.image {
+                                image
+                                    .resizable()
+                                    .cornerRadius(100)
+                                    .frame(width: 200, height: 200)
+                                    .padding(.vertical, 30)
+                            } else if state.error != nil {
+                                AsyncImage(url: self.chatManager.getDefaultAvatar()){ image in
+                                    image.resizable().frame(width: 200, height: 200).cornerRadius(100).padding(.vertical, 30)
+                                } placeholder: {
+                                    ProgressView()
+                                        .controlSize(.large)
+                                        .frame(width: 200, height: 200)
                                 }
+                            } else {
+                                ProgressView()
+                                    .controlSize(.large)
+                                    .frame(width: 200, height: 200)
+                            }
+                        }
+                    } else {
+                        Image(uiImage: avatarImage)
+                            .resizable()
+                            .frame(width: 200, height: 200)
+                            .cornerRadius(100)
+                            .padding(.vertical, 30)
+                    }
+                }.onTapGesture { isShowingPhotoPicker.toggle() }
+                
+                if isSelectedImage {
+                    Button(action: {
+                        avatarImage = UIImage(named: "dog.png")!
+                        isSelectedImage = false
+                    }) {
+                        Text("Clear")
+                            .frame(width: 60, height: 10)
+                            .padding()
+                            .background(Color("Primary"))
+                            .cornerRadius(4)
+                    }
+                }
                 
                 HStack {
                     Text("User Name")
@@ -131,9 +131,18 @@ struct EditProfileView: View {
                         }
                         
                         var filename = currentAvatar;
-                        if imageData != nil {
-                            filename = await uploadFile(fileData: imageData!)
+                        
+                        if isSelectedImage {
+                            let idata = avatarImage.jpegData(compressionQuality: 0.5)
+                            guard idata != nil else {
+                                showAlert.toggle()
+                                alertTitle = "error"
+                                alertMessage = "Select image error, please try again later!"
+                                return
+                            }
+                            filename = await uploadFile(fileData:idata!)
                         }
+                        
                         userAuth.updateUserProfile(username: name, filename: filename)
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -148,12 +157,15 @@ struct EditProfileView: View {
             }
             .padding()
         }
+        .sheet(isPresented: $isShowingPhotoPicker, content: {
+            PhotoPicker(avatarImage: $avatarImage, isSelectImage: $isSelectedImage)
+        })
         .background(Color("Background"))
         .foregroundColor(Color("Text"))
         .onAppear {
             self.name = userAuth.username()
             if userAuth.profile != nil && userAuth.profile!.avatarUrl != nil {
-                self.currentAvatar = userAuth.profile!.avatarUrl!
+                self.userprofile = userAuth.profile!.avatarUrl!
             }
             
         }

@@ -31,6 +31,8 @@
 		36B218982BE91F3600CAE5AB /* ChatWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */; };
 		36B2189A2BE91F4C00CAE5AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218992BE91F4C00CAE5AB /* LocationManager.swift */; };
 		36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B2189B2BE91F6D00CAE5AB /* Message.swift */; };
+		791F38032C23702600B650FF /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 791F38022C23702600B650FF /* dog.png */; };
+		791F38052C23718800B650FF /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F38042C23718800B650FF /* PhotoPicker.swift */; };
 		792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */; };
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
@@ -87,6 +89,8 @@
 		36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWindowView.swift; sourceTree = "<group>"; };
 		36B218992BE91F4C00CAE5AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		36B2189B2BE91F6D00CAE5AB /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		791F38022C23702600B650FF /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		791F38042C23718800B650FF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		792A4A512BDAEB0500CBCCB1 /* Person-Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person-Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_GoApp.swift; sourceTree = "<group>"; };
 		792A4A562BDAEB0500CBCCB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -188,6 +192,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		791F38012C236F2100B650FF /* Avatar */ = {
+			isa = PBXGroup;
+			children = (
+				791F38022C23702600B650FF /* dog.png */,
+			);
+			path = Avatar;
+			sourceTree = "<group>";
+		};
 		792A4A482BDAEB0500CBCCB1 = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +221,7 @@
 		792A4A532BDAEB0500CBCCB1 /* Person-Go */ = {
 			isa = PBXGroup;
 			children = (
+				791F38012C236F2100B650FF /* Avatar */,
 				3693DFFC2BE41AC3003F83BD /* Info.plist */,
 				27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */,
 				792A4A562BDAEB0500CBCCB1 /* ContentView.swift */,
@@ -258,6 +271,7 @@
 				36B218852BE91F3600CAE5AB /* RegistrationView.swift */,
 				36B218812BE91F3600CAE5AB /* SecurityView.swift */,
 				36B218872BE91F3600CAE5AB /* SettingView.swift */,
+				791F38042C23718800B650FF /* PhotoPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -341,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791F38032C23702600B650FF /* dog.png in Resources */,
 				27FFF3E32BE50DC10008B22B /* LaunchScreen.storyboard in Resources */,
 				7F821D1E2C0D4CFD0065F261 /* blaze_rocket.gif in Resources */,
 				7F821D1C2C0D4CF10065F261 /* phoenix_inferno.gif in Resources */,
@@ -369,6 +384,7 @@
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
 				79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
+				791F38052C23718800B650FF /* PhotoPicker.swift in Sources */,
 				79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */,
 				79F660D22BFBA93200B28D79 /* Profile.swift in Sources */,
 				271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */,
@@ -557,7 +573,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dddtga-gmail.com";
+				PRODUCT_BUNDLE_IDENTIFIER = dddtga.gmail.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -595,7 +611,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "dddtga-gmail.com";
+				PRODUCT_BUNDLE_IDENTIFIER = dddtga.gmail.com;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
