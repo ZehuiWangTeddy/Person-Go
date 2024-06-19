@@ -1,6 +1,5 @@
 import Foundation
 
-
 struct Message: Hashable, Decodable, Encodable {
     var messageId: Int
     var message: String

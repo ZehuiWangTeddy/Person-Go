@@ -32,6 +32,13 @@
 		36B218982BE91F3600CAE5AB /* ChatWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */; };
 		36B2189A2BE91F4C00CAE5AB /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B218992BE91F4C00CAE5AB /* LocationManager.swift */; };
 		36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36B2189B2BE91F6D00CAE5AB /* Message.swift */; };
+		791F380A2C23892D00B650FF /* Quickstrike_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 791F38092C23892D00B650FF /* Quickstrike_walking.gif */; };
+		791F380C2C23894C00B650FF /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F380B2C23894C00B650FF /* UserManager.swift */; };
+		791F380E2C2389D400B650FF /* InventoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F380D2C2389D400B650FF /* InventoryData.swift */; };
+		791F38112C238AB000B650FF /* dog.png in Resources */ = {isa = PBXBuildFile; fileRef = 791F38102C238AB000B650FF /* dog.png */; };
+		791F38142C238B7B00B650FF /* Nuke in Frameworks */ = {isa = PBXBuildFile; productRef = 791F38132C238B7B00B650FF /* Nuke */; };
+		791F38162C238B7B00B650FF /* NukeUI in Frameworks */ = {isa = PBXBuildFile; productRef = 791F38152C238B7B00B650FF /* NukeUI */; };
+		791F38182C238D7700B650FF /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 791F38172C238D7700B650FF /* PhotoPicker.swift */; };
 		792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */; };
 		792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 792A4A562BDAEB0500CBCCB1 /* ContentView.swift */; };
 		792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */; };
@@ -43,13 +50,11 @@
 		79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE802C16526300A33023 /* FriendInfo.swift */; };
 		79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79D9AE822C16529B00A33023 /* AddFriendView.swift */; };
 		79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CB2BFBA2D800B28D79 /* ChatManager.swift */; };
-		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
 		79F660D22BFBA93200B28D79 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660D12BFBA93200B28D79 /* Profile.swift */; };
 		7F1E11C32C2323040002BDCF /* TaskViewLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */; };
 		7F1E11C52C2326AF0002BDCF /* MissileClaimedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */; };
 		7F1E11C72C23724D0002BDCF /* Quickstrike_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E11C62C23724D0002BDCF /* Quickstrike_walking.gif */; };
-		7F34209D2C077E6C00323B0F /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F34209C2C077E6C00323B0F /* AccountView.swift */; };
 		7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81FBE62C0D963400494DA8 /* NotificationManager.swift */; };
 		7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0C2C0D2B370065F261 /* InventoryManager.swift */; };
 		7F821D0F2C0D2F3F0065F261 /* UserInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */; };
@@ -60,12 +65,10 @@
 		7F821D1E2C0D4CFD0065F261 /* blaze_rocket.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */; };
 		7F86F7F92C1F83B6004E26ED /* Blaze_rocket_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F7F82C1F83B6004E26ED /* Blaze_rocket_walking.gif */; };
 		7F86F7FB2C1F83C0004E26ED /* Phoenix_inferno_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F7FA2C1F83C0004E26ED /* Phoenix_inferno_walking.gif */; };
-		7F86F7FD2C1F83C9004E26ED /* Quickstrike_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F7FC2C1F83C9004E26ED /* Quickstrike_walking.gif */; };
 		7F86F7FF2C1F83D7004E26ED /* Blaze_rocket_celebration.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */; };
 		7F86F8012C1F83DF004E26ED /* Quickstrike_celebration.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */; };
 		7F86F8032C1F83EB004E26ED /* Phoenix_inferno_celebration.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */; };
 		7F8930F82C19FA8C00CAD4E1 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F8930F72C19FA8C00CAD4E1 /* Config.plist */; };
-		7F8930FC2C1A017C00CAD4E1 /* InventoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8930FB2C1A017C00CAD4E1 /* InventoryData.swift */; };
 		7F8C54B42C1B7279007BE55A /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C54B32C1B7279007BE55A /* TaskView.swift */; };
 		7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C202BF8F0B30035DF7B /* Friend.swift */; };
 		7F8D6C232BF8F0EF0035DF7B /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */; };
@@ -98,6 +101,11 @@
 		36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWindowView.swift; sourceTree = "<group>"; };
 		36B218992BE91F4C00CAE5AB /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		36B2189B2BE91F6D00CAE5AB /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		791F38092C23892D00B650FF /* Quickstrike_walking.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Quickstrike_walking.gif; sourceTree = "<group>"; };
+		791F380B2C23894C00B650FF /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		791F380D2C2389D400B650FF /* InventoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InventoryData.swift; sourceTree = "<group>"; };
+		791F38102C238AB000B650FF /* dog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dog.png; sourceTree = "<group>"; };
+		791F38172C238D7700B650FF /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 		792A4A512BDAEB0500CBCCB1 /* Person-Go.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Person-Go.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person_GoApp.swift; sourceTree = "<group>"; };
 		792A4A562BDAEB0500CBCCB1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -112,7 +120,6 @@
 		79D9AE802C16526300A33023 /* FriendInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendInfo.swift; path = "Person-Go/Model/FriendInfo.swift"; sourceTree = SOURCE_ROOT; };
 		79D9AE822C16529B00A33023 /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		79F660CB2BFBA2D800B28D79 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
-		79F660CD2BFBA84500B28D79 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		79F660CF2BFBA87000B28D79 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		79F660D12BFBA93200B28D79 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewLocationManager.swift; sourceTree = "<group>"; };
@@ -130,12 +137,10 @@
 		7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = blaze_rocket.gif; sourceTree = "<group>"; };
 		7F86F7F82C1F83B6004E26ED /* Blaze_rocket_walking.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Blaze_rocket_walking.gif; sourceTree = "<group>"; };
 		7F86F7FA2C1F83C0004E26ED /* Phoenix_inferno_walking.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Phoenix_inferno_walking.gif; sourceTree = "<group>"; };
-		7F86F7FC2C1F83C9004E26ED /* Quickstrike_walking.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = Quickstrike_walking.gif; path = ../../../../../../Downloads/Quickstrike_walking.gif; sourceTree = "<group>"; };
 		7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Blaze_rocket_celebration.gif; sourceTree = "<group>"; };
 		7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Quickstrike_celebration.gif; sourceTree = "<group>"; };
 		7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Phoenix_inferno_celebration.gif; sourceTree = "<group>"; };
 		7F8930F72C19FA8C00CAD4E1 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
-		7F8930FB2C1A017C00CAD4E1 /* InventoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryData.swift; sourceTree = "<group>"; };
 		7F8C54B32C1B7279007BE55A /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		7F8D6C202BF8F0B30035DF7B /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
@@ -148,9 +153,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				791F38162C238B7B00B650FF /* NukeUI in Frameworks */,
 				270EB82A2C2315110012E77F /* Toast in Frameworks */,
 				7F821D142C0D48970065F261 /* SDWebImageSwiftUI in Frameworks */,
 				3693DFF62BE40892003F83BD /* Supabase in Frameworks */,
+				791F38142C238B7B00B650FF /* Nuke in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +183,7 @@
 				7F821D0C2C0D2B370065F261 /* InventoryManager.swift */,
 				36B218992BE91F4C00CAE5AB /* LocationManager.swift */,
 				7F81FBE62C0D963400494DA8 /* NotificationManager.swift */,
+				791F380B2C23894C00B650FF /* UserManager.swift */,
 				7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */,
 			);
 			path = Managers;
@@ -202,6 +210,7 @@
 			children = (
 				79F660CF2BFBA87000B28D79 /* ChatMessage.swift */,
 				7F8D6C202BF8F0B30035DF7B /* Friend.swift */,
+				791F380D2C2389D400B650FF /* InventoryData.swift */,
 				79D9AE802C16526300A33023 /* FriendInfo.swift */,
 				36B2189B2BE91F6D00CAE5AB /* Message.swift */,
 				7F821D102C0D30610065F261 /* Missile.swift */,
@@ -212,6 +221,21 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		791F38082C2388B600B650FF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		791F380F2C238A9900B650FF /* Avatar */ = {
+			isa = PBXGroup;
+			children = (
+				791F38102C238AB000B650FF /* dog.png */,
+			);
+			path = Avatar;
+			sourceTree = "<group>";
+		};
 		792A4A482BDAEB0500CBCCB1 = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +243,7 @@
 				79D9AE7F2C16524100A33023 /* Release.xcconfig */,
 				792A4A532BDAEB0500CBCCB1 /* Person-Go */,
 				792A4A522BDAEB0500CBCCB1 /* Products */,
+				791F38082C2388B600B650FF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -233,6 +258,7 @@
 		792A4A532BDAEB0500CBCCB1 /* Person-Go */ = {
 			isa = PBXGroup;
 			children = (
+				791F380F2C238A9900B650FF /* Avatar */,
 				3693DFFC2BE41AC3003F83BD /* Info.plist */,
 				27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */,
 				792A4A562BDAEB0500CBCCB1 /* ContentView.swift */,
@@ -262,9 +288,7 @@
 		792A4A622BDB04C600CBCCB1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
 				79641E7A2C092016006C6F3B /* AccountView.swift */,
-				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				36B218892BE91F3600CAE5AB /* AuthenticationView.swift */,
 				79641E7C2C092028006C6F3B /* ChangeEmailView.swift */,
 				79641E762C091FEE006C6F3B /* ChangePasswordView.swift */,
@@ -276,22 +300,20 @@
 				7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */,
 				36B218842BE91F3600CAE5AB /* LoginView.swift */,
 				36B218802BE91F3600CAE5AB /* MapView.swift */,
-				7F6937D92C091D5B0043B740 /* MissileMapView.swift */,
-				7F8D6C262BF9079A0035DF7B /* NotificationView.swift */,
 				36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */,
 				36B218882BE91F3600CAE5AB /* ProflieView.swift */,
 				36B218852BE91F3600CAE5AB /* RegistrationView.swift */,
 				36B218812BE91F3600CAE5AB /* SecurityView.swift */,
 				36B218872BE91F3600CAE5AB /* SettingView.swift */,
-				792A4A6B2BDB056D00CBCCB1 /* SettingView.swift */,
 				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
 				7F8D6C262BF9079A0035DF7B /* NotificationView.swift */,
 				7F34209C2C077E6C00323B0F /* AccountView.swift */,
 				7F3420A02C07864B00323B0F /* ChangeEmailView.swift */,
 				7F3420A22C07867200323B0F /* ChangePasswordView.swift */,
-				79D9AE822C16529B00A33023 /* SearchFriendView.swift */,
+				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				7F8C54B32C1B7279007BE55A /* TaskView.swift */,
 				7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */,
+				791F38172C238D7700B650FF /* PhotoPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -303,7 +325,7 @@
 				7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */,
 				7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */,
 				7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */,
-				7F86F7FC2C1F83C9004E26ED /* Quickstrike_walking.gif */,
+				791F38092C23892D00B650FF /* Quickstrike_walking.gif */,
 				7F86F7FA2C1F83C0004E26ED /* Phoenix_inferno_walking.gif */,
 				7F86F7F82C1F83B6004E26ED /* Blaze_rocket_walking.gif */,
 				7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */,
@@ -333,6 +355,8 @@
 				3693DFF52BE40892003F83BD /* Supabase */,
 				7F821D132C0D48970065F261 /* SDWebImageSwiftUI */,
 				270EB8292C2315110012E77F /* Toast */,
+				791F38132C238B7B00B650FF /* Nuke */,
+				791F38152C238B7B00B650FF /* NukeUI */,
 			);
 			productName = "Person-Go";
 			productReference = 792A4A512BDAEB0500CBCCB1 /* Person-Go.app */;
@@ -366,6 +390,7 @@
 				3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				270EB8282C2315110012E77F /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				791F38122C238B7B00B650FF /* XCRemoteSwiftPackageReference "Nuke" */,
 			);
 			productRefGroup = 792A4A522BDAEB0500CBCCB1 /* Products */;
 			projectDirPath = "";
@@ -387,13 +412,14 @@
 				792A4A5C2BDAEB0800CBCCB1 /* Preview Assets.xcassets in Resources */,
 				7F821D1A2C0D4CE50065F261 /* quickstrike.gif in Resources */,
 				7F86F7F92C1F83B6004E26ED /* Blaze_rocket_walking.gif in Resources */,
+				791F38112C238AB000B650FF /* dog.png in Resources */,
 				792A4A592BDAEB0800CBCCB1 /* Assets.xcassets in Resources */,
 				7F86F8032C1F83EB004E26ED /* Phoenix_inferno_celebration.gif in Resources */,
 				7F1E11C72C23724D0002BDCF /* Quickstrike_walking.gif in Resources */,
-				7F86F7FD2C1F83C9004E26ED /* Quickstrike_walking.gif in Resources */,
 				7F86F7FF2C1F83D7004E26ED /* Blaze_rocket_celebration.gif in Resources */,
 				7F86F8012C1F83DF004E26ED /* Quickstrike_celebration.gif in Resources */,
 				7F86F7FB2C1F83C0004E26ED /* Phoenix_inferno_walking.gif in Resources */,
+				791F380A2C23892D00B650FF /* Quickstrike_walking.gif in Resources */,
 				7F8930F82C19FA8C00CAD4E1 /* Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -415,13 +441,12 @@
 				36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */,
 				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
+				791F380E2C2389D400B650FF /* InventoryData.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
 				79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
-				79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */,
 				79F660D22BFBA93200B28D79 /* Profile.swift in Sources */,
 				271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */,
-				7F8930FC2C1A017C00CAD4E1 /* InventoryData.swift in Sources */,
 				36B2188D2BE91F3600CAE5AB /* MapView.swift in Sources */,
 				79641E7B2C092016006C6F3B /* AccountView.swift in Sources */,
 				36B2189A2BE91F4C00CAE5AB /* LocationManager.swift in Sources */,
@@ -434,6 +459,7 @@
 				36B218962BE91F3600CAE5AB /* AuthenticationView.swift in Sources */,
 				36B218912BE91F3600CAE5AB /* LoginView.swift in Sources */,
 				7F8D6C232BF8F0EF0035DF7B /* LaunchListView.swift in Sources */,
+				791F38182C238D7700B650FF /* PhotoPicker.swift in Sources */,
 				36B218932BE91F3600CAE5AB /* ChatsView.swift in Sources */,
 				7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */,
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
@@ -451,6 +477,7 @@
 				79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */,
 				271E22672BF9E292008FCA91 /* ProfileCRUD.swift in Sources */,
 				79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */,
+				791F380C2C23894C00B650FF /* UserManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -694,6 +721,14 @@
 				minimumVersion = 2.5.1;
 			};
 		};
+		791F38122C238B7B00B650FF /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.7.2;
+			};
+		};
 		7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -714,6 +749,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */;
 			productName = Supabase;
+		};
+		791F38132C238B7B00B650FF /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 791F38122C238B7B00B650FF /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		791F38152C238B7B00B650FF /* NukeUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 791F38122C238B7B00B650FF /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = NukeUI;
 		};
 		7F821D132C0D48970065F261 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;
