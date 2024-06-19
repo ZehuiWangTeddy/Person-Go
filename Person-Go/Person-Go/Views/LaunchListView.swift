@@ -13,11 +13,13 @@ struct LaunchListView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var friends: [Friend1] = []
     @Environment(\.colorScheme) var colorScheme
-    @State private var selectedFriends: Set<UUID> = []
+    @State private var selectedFriend: UUID?
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
     var selectedSize: String?
     @EnvironmentObject var userAuth: UserAuth
+    @State private var showingAlert = false
+    @State private var message = ""
 
     var user_id: String {
         return userAuth.user!.id.uuidString
@@ -39,12 +41,12 @@ struct LaunchListView: View {
                         .frame(height: 2)
 
                 List(friends, id: \.id) { friend in
-                    FriendRow(friend: friend, isSelected: self.selectedFriends.contains(friend.id))
+                    FriendRow(friend: friend, isSelected: self.selectedFriend == friend.id)
                             .onTapGesture {
-                                if self.selectedFriends.contains(friend.id) {
-                                    self.selectedFriends.remove(friend.id)
+                                if self.selectedFriend == friend.id {
+                                    self.selectedFriend = nil
                                 } else {
-                                    self.selectedFriends.insert(friend.id)
+                                    self.selectedFriend = friend.id
                                 }
                             }
                             .listRowBackground(Color("Background"))
@@ -61,12 +63,15 @@ struct LaunchListView: View {
                             .font(.title3)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(selectedFriends.isEmpty ? Color.gray : Color("Primary"))
+                            .background(selectedFriend == nil ? Color.gray : Color("Primary"))
                             .foregroundColor(Color("Text"))
                             .cornerRadius(10)
                 }
                         .padding(.top, 40)
-                        .disabled(selectedFriends.isEmpty)
+                        .disabled(selectedFriend == nil)
+                        .alert(isPresented: $showingAlert) {
+                            Alert(title: Text("Failed to launch missile"), message: Text(message), dismissButton: .default(Text("OK")))
+                        }
             }
                     .padding()
                     .background(Color("Background"))
@@ -82,21 +87,50 @@ struct LaunchListView: View {
 
     private func confirmAction() {
         let selected = friends.filter {
-            selectedFriends.contains($0.id)
+            selectedFriend == $0.id
         }
-        print("Selected friends: \(selected.map { $0.name })")
-        selectedFriendsStore.friends = selected
-        selectedFriendsStore.selectedSize = selectedSize
-        DispatchQueue.main.async {
-            selectedFriendsStore.friends = selected
-        }
-        selectedTab = "Map"
 
         for friend in selected {
             Task {
-                await insertLaunch(user_id: UUID(uuidString: user_id)!, target_id: friend.friendId!, launch_type: selectedSize ?? "Phoenix Inferno")
+                // Fetch the current inventory
+                let currentInventory = await fetchInventory(for: UUID(uuidString: user_id)!)
+
+                // Check if the selected missile type is not zero
+                let missileCount: Int
+                switch selectedSize {
+                case "Quickstrike":
+                    missileCount = currentInventory?.small ?? 0
+                case "Blaze Rocket":
+                    missileCount = currentInventory?.medium ?? 0
+                case "Phoenix Inferno":
+                    missileCount = currentInventory?.large ?? 0
+                default:
+                    missileCount = 0
+                }
+
+                if missileCount > 0 {
+                    let launchSuccess = await insertLaunch(user_id: UUID(uuidString: user_id)!, target_id: friend.friendId!, launch_type: selectedSize ?? "Phoenix Inferno")
+                    let inventorySuccess = await decreaseInventory(for: UUID(uuidString: user_id)!, missileType: selectedSize ?? "Phoenix Inferno")
+                    if launchSuccess && inventorySuccess {
+                        selectedFriendsStore.friends = selected
+                        selectedFriendsStore.selectedSize = selectedSize
+                        DispatchQueue.main.async {
+                            selectedFriendsStore.friends = selected
+                        }
+                        selectedTab = "Map"
+                    } else {
+                        DispatchQueue.main.async {
+                            message = "An error occurred while launching the missile. Please try again."
+                            showingAlert = true
+                        }
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        message = "You do not have enough missiles to launch. Please get more missiles. Go to Add missile page to get more missiles"
+                        showingAlert = true
+                    }
+                }
             }
-//            print(friend.friendId)
         }
     }
 

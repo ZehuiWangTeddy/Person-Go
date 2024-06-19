@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		270EB82A2C2315110012E77F /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 270EB8292C2315110012E77F /* Toast */; };
 		271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */; };
 		271DF0582BE199FF007DC5F7 /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */; };
 		271E22652BF9E288008FCA91 /* LocationCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E22642BF9E288008FCA91 /* LocationCRUD.swift */; };
@@ -123,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				270EB82A2C2315110012E77F /* Toast in Frameworks */,
 				7F821D142C0D48970065F261 /* SDWebImageSwiftUI in Frameworks */,
 				3693DFF62BE40892003F83BD /* Supabase in Frameworks */,
 			);
@@ -290,6 +292,7 @@
 			packageProductDependencies = (
 				3693DFF52BE40892003F83BD /* Supabase */,
 				7F821D132C0D48970065F261 /* SDWebImageSwiftUI */,
+				270EB8292C2315110012E77F /* Toast */,
 			);
 			productName = "Person-Go";
 			productReference = 792A4A512BDAEB0500CBCCB1 /* Person-Go.app */;
@@ -322,6 +325,7 @@
 			packageReferences = (
 				3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */,
 				7F821D122C0D48970065F261 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
+				270EB8282C2315110012E77F /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = 792A4A522BDAEB0500CBCCB1 /* Products */;
 			projectDirPath = "";
@@ -624,6 +628,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		270EB8282C2315110012E77F /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
 		3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/supabase-community/supabase-swift.git";
@@ -643,6 +655,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		270EB8292C2315110012E77F /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 270EB8282C2315110012E77F /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
 		3693DFF52BE40892003F83BD /* Supabase */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3693DFF42BE4080C003F83BD /* XCRemoteSwiftPackageReference "supabase-swift" */;

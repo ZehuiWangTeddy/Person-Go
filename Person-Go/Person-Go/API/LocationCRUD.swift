@@ -68,19 +68,6 @@ public func fetchSenderLocation(receiverId: UUID) async -> [LaunchView] {
     }
 }
 
-struct AnyEncodable: Encodable {
-    let value: Encodable
-
-    init(_ value: Encodable) {
-        self.value = value
-    }
-
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try value.encode(to: encoder)
-    }
-}
-
 public struct launchData: Codable {
     var user_id: UUID?
     var target_id: UUID?
@@ -106,15 +93,17 @@ public func insertLocation(user_id: UUID, latitude: Double, longitude: Double) a
 }
 
 
-public func insertLaunch(user_id: UUID, target_id: UUID, launch_type: String) async {
+public func insertLaunch(user_id: UUID, target_id: UUID, launch_type: String) async -> Bool {
     do {
         let _ = try await supabase
                 .from("launches")
                 .insert(launchData(user_id: user_id, target_id: target_id, launch_type: launch_type))
                 .execute()
         print("Launch inserted successfully")
+        return true
     } catch {
         print("Failed to insert launch: \(error)")
+        return false
     }
 }
 

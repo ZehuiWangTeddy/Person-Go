@@ -19,9 +19,9 @@ struct InventoryView: View {
 
 
     let missileData = [
-        ("Quickstrike", "5km", "quickstrike.gif"),
-        ("Blaze Rocket", "10km", "blaze_rocket.gif"),
-        ("Phoenix Inferno", "50km", "phoenix_inferno.gif")
+        ("Quickstrike", "100m", "quickstrike.gif"),
+        ("Blaze Rocket", "500m", "blaze_rocket.gif"),
+        ("Phoenix Inferno", "1km", "phoenix_inferno.gif")
     ]
 
     var body: some View {
@@ -81,7 +81,7 @@ struct InventoryView: View {
                                 .cornerRadius(10)
                     }
                             .padding(.top, 40)
-                            .disabled(selectedSize == nil)
+                            .disabled(selectedSize == nil || inventoryValue(for: selectedSize!) <= 0)
                 }
                         .padding()
             }
