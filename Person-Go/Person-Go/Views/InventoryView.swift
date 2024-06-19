@@ -7,7 +7,7 @@ struct InventoryView: View {
     @Environment(\.colorScheme) var colorScheme
     @State private var selectedSize: String? = nil
     @State private var navigateToLaunchListView = false
-    @State private var navigateToTestView = false // Updated to reflect the new view
+    @State private var navigateToTaskView = false // Updated to reflect the new view
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
     @State private var inventory: UserInventory = UserInventory(small: 0, medium: 0, large: 0)
@@ -82,14 +82,14 @@ struct InventoryView: View {
             }
             .background(Color("Background"))
             .navigationBarItems(trailing: Button(action: {
-                navigateToTestView = true // Updated action to navigate to TestView
+                navigateToTaskView = true // Updated action to navigate to TestView
             }) {
                 Text("Add Missile")
                     .foregroundColor(Color("Primary"))
             })
-            .navigationDestination(isPresented: $navigateToTestView) {
+            .navigationDestination(isPresented: $navigateToTaskView) {
                 if let userId = userId {
-                    TestView(inventory: $inventory, userId: userId) // Pass userId to TestView
+                    TaskView(inventory: $inventory, userId: userId) // Pass userId to TestView
                 } else {
                     Text("User ID not available") // Fallback if userId is not set
                 }

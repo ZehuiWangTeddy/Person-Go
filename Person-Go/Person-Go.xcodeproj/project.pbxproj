@@ -47,8 +47,9 @@
 		79F660CE2BFBA84500B28D79 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CD2BFBA84500B28D79 /* UserManager.swift */; };
 		79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660CF2BFBA87000B28D79 /* ChatMessage.swift */; };
 		79F660D22BFBA93200B28D79 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F660D12BFBA93200B28D79 /* Profile.swift */; };
+		7F1E11C32C2323040002BDCF /* TaskViewLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */; };
+		7F1E11C52C2326AF0002BDCF /* MissileClaimedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */; };
 		7F34209D2C077E6C00323B0F /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F34209C2C077E6C00323B0F /* AccountView.swift */; };
-		7F6937DA2C091D5B0043B740 /* MissileMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6937D92C091D5B0043B740 /* MissileMapView.swift */; };
 		7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81FBE62C0D963400494DA8 /* NotificationManager.swift */; };
 		7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0C2C0D2B370065F261 /* InventoryManager.swift */; };
 		7F821D0F2C0D2F3F0065F261 /* UserInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */; };
@@ -63,10 +64,9 @@
 		7F86F7FF2C1F83D7004E26ED /* Blaze_rocket_celebration.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */; };
 		7F86F8012C1F83DF004E26ED /* Quickstrike_celebration.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */; };
 		7F86F8032C1F83EB004E26ED /* Phoenix_inferno_celebration.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */; };
-		7F8930F62C19846D00CAD4E1 /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8930F52C19846D00CAD4E1 /* TaskView.swift */; };
 		7F8930F82C19FA8C00CAD4E1 /* Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7F8930F72C19FA8C00CAD4E1 /* Config.plist */; };
 		7F8930FC2C1A017C00CAD4E1 /* InventoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8930FB2C1A017C00CAD4E1 /* InventoryData.swift */; };
-		7F8C54B42C1B7279007BE55A /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C54B32C1B7279007BE55A /* TestView.swift */; };
+		7F8C54B42C1B7279007BE55A /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8C54B32C1B7279007BE55A /* TaskView.swift */; };
 		7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C202BF8F0B30035DF7B /* Friend.swift */; };
 		7F8D6C232BF8F0EF0035DF7B /* LaunchListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */; };
 		7F8D6C252BF901C80035DF7B /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8D6C242BF901C80035DF7B /* AboutView.swift */; };
@@ -119,10 +119,11 @@
 		79F660CD2BFBA84500B28D79 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		79F660CF2BFBA87000B28D79 /* ChatMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		79F660D12BFBA93200B28D79 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewLocationManager.swift; sourceTree = "<group>"; };
+		7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissileClaimedView.swift; sourceTree = "<group>"; };
 		7F34209C2C077E6C00323B0F /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		7F3420A02C07864B00323B0F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		7F3420A22C07867200323B0F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
-		7F6937D92C091D5B0043B740 /* MissileMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissileMapView.swift; sourceTree = "<group>"; };
 		7F81FBE62C0D963400494DA8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		7F821D0C2C0D2B370065F261 /* InventoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryManager.swift; sourceTree = "<group>"; };
 		7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInventory.swift; sourceTree = "<group>"; };
@@ -136,10 +137,9 @@
 		7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Blaze_rocket_celebration.gif; sourceTree = "<group>"; };
 		7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Quickstrike_celebration.gif; sourceTree = "<group>"; };
 		7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Phoenix_inferno_celebration.gif; sourceTree = "<group>"; };
-		7F8930F52C19846D00CAD4E1 /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		7F8930F72C19FA8C00CAD4E1 /* Config.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Config.plist; sourceTree = "<group>"; };
 		7F8930FB2C1A017C00CAD4E1 /* InventoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryData.swift; sourceTree = "<group>"; };
-		7F8C54B32C1B7279007BE55A /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		7F8C54B32C1B7279007BE55A /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
 		7F8D6C202BF8F0B30035DF7B /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 		7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchListView.swift; sourceTree = "<group>"; };
 		7F8D6C242BF901C80035DF7B /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -179,6 +179,7 @@
 				79F660CD2BFBA84500B28D79 /* UserManager.swift */,
 				7F821D0C2C0D2B370065F261 /* InventoryManager.swift */,
 				7F81FBE62C0D963400494DA8 /* NotificationManager.swift */,
+				7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -292,10 +293,9 @@
 				7F34209C2C077E6C00323B0F /* AccountView.swift */,
 				7F3420A02C07864B00323B0F /* ChangeEmailView.swift */,
 				7F3420A22C07867200323B0F /* ChangePasswordView.swift */,
-				7F6937D92C091D5B0043B740 /* MissileMapView.swift */,
 				79D9AE822C16529B00A33023 /* SearchFriendView.swift */,
-				7F8930F52C19846D00CAD4E1 /* TaskView.swift */,
-				7F8C54B32C1B7279007BE55A /* TestView.swift */,
+				7F8C54B32C1B7279007BE55A /* TaskView.swift */,
+				7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -418,6 +418,7 @@
 				36B2188E2BE91F3600CAE5AB /* SecurityView.swift in Sources */,
 				79641E772C091FEE006C6F3B /* ChangePasswordView.swift in Sources */,
 				36B218982BE91F3600CAE5AB /* ChatWindowView.swift in Sources */,
+				7F1E11C52C2326AF0002BDCF /* MissileClaimedView.swift in Sources */,
 				36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */,
 				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
@@ -433,6 +434,7 @@
 				79641E7B2C092016006C6F3B /* AccountView.swift in Sources */,
 				36B2189A2BE91F4C00CAE5AB /* LocationManager.swift in Sources */,
 				36B218952BE91F3600CAE5AB /* ProflieView.swift in Sources */,
+				7F1E11C32C2323040002BDCF /* TaskViewLocationManager.swift in Sources */,
 				7F821D112C0D30610065F261 /* Missile.swift in Sources */,
 				7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */,
 				79F660CC2BFBA2D800B28D79 /* ChatManager.swift in Sources */,
@@ -443,7 +445,6 @@
 				7F8D6C232BF8F0EF0035DF7B /* LaunchListView.swift in Sources */,
 				36B218932BE91F3600CAE5AB /* ChatsView.swift in Sources */,
 				7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */,
-				7F6937DA2C091D5B0043B740 /* MissileMapView.swift in Sources */,
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
 				7F34209D2C077E6C00323B0F /* AccountView.swift in Sources */,
 				7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */,
@@ -454,10 +455,9 @@
 				7F8D6C252BF901C80035DF7B /* AboutView.swift in Sources */,
 				36B2188C2BE91F3600CAE5AB /* PasswordResetView.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
-				7F8C54B42C1B7279007BE55A /* TestView.swift in Sources */,
+				7F8C54B42C1B7279007BE55A /* TaskView.swift in Sources */,
 				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
 				792A4A572BDAEB0500CBCCB1 /* ContentView.swift in Sources */,
-				7F8930F62C19846D00CAD4E1 /* TaskView.swift in Sources */,
 				792A4A552BDAEB0500CBCCB1 /* Person_GoApp.swift in Sources */,
 				271DF0582BE199FF007DC5F7 /* MapViewContainer.swift in Sources */,
 				79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */,
