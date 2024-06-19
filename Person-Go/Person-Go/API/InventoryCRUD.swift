@@ -21,15 +21,15 @@ public struct Inventory: Codable {
     }
 }
 
-    
-    public func fetchInventory(for userId: UUID) async -> Inventory? {
+
+public func fetchInventory(for userId: UUID) async -> Inventory? {
     do {
         let inventory: [Inventory] = try await supabase
-            .from("inventories")
-            .select()
-            .eq("user_id", value: userId)
-            .execute()
-            .value
+                .from("inventories")
+                .select()
+                .eq("user_id", value: userId)
+                .execute()
+                .value
         print("Fetched inventory: \(inventory)")
         return inventory.first
     } catch {
@@ -38,6 +38,54 @@ public struct Inventory: Codable {
     }
 }
 
+public struct AnyEncodable: Encodable {
+    let value: Encodable
+
+    public func encode(to encoder: Encoder) throws {
+        try value.encode(to: encoder)
+    }
+}
+
+public func decreaseInventory(for userId: UUID, missileType: String) async -> Bool {
+    do {
+        var inventory = try! await fetchInventory(for: userId)
+        switch missileType {
+        case "Quickstrike":
+            let newSmallCount = (inventory?.small ?? 0) - 1
+            let _ = try await supabase
+                    .from("inventories")
+                    .update(["small": newSmallCount])
+                    .eq("user_id", value: userId.uuidString)
+                    .execute()
+            print("Inventory updated")
+            return true
+
+        case "Blaze Rocket":
+            let newMediumCount = (inventory?.medium ?? 0) - 1
+            let _ = try await supabase
+                    .from("inventories")
+                    .update(["medium": newMediumCount])
+                    .eq("user_id", value: userId.uuidString)
+                    .execute()
+            print("Inventory updated")
+            return true
+
+        case "Phoenix Inferno":
+            let newLargeCount = (inventory?.large ?? 0) - 1
+            let _ = try await supabase
+                    .from("inventories")
+                    .update(["large": newLargeCount])
+                    .eq("user_id", value: userId.uuidString)
+                    .execute()
+            print("Inventory updated")
+            return true
+        default:
+            print("Inventory not updated")
+            return false
+        }
+    } catch {
+        print("Failed to update inventory: \(error)")
+        return false
 public func incrementInventoryItem(for userId: UUID, item: String, increment: Int = 1) async throws -> Bool {
     do {
         // Fetch the current inventory for the user
