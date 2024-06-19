@@ -1,87 +1,88 @@
 import SwiftUI
+import Supabase
 
 struct SettingView: View {
-    @Environment(\.colorScheme) var colorScheme
+    let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
+    
     @State private var showLoginView = false
     @EnvironmentObject var userAuth: UserAuth
     
+    @State private var showingAlert = false
+    @State private var alertTitle = ""
+    @State private var alertMessage = ""
+    
     var body: some View {
-        ZStack {
-            Color("Background")
-                .edgesIgnoringSafeArea(.all)
-            NavigationView {
-                ScrollView {
-                    VStack {
-                        VStack(alignment: .leading) {
-                            Text("Settings")
-                                .font(.largeTitle)
-                                .bold()
-                            Divider()
-                                .frame(height: 2)
-                        }
-                        .padding(.bottom, 0)
-                        .padding(.horizontal)
-                        
-                        VStack(alignment: .leading) {
-                            ForEach(["Account", "Notification", "Security", "About"], id: \.self) { item in
-                                if item == "Account" {
-                                    NavigationLink(destination: AccountView()) {
-                                        Text(item)
-                                            .font(.title2)
-                                            .padding()
-                                    }
-                                    .background(Color.clear)
-                                    .foregroundColor(Color("Text"))
-                                } else if item == "Security" {
-                                    NavigationLink(destination: SecurityView()) {
-                                        Text(item)
-                                            .font(.title2)
-                                            .padding()
-                                    }
-                                    .background(Color.clear)
-                                    .foregroundColor(Color("Text"))
-                                } else if item == "Notification" {
-                                    NavigationLink(destination: NotificationView()) {
-                                        Text(item)
-                                            .font(.title2)
-                                            .padding()
-                                    }
-                                    .background(Color.clear)
-                                    .foregroundColor(Color("Text"))
-                                } else if item == "About" {
-                                    NavigationLink(destination: AboutView()) {
-                                        Text(item)
-                                            .font(.title2)
-                                            .padding()
-                                    }
-                                    .background(Color.clear)
-                                    .foregroundColor(Color("Text"))
-                                }
-                                Divider()
-                            }
-                        }
-                        .padding(.horizontal)
-                        
-                        Button(action: {
-                            showLoginView = true
-                        }) {
-                            Text("Log out")
-                                .font(.title3)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color("Primary"))
-                                .foregroundColor(Color("Text"))
-                                .cornerRadius(4)
-                        }
-                        .fullScreenCover(isPresented: $showLoginView) {
-                            LoginView()
-                        }
-                        .padding(.top, 40)
-                    }
-                    .padding()
+        NavigationView {
+            VStack(spacing: 20) {
+                HStack {
+                    Text("Settings")
+                        .font(.largeTitle)
+                        .bold()
+                    Spacer()
                 }
-                .background(Color("Background"))
+                Divider()
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        NavigationLink(destination: AccountView()) {
+                            Text("Account")
+                        }
+                        Divider()
+                        NavigationLink(destination: SecurityView()) {
+                            Text("Security")
+                        }
+                        Divider()
+                        NavigationLink(destination: NotificationView()) {
+                            Text("Notification")
+                        }
+                        Divider()
+                        NavigationLink(destination: AboutView()) {
+                            Text("About")
+                        }
+                        Divider()
+                    }
+                }
+                Button(action: {
+                    Task {
+                        await signOut()
+                    }
+                }) {
+                    Text("Log out")
+                        .font(.title3)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color("Primary"))
+                        .foregroundColor(Color("Text"))
+                        .cornerRadius(8)
+                }
             }
+            .padding()
+            .background(Color("Background"))
+            .foregroundColor(Color("Text"))
+        }
+        .fullScreenCover(isPresented: $showLoginView) {
+            LoginView()
+        }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text(alertTitle), message: Text(alertMessage))
+        }
+    }
+    
+    private func signOut() async {
+        do {
+            try await client.auth.signOut()
+            userAuth.isLoggedin = false
+            showLoginView = true
+        } catch {
+            showPopup(title: "Error", message: "There was an error logging out!")
+            print("error: \(error)")
+        }
+    }
+
+    private func showPopup(title: String, message: String) {
+        DispatchQueue.main.async {
+            self.alertTitle = title
+            self.alertMessage = message
+            self.showingAlert = true
         }
     }
 }
