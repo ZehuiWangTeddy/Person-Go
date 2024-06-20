@@ -159,7 +159,6 @@ struct ChatWindowView: View {
             Task {
                 let message = try await chatManager.sendMessage(sentId: userAuth.user!.id, receiverId: friend.friendId, content: temp)
                 let channelName = chatManager.getRoomChannel(u1: userAuth.user!.id, u2: friend.friendId)
-                await chatManager.broadcastNewMessageEvent(cname: channelName, newMessage: message)
             }
         }
     }
@@ -289,11 +288,11 @@ struct ChatWindowView: View {
                 joinRoom()
             }
             .onDisappear {
-                //                if self.channel != nil {
-                //                    Task {
-                //                        await self.channel!.unsubscribe()
-                //                    }
-                //                }
+                if self.channel != nil {
+                    Task {
+                        await self.channel?.unsubscribe()
+                    }
+                }
             }
         
     }

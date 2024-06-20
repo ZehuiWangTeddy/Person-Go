@@ -142,17 +142,28 @@ struct ChatsView: View {
                     Task {
                         self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
                         
-                        let uchannel = await chatManager.getClient().channel(userAuth.user!.id.uuidString)
-                        await uchannel.subscribe()
+                        let channel = await chatManager.getClient().channel(userAuth.user!.id.uuidString)
                         
-                        let broadcastStream = await uchannel.broadcastStream(event: "new-message")
-                        for await _ in broadcastStream {
-                            Task {
-                                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                        let insertions = await channel.postgresChange(
+                            InsertAction.self,
+                            schema: "public",
+                            table: "chats"
+                        )
+                        
+                        await channel.subscribe()
+                        
+                        Task {
+                            for await insert in insertions {
+                                print("Inserted: \(insert.record)")
+                                guard let receiverId = insert.record["receiver_id"]?.stringValue else { return }
+                                
+                                if (receiverId == userAuth.user!.id.uuidString.lowercased())  {
+                                    self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                                }
                             }
                         }
                         
-                        self.channel = uchannel
+                        self.channel = channel
                     }
                 }
                 .onDisappear {
