@@ -13,7 +13,6 @@ struct EditProfileView: View {
     let chatManager =  ChatManager()
     @State private var name: String = ""
     @State private var email: String = ""
-    @State private var currentAvatar: String = ""
     
     // file upload
     @State private var avatarImage: UIImage = UIImage(named: "dog.png")!
@@ -129,7 +128,7 @@ struct EditProfileView: View {
                             return
                         }
                         
-                        var filename = currentAvatar;
+                        var filename = self.userprofile;
                         
                         if isSelectedImage {
                             let idata = avatarImage.jpegData(compressionQuality: 0.5)

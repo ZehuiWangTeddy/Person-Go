@@ -56,7 +56,7 @@ struct FriendProfileView: View {
                         }
                     }
                 }
-  
+                
                 VStack {
                     VStack(alignment: .leading) {
                         
@@ -131,7 +131,6 @@ struct FriendProfileView: View {
                 let info = await chatManager.fetchFriendInfo(id: friend.friendId)
                 
                 guard info != nil else { return }
-                
                 
                 DispatchQueue.main.async {
                     self.info = info
