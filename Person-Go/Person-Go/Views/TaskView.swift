@@ -36,7 +36,7 @@ struct TaskView: View {
                 }
                 Divider()
                 if selectedItemType == nil {
-                    Text("Complete a task to get Missiles!")
+                    Text("Complete a quest to get Missiles!")
                         .font(.headline)
                 }
                 ScrollView {
