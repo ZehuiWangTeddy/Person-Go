@@ -1,16 +1,5 @@
 {
-  "originHash" : "6a9509b5dd6d3076acec99746d32442cc1b6e5beec29966e697c8d9b5eab16ae",
-  "pins" : [
-    {
-      "identity" : "nuke",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/kean/Nuke",
-      "state" : {
-        "revision" : "084076db4f9b9ee4db51177ef5a4879689c1aa09",
-        "version" : "12.7.2"
-      }
-    },
-    {
+
       "identity" : "sdwebimage",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/SDWebImage/SDWebImage.git",

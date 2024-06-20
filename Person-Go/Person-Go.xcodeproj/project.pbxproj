@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		270EB82A2C2315110012E77F /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 270EB8292C2315110012E77F /* Toast */; };
+		270EB8352C23FD1B0012E77F /* Quickstrike_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 270EB8342C23FD1B0012E77F /* Quickstrike_walking.gif */; };
+		270EB8372C23FD7B0012E77F /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270EB8362C23FD7B0012E77F /* UserManager.swift */; };
+		270EB8392C23FDC50012E77F /* InventoryData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270EB8382C23FDC50012E77F /* InventoryData.swift */; };
 		271DF0562BE193C6007DC5F7 /* MapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */; };
 		271DF0582BE199FF007DC5F7 /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */; };
 		271E22652BF9E288008FCA91 /* LocationCRUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271E22642BF9E288008FCA91 /* LocationCRUD.swift */; };
@@ -77,6 +80,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		270EB8342C23FD1B0012E77F /* Quickstrike_walking.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Quickstrike_walking.gif; sourceTree = "<group>"; };
+		270EB8362C23FD7B0012E77F /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		270EB8382C23FDC50012E77F /* InventoryData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryData.swift; sourceTree = "<group>"; };
 		271DF0552BE193C6007DC5F7 /* MapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepresentable.swift; sourceTree = "<group>"; };
 		271DF0572BE199FF007DC5F7 /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
 		271E22642BF9E288008FCA91 /* LocationCRUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCRUD.swift; sourceTree = "<group>"; };
@@ -178,6 +184,7 @@
 		27FFF3DC2BE4FA1E0008B22B /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				270EB8362C23FD7B0012E77F /* UserManager.swift */,
 				27FFF3DA2BE40F940008B22B /* AppLockManager.swift */,
 				79F660CB2BFBA2D800B28D79 /* ChatManager.swift */,
 				7F821D0C2C0D2B370065F261 /* InventoryManager.swift */,
@@ -217,6 +224,7 @@
 				79F660D12BFBA93200B28D79 /* Profile.swift */,
 				3693DFF92BE41215003F83BD /* UserAuth.swift */,
 				7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */,
+				270EB8382C23FDC50012E77F /* InventoryData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,7 +333,7 @@
 				7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */,
 				7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */,
 				7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */,
-				791F38092C23892D00B650FF /* Quickstrike_walking.gif */,
+
 				7F86F7FA2C1F83C0004E26ED /* Phoenix_inferno_walking.gif */,
 				7F86F7F82C1F83B6004E26ED /* Blaze_rocket_walking.gif */,
 				7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */,
@@ -419,7 +427,6 @@
 				7F86F7FF2C1F83D7004E26ED /* Blaze_rocket_celebration.gif in Resources */,
 				7F86F8012C1F83DF004E26ED /* Quickstrike_celebration.gif in Resources */,
 				7F86F7FB2C1F83C0004E26ED /* Phoenix_inferno_walking.gif in Resources */,
-				791F380A2C23892D00B650FF /* Quickstrike_walking.gif in Resources */,
 				7F8930F82C19FA8C00CAD4E1 /* Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,7 +448,6 @@
 				36B2189D2BE91F6D00CAE5AB /* Message.swift in Sources */,
 				79F660D02BFBA87000B28D79 /* ChatMessage.swift in Sources */,
 				36B218922BE91F3600CAE5AB /* RegistrationView.swift in Sources */,
-				791F380E2C2389D400B650FF /* InventoryData.swift in Sources */,
 				36B218972BE91F3600CAE5AB /* InventoryView.swift in Sources */,
 				79D9AE832C16529B00A33023 /* AddFriendView.swift in Sources */,
 				27FFF3DB2BE40F940008B22B /* AppLockManager.swift in Sources */,
@@ -477,7 +483,6 @@
 				79641E7E2C092029006C6F3B /* ChangeEmailView.swift in Sources */,
 				271E22672BF9E292008FCA91 /* ProfileCRUD.swift in Sources */,
 				79D9AE812C16526300A33023 /* FriendInfo.swift in Sources */,
-				791F380C2C23894C00B650FF /* UserManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,7 +618,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Person-Go/Preview Content\"";
-				DEVELOPMENT_TEAM = X9Q624TB9R;
+				DEVELOPMENT_TEAM = 8M25VBMKB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
@@ -651,7 +656,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Person-Go/Preview Content\"";
-				DEVELOPMENT_TEAM = X9Q624TB9R;
+				DEVELOPMENT_TEAM = 8M25VBMKB9;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Person-Go/Info.plist";
