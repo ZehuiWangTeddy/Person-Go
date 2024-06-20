@@ -12,7 +12,7 @@ class UserManager: NSObject, ObservableObject{
             db: .init(encoder: encoder, decoder: decoder)
         )
     )
-    
+
     func getClient() -> SupabaseClient
     {
         return client
@@ -50,15 +50,15 @@ class UserManager: NSObject, ObservableObject{
         }
         do {
             try await client
-                .from("profiles")
-                .update(datas)
-                .eq("id", value: user)
-                .execute()
+              .from("profiles")
+              .update(datas)
+              .eq("id", value: user)
+              .execute()
             
             return true
         } catch {
             print(error)
-            //            return nil
+//            return nil
             
             return false
         }
@@ -141,7 +141,7 @@ class UserManager: NSObject, ObservableObject{
             FriendShip(userId: user, friendId: friend),
             FriendShip(userId: friend, friendId: user),
         ]
-        
+
         do {
             try await supabase
                 .from("friends")
