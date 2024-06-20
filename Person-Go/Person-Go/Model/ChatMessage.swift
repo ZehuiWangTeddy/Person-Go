@@ -1,7 +1,5 @@
 import Foundation
 
-
-
 struct ChatMessage: Identifiable,Hashable,Decodable {
     
     enum MessageType: Decodable {

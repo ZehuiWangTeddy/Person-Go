@@ -2,6 +2,7 @@ import Foundation
 import SwiftUI
 import Supabase
 import Combine
+import NukeUI
 
 class UserAuth: ObservableObject {
     @Published var isLoggedin = false
@@ -9,7 +10,8 @@ class UserAuth: ObservableObject {
     @Published var profile: Profile?
     
     private var userManager = UserManager()
-
+    private var chatManager = ChatManager()
+    
     func updateCurrentUser(user: Supabase.User)  {
         self.user = user
         
@@ -52,30 +54,40 @@ class UserAuth: ObservableObject {
         return profile!.username ?? user!.email!
     }
     
-    @ViewBuilder
+    @MainActor @ViewBuilder
     func getUserAvatar(width: CGFloat = 200, height: CGFloat = 200, radius: CGFloat = 100, padding: CGFloat = 30, edges: Edge.Set = .vertical) -> some View {
         let chatManager = ChatManager()
+        if (profile != nil && profile!.avatarUrl != nil) {
+            imageView(url: chatManager.retrieveAvatarPublicUrl(path: profile!.avatarUrl!), width: width, height: height, radius: radius, padding: padding, edges: edges)
+        } else {
+            imageView(url: chatManager.getDefaultAvatar(), width: width, height: height, radius: radius, padding: padding, edges: edges)
+        }
         
-        if profile != nil && profile!.avatarUrl != nil {
-            AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: profile!.avatarUrl!)){ image in
+        
+    }
+    
+    @MainActor
+    func imageView(url: URL, width: CGFloat = 200, height: CGFloat = 200, radius: CGFloat = 100, padding: CGFloat = 30, edges: Edge.Set = .vertical) -> some View {
+        LazyImage(url: url) { state in
+            if let image = state.image {
                 image
-                    .resizable()
-                    .scaledToFill()
-                    .cornerRadius(radius)
-                    .frame(width: width, height: height)
-            } placeholder: {
-                Image("userprofile")
                     .resizable()
                     .cornerRadius(radius)
                     .frame(width: width, height: height)
                     .padding(edges, padding)
+            } else if state.error != nil {
+                AsyncImage(url: self.chatManager.getDefaultAvatar()){ image in
+                    image.resizable().frame(width: width, height: height).cornerRadius(radius)
+                } placeholder: {
+                    ProgressView()
+                        .controlSize(.large)
+                        .frame(width: width, height: height)
+                }
+            } else {
+                ProgressView()
+                    .controlSize(.large)
+                    .frame(width: width, height: height)
             }
-        } else {
-            Image("userprofile")
-                .resizable()
-                .cornerRadius(radius)
-                .frame(width: width, height: height)
-                .padding(edges, padding)
         }
     }
 }

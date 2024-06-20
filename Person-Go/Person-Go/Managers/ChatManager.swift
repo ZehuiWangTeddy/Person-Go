@@ -90,7 +90,7 @@ class ChatManager: NSObject, ObservableObject{
         }
     }
     
-    func fetchMessages(currentUser: Supabase.User, friendId: UUID) async -> [ChatMessage] {
+    func fetchMessages(currentUser: Supabase.User, friendId: UUID, limit: Int = 20) async -> [ChatMessage] {
         print("load messages... \(friendId) with \(currentUser.id)")
         do {
             let messages: [Message] = try await client.from("chats")
@@ -104,17 +104,33 @@ class ChatManager: NSObject, ObservableObject{
             
             var cmessages: [ChatMessage] = []
             
+            var cc = 0
             for (index, message) in messages.enumerated() {
-                cmessages.append(ChatMessage(message: message, type: .message))
-                if (index + 1) % 5 == 0 {
-                    cmessages.append(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: message.sentAt), type: .system))
+                if (index == 0) {
+                    cmessages.insert(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: message.sentAt), type: .system), at: 0)
+                    cmessages.append(ChatMessage(message: message, type: .message))
+                    continue
                 }
+                
+                let last = messages[index-1]
+                let lasttime = self.parseDate(dateString: last.sentAt)
+                let thistime = self.parseDate(dateString: message.sentAt)
+                
+                var diff = thistime!.timeIntervalSince(lasttime!)
+                diff = abs(diff)
+                if (index != messages.count - 1) && (diff > 300) {
+                    if cmessages.last != nil && cmessages.last!.type != .system {
+                        cmessages.append(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: message.sentAt), type: .system))
+                    }
+                }
+                
+                cmessages.append(ChatMessage(message: message, type: .message))
+                
+                cc += 1
             }
             
             if !cmessages.isEmpty {
                 await updateMessageAsReaded(lastMessageId: messages.last!.messageId, from: friendId, to: currentUser.id)
-                
-                cmessages.insert(ChatMessage(message: Message(messageId: 0, message: " ", sentId: UUID(), receiverId: UUID(), sentAt: messages.first!.sentAt), type: .system), at: 0)
             }
             
             return cmessages
@@ -141,12 +157,6 @@ class ChatManager: NSObject, ObservableObject{
     
     func sendMessage(sentId: UUID, receiverId: UUID, content: String) async throws -> Message {
         let now = Date()
-        
-        // let dateFormatter = ISO8601DateFormatter()
-        // dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]// ISO 8601格式
-        // dateFormatter.timeZone = TimeZone.current
-        
-        // timestamptz time with current phone timezone
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         dateFormatter.timeZone = TimeZone.current
@@ -154,12 +164,15 @@ class ChatManager: NSObject, ObservableObject{
         let dateString = dateFormatter.string(from: now)
         let message = MessageSenderStruct(message: content, sentId: sentId, receiverId: receiverId, sentAt: dateString)
         
-        return try await client.from("chats")
+        let m: Message = try await client.from("chats")
             .insert(message)
             .select()
             .single()
             .execute()
             .value
+        
+        return m
+        
     }
     
     func clearChannel() {
@@ -169,14 +182,9 @@ class ChatManager: NSObject, ObservableObject{
         }
     }
     
-    func broadcastNewMessageEvent(channel: Supabase.RealtimeChannelV2, newMessage: Message) {
-        Task {
-            try await channel.broadcast(
-                event: "new-message",
-                message: [
-                    "message": newMessage
-                ]
-            )
+    func broadcastNewMessageEvent(cname: String, newMessage: Message) async {
+        
+        do {
             
             let uchannel = await client.channel(newMessage.receiverId.uuidString)
             await uchannel.subscribe()
@@ -186,6 +194,8 @@ class ChatManager: NSObject, ObservableObject{
                     "from": newMessage.sentId
                 ]
             )
+        } catch {
+            print("broadcasting error ... \(error)")
         }
     }
     
@@ -199,19 +209,34 @@ class ChatManager: NSObject, ObservableObject{
     
     func retrieveAvatarPublicUrl(path: String) -> URL {
         
+        if path.isEmpty {
+            return getDefaultAvatar()
+        }
+        
         do {
             let publicURL = try client.storage
                 .from("avatars")
                 .getPublicURL(
-                    path: path
-                    //                ,options: TransformOptions(
-                    //                  width: 50,
-                    //                  height: 50
-                    //                )
+                    path: path                    
                 )
+
+            if publicURL.absoluteString.isEmpty {
+                return getDefaultAvatar()
+            }
             
             return publicURL
         } catch {
+            return getDefaultAvatar()
+        }
+    }
+    
+    func getDefaultAvatar() -> URL
+    {
+        if let url = Bundle.main.url(forResource: "dog.png", withExtension: nil) {
+            print("return local image")
+            return url
+        } else {
+            print("use network default avatar")
             return URL(string: "https://ecqmicvfzypcomzptfbt.supabase.co/storage/v1/object/public/avatars/userprofile.png?t=2024-05-20T18%3A06%3A06.725Z")!
         }
     }

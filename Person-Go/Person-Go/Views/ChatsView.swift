@@ -1,4 +1,5 @@
 import SwiftUI
+import NukeUI
 import Supabase
 
 struct FriendAvatarView: View {
@@ -6,17 +7,22 @@ struct FriendAvatarView: View {
     var avatarUrl: String
     
     var body: some View {
-        AsyncImage(url: chatManager.retrieveAvatarPublicUrl(path: avatarUrl)){ image in
-            image
-                .resizable()
-                .scaledToFill()
-                .cornerRadius(30)
-                .frame(width: 50, height: 50)
-        } placeholder: {
-            Image("userprofile")
-                .resizable()
-                .frame(width: 50, height: 50)
-                .cornerRadius(30)
+        LazyImage(url: chatManager.retrieveAvatarPublicUrl(path: avatarUrl)) { state in
+            if let image = state.image {
+                image.resizable().frame(width: 50, height: 50).cornerRadius(30)
+            } else if state.error != nil {
+                AsyncImage(url: chatManager.getDefaultAvatar()){ image in
+                    image.resizable().frame(width: 50, height: 50).cornerRadius(30)
+                } placeholder: {
+                    ProgressView()
+                        .controlSize(.large)
+                        .frame(width: 30, height: 30)
+                }
+            } else {
+                ProgressView()
+                    .controlSize(.large)
+                    .frame(width: 30, height: 30)
+            }
         }
     }
 }
@@ -137,19 +143,16 @@ struct ChatsView: View {
                         self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
                         
                         let uchannel = await chatManager.getClient().channel(userAuth.user!.id.uuidString)
-                        self.channel = uchannel
-                        await self.channel!.subscribe()
+                        await uchannel.subscribe()
                         
-                        do {
-                            let broadcastStream = await self.channel!.broadcastStream(event: "new-message")
-                            for await _ in broadcastStream {
-                                Task {
-                                    self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
-                                }
+                        let broadcastStream = await uchannel.broadcastStream(event: "new-message")
+                        for await _ in broadcastStream {
+                            Task {
+                                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
                             }
-                        } catch {
-                            print("There was an error fetching messages")
                         }
+                        
+                        self.channel = uchannel
                     }
                 }
                 .onDisappear {
@@ -166,3 +169,4 @@ struct ChatsView: View {
         }
     }
 }
+

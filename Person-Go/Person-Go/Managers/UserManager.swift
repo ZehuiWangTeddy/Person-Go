@@ -64,7 +64,7 @@ class UserManager: NSObject, ObservableObject{
         }
     }
     
-    func checkUserNameIsAvaliable(name: String) async -> Bool {
+    func checkUserNameIsAvaliable(user: UUID, name: String) async -> Bool {
         do {
             let data: [Profile] = try await client
                 .from("profiles")
@@ -74,6 +74,12 @@ class UserManager: NSObject, ObservableObject{
                 .value
             
             if (data.isEmpty) {
+                return true
+            }
+            
+            let profile = data.first!
+            
+            if (profile.id == user) {
                 return true
             }
             
