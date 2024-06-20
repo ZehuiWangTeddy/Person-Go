@@ -4,7 +4,6 @@ import Supabase
 struct SettingView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
-    @State private var showLoginView = false
     @EnvironmentObject var userAuth: UserAuth
     
     @State private var showingAlert = false
@@ -59,9 +58,6 @@ struct SettingView: View {
             .background(Color("Background"))
             .foregroundColor(Color("Text"))
         }
-        .fullScreenCover(isPresented: $showLoginView) {
-            LoginView()
-        }
         .alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage))
         }
@@ -71,7 +67,6 @@ struct SettingView: View {
         do {
             try await client.auth.signOut()
             userAuth.isLoggedin = false
-            showLoginView = true
         } catch {
             showPopup(title: "Error", message: "There was an error logging out!")
             print("error: \(error)")
