@@ -87,7 +87,7 @@ struct ChatBubbleView: View {
                             Text(message.message.message)
                                 .padding(15)
                                 .foregroundColor(.white)
-                                .background(Color(red: 0xEC / 255, green: 0x95 / 255, blue: 0x83 / 255))
+                                .background(Color("Primary"))
                                 .cornerRadius(10)
                         }
                         loadAvatar(url: chatManager.retrieveAvatarPublicUrl(path: userAuth.profile!.avatarUrl ?? ""), hasPadding: false)
@@ -100,7 +100,7 @@ struct ChatBubbleView: View {
                             Text(message.message.message)
                                 .padding(15)
                                 .foregroundColor(.white)
-                                .background(Color(red: 128 / 255, green: 228 / 255, blue: 132 / 255))
+                                .background(Color("Accent"))
                                 .cornerRadius(10)
                         }
                     }
@@ -221,10 +221,7 @@ struct ChatWindowView: View {
                                 .padding(.horizontal, 25)
                         }
                         
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
-                            .padding(.vertical, 5)
+                        Divider()
                         
                         ScrollViewReader { value in
                             ScrollView {

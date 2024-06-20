@@ -7,7 +7,7 @@ struct TaskView: View {
     var userId: String {
         return userAuth.user!.id.uuidString
     }
-
+    
     @StateObject private var locationManager = TaskViewViewLocationManager()
     @State private var selectedItemType: String? = nil
     @State private var showAdditionalButtonSmall = false
@@ -18,234 +18,219 @@ struct TaskView: View {
     @State private var navigateToMissileClaimedView = false // State for navigation
     @State private var claimedGifName: String? = nil // State for the claimed GIF name
     @State private var claimedMissileName: String? = nil // State for the claimed missile name
-
+    
     let missileData = [
         ("Quickstrike", "Walk 50m", "quickstrike.gif", "small", "Quickstrike_walking.gif"),
         ("Blaze Rocket", "Walk 100m", "blaze_rocket.gif", "medium", "Blaze_rocket_walking.gif"),
         ("Phoenix Inferno", "Walk 150m", "phoenix_inferno.gif", "large", "Phoenix_inferno_walking.gif")
     ]
-
+    
     var body: some View {
         NavigationStack {
-            ZStack {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 20) {
-                        Text("Task Completion")
-                                .font(.largeTitle)
-                                .bold()
-                                .padding(.bottom, 0)
-                                .foregroundColor(Color("Text"))
-                        Divider()
-                                .frame(height: 2)
-
-                        VStack(alignment: .leading) {
-                            Text("Distance moved: \(locationManager.distanceMoved, specifier: "%.2f") meters")
-                                    .padding()
-                                    .font(.headline)
-                                    .foregroundColor(Color("Text"))
-
-                            if selectedItemType == nil {
-                                Text("Complete a task to get Missiles!")
-                                        .font(.headline)
-                                        .padding()
-                                        .foregroundColor(Color("Text"))
-
-                                ForEach(missileData, id: \.0) { missile, distance, imageName, itemType, _ in
-                                    Button(action: {
-                                        selectedItemType = itemType
-                                        locationManager.resetDistanceMoved()
-                                        locationManager.startDistanceCalculation()
-                                    }) {
-                                        HStack {
-                                            missileImage(imageName: imageName)
-                                                    .frame(width: 50, height: 50)
-                                                    .clipShape(Circle())
-                                                    .padding(.trailing, 8)
-                                            VStack(alignment: .leading) {
-                                                Text(missile)
-                                                        .font(.title2)
-                                                        .foregroundColor(.black)
-                                                Text(distance)
-                                                        .font(.subheadline)
-                                                        .foregroundColor(.black)
-                                            }
-                                            Spacer()
-                                        }
-                                                .padding()
-                                                .background(Color.gray)
-                                                .cornerRadius(8)
-                                    }
-                                }
-                            } else {
-                                displayGif()
-                                if selectedItemType == "small" && showAdditionalButtonSmall {
-                                    Button(action: {
-                                        Task {
-                                            await claimMissile(item: "small", imageName: "quickstrike.gif", message: "Quickstrike", celebrationGif: "Quickstrike_celebration.gif")
-                                            claimedGifName = "Quickstrike_celebration.gif"
-                                            claimedMissileName = "Quickstrike"
-                                            navigateToMissileClaimedView = true // Navigate after claiming missile
-                                        }
-                                    }) {
-                                        HStack {
-                                            missileImage(imageName: "quickstrike.gif")
-                                                    .frame(width: 50, height: 50)
-                                                    .clipShape(Circle())
-                                                    .padding(.trailing, 8)
-                                            VStack(alignment: .leading) {
-                                                Text("Claim Quickstrike")
-                                                        .font(.title2)
-                                                        .foregroundColor(.black)
-                                                Text("Walk 50m")
-                                                        .font(.subheadline)
-                                                        .foregroundColor(.black)
-                                            }
-                                            Spacer()
-                                        }
-                                                .padding()
-                                                .background(Color.gray)
-                                                .cornerRadius(8)
-                                    }
-                                }
-
-                                if selectedItemType == "medium" && showAdditionalButtonMedium {
-                                    Button(action: {
-                                        Task {
-                                            await claimMissile(item: "medium", imageName: "blaze_rocket.gif", message: "Blaze Rocket", celebrationGif: "Blaze_rocket_celebration.gif")
-                                            claimedGifName = "Blaze_rocket_celebration.gif"
-                                            claimedMissileName = "Blaze Rocket"
-                                            navigateToMissileClaimedView = true // Navigate after claiming missile
-                                        }
-                                    }) {
-                                        HStack {
-                                            missileImage(imageName: "blaze_rocket.gif")
-                                                    .frame(width: 50, height: 50)
-                                                    .clipShape(Circle())
-                                                    .padding(.trailing, 8)
-                                            VStack(alignment: .leading) {
-                                                Text("Claim Blaze Rocket")
-                                                        .font(.title2)
-                                                        .foregroundColor(.black)
-                                                Text("Walk 100m")
-                                                        .font(.subheadline)
-                                                        .foregroundColor(.black)
-                                            }
-                                            Spacer()
-                                        }
-                                                .padding()
-                                                .background(Color.gray)
-                                                .cornerRadius(8)
-                                    }
-                                }
-
-                                if selectedItemType == "large" && showAdditionalButtonLarge {
-                                    Button(action: {
-                                        Task {
-                                            await claimMissile(item: "large", imageName: "phoenix_inferno.gif", message: "Phoenix Inferno", celebrationGif: "Phoenix_inferno_celebration.gif")
-                                            claimedGifName = "Phoenix_inferno_celebration.gif"
-                                            claimedMissileName = "Phoenix Inferno"
-                                            navigateToMissileClaimedView = true // Navigate after claiming missile
-                                        }
-                                    }) {
-                                        HStack {
-                                            missileImage(imageName: "phoenix_inferno.gif")
-                                                    .frame(width: 50, height: 50)
-                                                    .clipShape(Circle())
-                                                    .padding(.trailing, 8)
-                                            VStack(alignment: .leading) {
-                                                Text("Claim Phoenix Inferno")
-                                                        .font(.title2)
-                                                        .foregroundColor(.black)
-                                                Text("Walk 150m")
-                                                        .font(.subheadline)
-                                                        .foregroundColor(.black)
-                                            }
-                                            Spacer()
-                                        }
-                                                .padding()
-                                                .background(Color.gray)
-                                                .cornerRadius(8)
-                                    }
-                                }
-                            }
-                        }
-                                .padding(.horizontal)
-                    }
-                            .padding()
+            VStack(spacing: 20) {
+                HStack {
+                    Text("Quests")
+                        .font(.largeTitle)
+                        .bold()
+                    Spacer()
                 }
-                        .background(Color("Background"))
-                        .navigationBarItems(trailing: Button(action: {
-
-                        }) {
-                            Text("")
-                                    .foregroundColor(Color("Primary"))
-                        })
-                        .background(
-                                NavigationLink(
-                                        destination: claimedGifName != nil && claimedMissileName != nil ? MissileClaimedView(gifName: claimedGifName!, missileName: claimedMissileName!) : nil,
-                                        isActive: $navigateToMissileClaimedView,
-                                        label: {
-                                            EmptyView()
+                Divider()
+                if selectedItemType == nil {
+                    Text("Complete a task to get Missiles!")
+                        .font(.headline)
+                }
+                ScrollView {
+                    if selectedItemType == nil {
+                        VStack() {
+                            Divider()
+                            ForEach(missileData, id: \.0) { missile, distance, imageName, itemType, _ in
+                                Button(action: {
+                                    selectedItemType = itemType
+                                    locationManager.resetDistanceMoved()
+                                    locationManager.startDistanceCalculation()
+                                }) {
+                                    HStack {
+                                        missileImage(imageName: imageName)
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(Circle())
+                                            .padding(.trailing, 8)
+                                        VStack(alignment: .leading) {
+                                            Text(missile)
+                                                .font(.title2)
+                                            Text(distance)
+                                                .font(.subheadline)
                                         }
-                                )
-                        )
-
-                if showCelebration {
-                    VStack {
-                        Text("Missile Claimed!")
-                                .font(.largeTitle)
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding(.bottom, 10)
-
-                        if let celebrationGif = celebrationGif {
-                            AnimatedImage(name: celebrationGif)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 200, height: 200)
+                                        Spacer()
+                                    }
                                     .padding()
+                                    .foregroundColor(Color("Text"))
+                                }
+                                Divider()
+                            }
                         }
-                    }
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .background(Color.black.opacity(0.5))
-                            .edgesIgnoringSafeArea(.all)
-                            .onTapGesture {
-                                withAnimation {
-                                    showCelebration = false
+                    } else {
+                        VStack() {
+                            Text("Distance moved: \(locationManager.distanceMoved, specifier: "%.2f") meters")
+                                .font(.headline)
+                            displayGif()
+                            if selectedItemType == "small" && showAdditionalButtonSmall {
+                                Button(action: {
+                                    Task {
+                                        await claimMissile(item: "small", imageName: "quickstrike.gif", message: "Quickstrike", celebrationGif: "Quickstrike_celebration.gif")
+                                        claimedGifName = "Quickstrike_celebration.gif"
+                                        claimedMissileName = "Quickstrike"
+                                        navigateToMissileClaimedView = true // Navigate after claiming missile
+                                    }
+                                }) {
+                                    HStack {
+                                        missileImage(imageName: "quickstrike.gif")
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(Circle())
+                                            .padding(.trailing, 8)
+                                        VStack(alignment: .leading) {
+                                            Text("Claim Quickstrike")
+                                                .font(.title2)
+                                            Text("Walk 50m")
+                                                .font(.subheadline)
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color("Primary"))
+                                    .foregroundColor(Color("Text"))
+                                    .cornerRadius(8)
                                 }
                             }
+                            
+                            if selectedItemType == "medium" && showAdditionalButtonMedium {
+                                Button(action: {
+                                    Task {
+                                        await claimMissile(item: "medium", imageName: "blaze_rocket.gif", message: "Blaze Rocket", celebrationGif: "Blaze_rocket_celebration.gif")
+                                        claimedGifName = "Blaze_rocket_celebration.gif"
+                                        claimedMissileName = "Blaze Rocket"
+                                        navigateToMissileClaimedView = true // Navigate after claiming missile
+                                    }
+                                }) {
+                                    HStack {
+                                        missileImage(imageName: "blaze_rocket.gif")
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(Circle())
+                                            .padding(.trailing, 8)
+                                        VStack(alignment: .leading) {
+                                            Text("Claim Blaze Rocket")
+                                                .font(.title2)
+                                            Text("Walk 100m")
+                                                .font(.subheadline)
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color("Primary"))
+                                    .foregroundColor(Color("Text"))
+                                    .cornerRadius(8)
+                                }
+                            }
+                            
+                            if selectedItemType == "large" && showAdditionalButtonLarge {
+                                Button(action: {
+                                    Task {
+                                        await claimMissile(item: "large", imageName: "phoenix_inferno.gif", message: "Phoenix Inferno", celebrationGif: "Phoenix_inferno_celebration.gif")
+                                        claimedGifName = "Phoenix_inferno_celebration.gif"
+                                        claimedMissileName = "Phoenix Inferno"
+                                        navigateToMissileClaimedView = true // Navigate after claiming missile
+                                    }
+                                }) {
+                                    HStack {
+                                        missileImage(imageName: "phoenix_inferno.gif")
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(Circle())
+                                            .padding(.trailing, 8)
+                                        VStack(alignment: .leading) {
+                                            Text("Claim Phoenix Inferno")
+                                                .font(.title2)
+                                            Text("Walk 150m")
+                                                .font(.subheadline)
+                                        }
+                                        Spacer()
+                                    }
+                                    .padding()
+                                    .background(Color("Primary"))
+                                    .foregroundColor(Color("Text"))
+                                    .cornerRadius(8)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .padding()
+            .background(Color("Background"))
+            .foregroundColor(Color("Text"))
+            .background(
+                NavigationLink(
+                    destination: claimedGifName != nil && claimedMissileName != nil ? MissileClaimedView(gifName: claimedGifName!, missileName: claimedMissileName!) : nil,
+                    isActive: $navigateToMissileClaimedView,
+                    label: {
+                        EmptyView()
+                    }
+                )
+            )
+            
+            if showCelebration {
+                VStack {
+                    Text("Missile Claimed!")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.bottom, 10)
+                    
+                    if let celebrationGif = celebrationGif {
+                        AnimatedImage(name: celebrationGif)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 200, height: 200)
+                            .padding()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black.opacity(0.5))
+                .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    withAnimation {
+                        showCelebration = false
+                    }
                 }
             }
         }
-                .onAppear {
-                    Task {
-                        if let userIdUUID = UUID(uuidString: userId) {
-                            inventory = await fetchInventory(for: userIdUUID)
-                        }
-                    }
+        .onAppear {
+            Task {
+                if let userIdUUID = UUID(uuidString: userId) {
+                    inventory = await fetchInventory(for: userIdUUID)
                 }
-                .onChange(of: locationManager.distanceMoved) { newDistance in
-                    if selectedItemType == "small" && newDistance >= 50 && !showAdditionalButtonSmall {
-                        showAdditionalButtonSmall = true
-                    }
-                    if selectedItemType == "medium" && newDistance >= 100 && !showAdditionalButtonMedium {
-                        showAdditionalButtonMedium = true
-                    }
-                    if selectedItemType == "large" && newDistance >= 150 && !showAdditionalButtonLarge {
-                        showAdditionalButtonLarge = true
-                    }
-                }
+            }
+        }
+        .onChange(of: locationManager.distanceMoved) { newDistance in
+            if selectedItemType == "small" && newDistance >= 50 && !showAdditionalButtonSmall {
+                showAdditionalButtonSmall = true
+            }
+            if selectedItemType == "medium" && newDistance >= 100 && !showAdditionalButtonMedium {
+                showAdditionalButtonMedium = true
+            }
+            if selectedItemType == "large" && newDistance >= 150 && !showAdditionalButtonLarge {
+                showAdditionalButtonLarge = true
+            }
+        }
     }
 
     private func missileImage(imageName: String) -> some View {
         if let _ = Bundle.main.path(forResource: imageName, ofType: nil) {
             return AnyView(AnimatedImage(name: imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit))
+                .resizable()
+                .aspectRatio(contentMode: .fit))
         } else {
             return AnyView(Text("Image not found")
-                    .foregroundColor(.red)
-                    .frame(width: 50, height: 50))
+                .foregroundColor(.red)
+                .frame(width: 50, height: 50))
         }
     }
 
@@ -262,11 +247,11 @@ struct TaskView: View {
             gifName = ""
         }
         return gifName.isEmpty ? AnyView(EmptyView()) : AnyView(
-                AnimatedImage(name: gifName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 200, height: 200)
-                        .padding()
+            AnimatedImage(name: gifName)
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 200, height: 200)
+                .padding()
         )
     }
 

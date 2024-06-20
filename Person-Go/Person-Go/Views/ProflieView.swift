@@ -27,9 +27,7 @@ struct ProfileView: View {
                                 .font(.title2)
                         }
                         .padding(.horizontal, 25)
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
+                        Divider()
                         HStack{
                             Text("Email")
                                 .font(.title2)
@@ -38,9 +36,7 @@ struct ProfileView: View {
                                 .font(.title2)
                         }
                         .padding(.horizontal, 25)
-                        Rectangle()
-                            .frame(height: 1)
-                            .foregroundColor(Color(red: 204 / 255, green: 204 / 255, blue: 204 / 255))
+                        Divider()
                         NavigationLink(destination: EditProfileView().environmentObject(userAuth)){
                             Text("EDIT")
                                 .font(.title2)

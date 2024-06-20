@@ -208,23 +208,16 @@
 			children = (
 				79F660CF2BFBA87000B28D79 /* ChatMessage.swift */,
 				7F8D6C202BF8F0B30035DF7B /* Friend.swift */,
-				791F380D2C2389D400B650FF /* InventoryData.swift */,
 				79D9AE802C16526300A33023 /* FriendInfo.swift */,
+				791F380D2C2389D400B650FF /* InventoryData.swift */,
+				270EB8382C23FDC50012E77F /* InventoryData.swift */,
 				36B2189B2BE91F6D00CAE5AB /* Message.swift */,
 				7F821D102C0D30610065F261 /* Missile.swift */,
 				79F660D12BFBA93200B28D79 /* Profile.swift */,
 				3693DFF92BE41215003F83BD /* UserAuth.swift */,
 				7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */,
-				270EB8382C23FDC50012E77F /* InventoryData.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		791F38082C2388B600B650FF /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		791F380F2C238A9900B650FF /* Avatar */ = {
@@ -242,7 +235,6 @@
 				79D9AE7F2C16524100A33023 /* Release.xcconfig */,
 				792A4A532BDAEB0500CBCCB1 /* Person-Go */,
 				792A4A522BDAEB0500CBCCB1 /* Products */,
-				791F38082C2388B600B650FF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -257,13 +249,14 @@
 		792A4A532BDAEB0500CBCCB1 /* Person-Go */ = {
 			isa = PBXGroup;
 			children = (
-				791F380F2C238A9900B650FF /* Avatar */,
+				7F8930F72C19FA8C00CAD4E1 /* Config.plist */,
 				3693DFFC2BE41AC3003F83BD /* Info.plist */,
 				27FFF3E22BE50DC10008B22B /* LaunchScreen.storyboard */,
 				792A4A562BDAEB0500CBCCB1 /* ContentView.swift */,
 				792A4A542BDAEB0500CBCCB1 /* Person_GoApp.swift */,
 				792A4A582BDAEB0800CBCCB1 /* Assets.xcassets */,
 				271E22632BF9E247008FCA91 /* API */,
+				791F380F2C238A9900B650FF /* Avatar */,
 				27FFF3DE2BE5000E0008B22B /* Containers */,
 				27FFF3DC2BE4FA1E0008B22B /* Managers */,
 				7F821D182C0D4C6B0065F261 /* MissileLogos */,
@@ -271,7 +264,6 @@
 				792A4A5A2BDAEB0800CBCCB1 /* Preview Content */,
 				27FFF3DD2BE4FFF40008B22B /* Representables */,
 				792A4A622BDB04C600CBCCB1 /* Views */,
-				7F8930F72C19FA8C00CAD4E1 /* Config.plist */,
 			);
 			path = "Person-Go";
 			sourceTree = "<group>";
@@ -287,10 +279,15 @@
 		792A4A622BDB04C600CBCCB1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
 				79641E7A2C092016006C6F3B /* AccountView.swift */,
+				7F34209C2C077E6C00323B0F /* AccountView.swift */,
+				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				36B218892BE91F3600CAE5AB /* AuthenticationView.swift */,
 				79641E7C2C092028006C6F3B /* ChangeEmailView.swift */,
+				7F3420A02C07864B00323B0F /* ChangeEmailView.swift */,
 				79641E762C091FEE006C6F3B /* ChangePasswordView.swift */,
+				7F3420A22C07867200323B0F /* ChangePasswordView.swift */,
 				36B218862BE91F3600CAE5AB /* ChatsView.swift */,
 				36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */,
 				79641E782C091FF8006C6F3B /* EditProfileView.swift */,
@@ -299,20 +296,15 @@
 				7F8D6C222BF8F0EF0035DF7B /* LaunchListView.swift */,
 				36B218842BE91F3600CAE5AB /* LoginView.swift */,
 				36B218802BE91F3600CAE5AB /* MapView.swift */,
+				7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */,
+				7F8D6C262BF9079A0035DF7B /* NotificationView.swift */,
 				36B2187F2BE91F3600CAE5AB /* PasswordResetView.swift */,
+				791F38172C238D7700B650FF /* PhotoPicker.swift */,
 				36B218882BE91F3600CAE5AB /* ProflieView.swift */,
 				36B218852BE91F3600CAE5AB /* RegistrationView.swift */,
 				36B218812BE91F3600CAE5AB /* SecurityView.swift */,
 				36B218872BE91F3600CAE5AB /* SettingView.swift */,
-				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
-				7F8D6C262BF9079A0035DF7B /* NotificationView.swift */,
-				7F34209C2C077E6C00323B0F /* AccountView.swift */,
-				7F3420A02C07864B00323B0F /* ChangeEmailView.swift */,
-				7F3420A22C07867200323B0F /* ChangePasswordView.swift */,
-				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				7F8C54B32C1B7279007BE55A /* TaskView.swift */,
-				7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */,
-				791F38172C238D7700B650FF /* PhotoPicker.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -320,14 +312,14 @@
 		7F821D182C0D4C6B0065F261 /* MissileLogos */ = {
 			isa = PBXGroup;
 			children = (
-				7F1E11C62C23724D0002BDCF /* Quickstrike_walking.gif */,
-				7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */,
-				7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */,
 				7F86F7FE2C1F83D6004E26ED /* Blaze_rocket_celebration.gif */,
-				7F86F7FA2C1F83C0004E26ED /* Phoenix_inferno_walking.gif */,
 				7F86F7F82C1F83B6004E26ED /* Blaze_rocket_walking.gif */,
 				7F821D1D2C0D4CFC0065F261 /* blaze_rocket.gif */,
+				7F86F8022C1F83EB004E26ED /* Phoenix_inferno_celebration.gif */,
+				7F86F7FA2C1F83C0004E26ED /* Phoenix_inferno_walking.gif */,
 				7F821D1B2C0D4CF10065F261 /* phoenix_inferno.gif */,
+				7F86F8002C1F83DF004E26ED /* Quickstrike_celebration.gif */,
+				7F1E11C62C23724D0002BDCF /* Quickstrike_walking.gif */,
 				7F821D192C0D4CE50065F261 /* quickstrike.gif */,
 			);
 			path = MissileLogos;

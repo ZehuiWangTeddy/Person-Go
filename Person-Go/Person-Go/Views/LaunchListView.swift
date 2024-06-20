@@ -12,7 +12,6 @@ struct Friend1: Identifiable {
 struct LaunchListView: View {
     @StateObject private var locationManager = LocationManager()
     @State private var friends: [Friend1] = []
-    @Environment(\.colorScheme) var colorScheme
     @State private var selectedFriend: UUID?
     @Binding var selectedTab: String
     @ObservedObject var selectedFriendsStore: SelectedFriends
@@ -20,81 +19,78 @@ struct LaunchListView: View {
     @EnvironmentObject var userAuth: UserAuth
     @State private var showingAlert = false
     @State private var message = ""
-
+    
     var user_id: String {
         return userAuth.user!.id.uuidString
     }
-
-
+    
     var body: some View {
-        ZStack {
-            Color("Background")
-                    .edgesIgnoringSafeArea(.all)
-            VStack(alignment: .leading, spacing: 20) {
-                Text("Friend List")
+        NavigationView {
+            VStack(spacing: 20) {
+                HStack {
+                    Text("Friend List")
                         .font(.largeTitle)
                         .bold()
-                        .foregroundColor(Color("Text"))
-                        .padding(.bottom, 0)
-
+                    Spacer()
+                }
                 Divider()
-                        .frame(height: 2)
-
                 List(friends, id: \.id) { friend in
                     FriendRow(friend: friend, isSelected: self.selectedFriend == friend.id)
-                            .onTapGesture {
-                                if self.selectedFriend == friend.id {
-                                    self.selectedFriend = nil
-                                } else {
-                                    self.selectedFriend = friend.id
-                                }
+                        .onTapGesture {
+                            if self.selectedFriend == friend.id {
+                                self.selectedFriend = nil
+                            } else {
+                                self.selectedFriend = friend.id
                             }
-                            .listRowBackground(Color("Background"))
-                }
-                        .refreshable {
-                            await loadFriends()
                         }
-                        .listStyle(PlainListStyle())
-
+                        .listRowBackground(Color("Background"))
+                        .listRowInsets(EdgeInsets())
+                        .padding(.vertical, 8)
+                }
+                .listStyle(PlainListStyle())
+                .refreshable {
+                    Task {
+                        await loadFriends()
+                    }
+                }
+                .onAppear {
+                    Task {
+                        await loadFriends()
+                    }
+                }
+                
                 Button(action: {
                     confirmAction()
                 }) {
                     Text("Send Missile")
-                            .font(.title3)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(selectedFriend == nil ? Color.gray : Color("Primary"))
-                            .foregroundColor(Color("Text"))
-                            .cornerRadius(10)
+                        .font(.title3)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(selectedFriend != nil ? Color("Primary") : Color("Primary").opacity(0.5))
+                        .foregroundColor(Color("Text"))
+                        .cornerRadius(8)
                 }
-                        .padding(.top, 40)
-                        .disabled(selectedFriend == nil)
-                        .alert(isPresented: $showingAlert) {
-                            Alert(title: Text("Failed to launch missile"), message: Text(message), dismissButton: .default(Text("OK")))
-                        }
+                .disabled(selectedFriend == nil)
+                .alert(isPresented: $showingAlert) {
+                    Alert(title: Text("Failed to launch missile"), message: Text(message), dismissButton: .default(Text("OK")))
+                }
             }
-                    .padding()
-                    .background(Color("Background"))
-                    .foregroundColor(Color("Text"))
-                    .onAppear {
-                        Task {
-                            await loadFriends()
-                        }
-                    }
+            .padding()
+            .background(Color("Background"))
+            .foregroundColor(Color("Text"))
         }
-                .background(Color("Background")) // Ensuring the background color is consistent
     }
-
+    
     private func confirmAction() {
         let selected = friends.filter {
             selectedFriend == $0.id
         }
-
+        
         for friend in selected {
             Task {
                 // Fetch the current inventory
                 let currentInventory = await fetchInventory(for: UUID(uuidString: user_id)!)
-
+                
                 // Check if the selected missile type is not zero
                 let missileCount: Int
                 switch selectedSize {
@@ -107,7 +103,7 @@ struct LaunchListView: View {
                 default:
                     missileCount = 0
                 }
-
+                
                 if missileCount > 0 {
                     let launchSuccess = await insertLaunch(user_id: UUID(uuidString: user_id)!, target_id: friend.friendId!, launch_type: selectedSize ?? "Phoenix Inferno")
                     let inventorySuccess = await decreaseInventory(for: UUID(uuidString: user_id)!, missileType: selectedSize ?? "Phoenix Inferno")
@@ -133,22 +129,22 @@ struct LaunchListView: View {
             }
         }
     }
-
+    
     private func loadFriends() async {
         do {
             // Fetch the friends list
             let friendsList: [FriendsForMap] = try await fetchFriendsForMap(for: UUID(uuidString: user_id)!)!
-
+            
             // Clear the existing friends list
             friends.removeAll()
-
+            
             // For each friend in the list, calculate the distance from the user's current location
             for friend in friendsList {
                 if let friend_id = friend.friend_id {
                     if let latitude = friend.latitude, let longitude = friend.longitude {
                         let friendLocation = CLLocation(latitude: latitude, longitude: longitude)
                         let distance = locationManager.calculateDistance(from: locationManager.currentLocation!, to: friendLocation)
-
+                        
                         // Create a new Friend1 object with the calculated distance and add it to the friends array
                         let newFriend = Friend1(friendId: friend_id, name: friend.username ?? "", distance: distance, avatar: friend.avatar_url ?? "sample")
                         friends.append(newFriend)
@@ -161,36 +157,30 @@ struct LaunchListView: View {
             print("Failed to load friends: \(error)")
         }
     }
-
+    
     struct FriendRow: View {
         let friend: Friend1
         let isSelected: Bool
-
+        
         var body: some View {
             HStack {
                 Image(friend.avatar)
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.gray, lineWidth: 1))
-
-                VStack(alignment: .leading) {
-                    Text(friend.name)
-                            .font(.headline)
-                            .foregroundColor(Color("Text"))
-                }
-                Spacer() // Pushes the distance to the right
-                Text("\(friend.distance, specifier: "%.1f") km")
-                        .font(.subheadline)
-                        .foregroundColor(Color("Text"))
-                if isSelected {
-                    Image(systemName: "checkmark")
-                            .foregroundColor(.blue)
-                }
-            }
+                    .resizable()
+                    .frame(width: 40, height: 40)
+                    .clipShape(Circle())
                     .padding()
-                    .background(isSelected ? Color("Primary").opacity(0.1) : Color.clear)
-                    .cornerRadius(8)
+                Text(friend.name)
+                    .font(.headline)
+                    .foregroundColor(Color("Text"))
+                Spacer()
+                Text("\(friend.distance, specifier: "%.1f") km")
+                    .font(.subheadline)
+                    .foregroundColor(Color("Text"))
+                    .padding()
+            }
+            .background(isSelected ? Color("Primary").opacity(0.2) : Color.clear)
+            .cornerRadius(8)
+            .contentShape(Rectangle())
         }
     }
 }

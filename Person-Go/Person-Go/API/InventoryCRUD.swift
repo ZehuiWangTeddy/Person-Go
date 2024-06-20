@@ -48,7 +48,7 @@ public struct AnyEncodable: Encodable {
 
 public func decreaseInventory(for userId: UUID, missileType: String) async -> Bool {
     do {
-        var inventory = try! await fetchInventory(for: userId)
+        let inventory = try! await fetchInventory(for: userId)
         switch missileType {
         case "Quickstrike":
             let newSmallCount = (inventory?.small ?? 0) - 1
