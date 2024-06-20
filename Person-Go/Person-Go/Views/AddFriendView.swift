@@ -31,7 +31,6 @@ struct AddFriendView: View {
                     Spacer()
                 }
                 Divider()
-                    .frame(height: 2)
                 TextField("Friend's email", text: $email)
                     .padding()
                     .background(Color.gray.opacity(0.2))
@@ -39,7 +38,6 @@ struct AddFriendView: View {
                     .cornerRadius(8)
                     .foregroundColor(Color.gray)
                     .autocapitalization(.none)
-                    .frame(height: 50)                    
                 Button(action: {
                     Task {
                         await addFriend()

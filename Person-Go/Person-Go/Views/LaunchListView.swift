@@ -164,14 +164,10 @@ struct LaunchListView: View {
         
         var body: some View {
             HStack {
-                Image(friend.avatar)
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .clipShape(Circle())
-                    .padding()
                 Text(friend.name)
                     .font(.headline)
                     .foregroundColor(Color("Text"))
+                    .padding()
                 Spacer()
                 Text("\(friend.distance, specifier: "%.1f") km")
                     .font(.subheadline)
