@@ -99,7 +99,6 @@ struct PasswordField: View {
             .cornerRadius(8)
             .foregroundColor(Color.gray)
             .autocapitalization(.none)
-            .frame(height: 50)
             Button(action: {
                 isPasswordVisible.toggle()
             }) {
