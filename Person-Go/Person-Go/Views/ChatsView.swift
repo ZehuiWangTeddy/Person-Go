@@ -61,123 +61,106 @@ struct ChatsView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                Color("Background")
-                    .edgesIgnoringSafeArea(.all)
-                VStack {
-                    HStack {
-                        Text("Chats")
-                            .font(.largeTitle)
-                            .bold()
-                        NavigationLink(destination: AddFriendView().environmentObject(userAuth)) {
-                            Image(systemName: "plus.circle")
-                                .resizable()
-                                .frame(width: 25, height: 25)
-                        }
-                        Spacer()
-                        NavigationLink(destination: ProfileView().environmentObject(userAuth)){
-                            userAuth.getUserAvatar(width: 50, height: 50, radius: 30)
-                        }
-                        Divider()
-                            .frame(height: 2)
+            VStack(spacing: 20) {
+                HStack {
+                    Text("Chats")
+                        .font(.largeTitle)
+                        .bold()
+                    NavigationLink(destination: AddFriendView().environmentObject(userAuth)) {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 25, height: 25)
                     }
-                    .padding(.horizontal)
-                    
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundColor(.gray)
-                        .padding(.horizontal)
-                    
-                    if (friends.isEmpty) {
-                        if (loading) {
-                            Text("loadings...").padding()
-                        } else {
-                            Text("No Friends...").padding()
-                        }
-                        
-                        Spacer()
-                            .padding()
+                    Spacer()
+                }
+                .overlay(
+                    NavigationLink(destination: ProfileView().environmentObject(userAuth)) {
+                        userAuth.getUserAvatar(width: 50, height: 50, radius: 30)
+                    }
+                    .padding(.trailing),
+                    alignment: .trailing
+                )
+                Divider()
+                if (friends.isEmpty) {
+                    if (loading) {
+                        Text("loadings...")
                     } else {
-                        
-                        List {
-                            ForEach(friends, id: \.id) { friend in
-                                NavigationLink(
-                                    destination: ChatWindowView(friend: friend).environmentObject(userAuth)
-                                ){
-                                    HStack{
-                                        
-                                        FriendAvatarView(avatarUrl: friend.profiles.avatarUrl ?? "")
-                                        Text(friend.profiles.username ?? friend.profiles.id.uuidString)
-                                            .font(.headline)
-                                        
-                                        Spacer()
-                                        
-                                        CircleWithTextView(content: "\(friend.totalInventory)")
-                                        
-                                        if (friend.totalUnread > 0) {
-                                            UnreadView()
-                                        }
+                        Text("No Friends...")
+                    }
+                    Spacer()
+                } else {
+                    List {
+                        ForEach(friends, id: \.id) { friend in
+                            NavigationLink(
+                                destination: ChatWindowView(friend: friend).environmentObject(userAuth)
+                            ){
+                                HStack{
+                                    FriendAvatarView(avatarUrl: friend.profiles.avatarUrl ?? "")
+                                        .padding()
+                                    Text(friend.profiles.username ?? friend.profiles.id.uuidString)
+                                        .font(.headline)
+                                    Spacer()
+                                    CircleWithTextView(content: "\(friend.totalInventory)")
+                                    if (friend.totalUnread > 0) {
+                                        UnreadView()
                                     }
-                                    .padding(.vertical, 8)
                                 }
-                                .listRowBackground(Color("Background"))
-                                .listRowSeparator(.automatic)
-                            }
-                        }
-                        .listStyle(PlainListStyle())
-                        .background(Color("Background"))
-                        .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                        .padding(.horizontal)
-                        .padding(.vertical)
-                        .refreshable {
-                            loading = true
-                            self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
-                            loading = false
-                        }
-                    }
-                }
-                .foregroundColor(Color("Text"))
-                .padding(.vertical, 15)
-                .onAppear {
-                    Task {
-                        self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
-                        
-                        let channel = await chatManager.getClient().channel(userAuth.user!.id.uuidString)
-                        
-                        let insertions = await channel.postgresChange(
-                            InsertAction.self,
-                            schema: "public",
-                            table: "chats"
-                        )
-                        
-                        await channel.subscribe()
-                        
-                        Task {
-                            for await insert in insertions {
-                                print("Inserted: \(insert.record)")
-                                guard let receiverId = insert.record["receiver_id"]?.stringValue else { return }
                                 
-                                if (receiverId == userAuth.user!.id.uuidString.lowercased())  {
-                                    self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
-                                }
                             }
+                            .listRowBackground(Color("Background"))
+                            .listRowInsets(EdgeInsets())
+                            //.padding(.vertical, 8)
                         }
-                        
-                        self.channel = channel
+                    }
+                    .listStyle(PlainListStyle())
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .refreshable {
+                        loading = true
+                        self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                        loading = false
                     }
                 }
-                .onDisappear {
+            }
+            .padding()
+            .background(Color("Background"))
+            .foregroundColor(Color("Text"))
+            .onAppear {
+                Task {
+                    self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                    
+                    let channel = await chatManager.getClient().channel(userAuth.user!.id.uuidString)
+                    
+                    let insertions = await channel.postgresChange(
+                        InsertAction.self,
+                        schema: "public",
+                        table: "chats"
+                    )
+                    
+                    await channel.subscribe()
+                    
                     Task {
-                        self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
-                        if self.channel != nil {
-                            await self.channel!.unsubscribe()
-                            self.channel = nil
+                        for await insert in insertions {
+                            print("Inserted: \(insert.record)")
+                            guard let receiverId = insert.record["receiver_id"]?.stringValue else { return }
+                            
+                            if (receiverId == userAuth.user!.id.uuidString.lowercased())  {
+                                self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                            }
                         }
-                        
+                    }
+                    
+                    self.channel = channel
+                }
+            }
+            .onDisappear {
+                Task {
+                    self.friends = await chatManager.fetchFriends(currentUser: userAuth.user!)
+                    if self.channel != nil {
+                        await self.channel!.unsubscribe()
+                        self.channel = nil
                     }
                 }
             }
         }
     }
 }
-

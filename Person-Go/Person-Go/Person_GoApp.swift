@@ -42,8 +42,11 @@ struct Person_GoApp: App {
                     return
                 }
                 await insertLocation(user_id: UUID(uuidString: userAuth.user!.id.uuidString)!, latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude)
-                // Sleep for 30 seconds (30 billion nanoseconds)
-                await Task.sleep(5_000_000_000)
+                do {
+                    try await Task.sleep(nanoseconds: 5_000_000_000)
+                } catch {
+                    print("Failed to sleep.")
+                }
             }
         }
     }
