@@ -12,13 +12,11 @@ struct InventoryView: View {
     @ObservedObject var selectedFriendsStore: SelectedFriends
     @State private var inventory: Inventory? // State to store the fetched inventory data
     @EnvironmentObject var userAuth: UserAuth
+    @State private var navigateToMissileMapView = false
 
     var user_id: String {
         return userAuth.user!.id.uuidString
     }
-
-    @State private var inventory: UserInventory = UserInventory(small: 0, medium: 0, large: 0)
-    @State private var userId: UUID? = nil // State to hold the user ID
 
     let missileData = [
         ("Quickstrike", "100m", "quickstrike.gif"),
@@ -94,22 +92,15 @@ struct InventoryView: View {
                         Text("Add Missile")
                                 .foregroundColor(Color("Primary"))
                     })
-                    .navigationDestination(isPresented: $navigateToTaskView) {
-                if let userId = userId {
-                    TaskView(inventory: $inventory, userId: userId) // Pass userId to TestView
-                } else {
-                    Text("User ID not available") // Fallback if userId is not set
-                }
-            }
-            .navigationDestination(isPresented: $navigateToLaunchListView) {
-                LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
-            }
+                    .navigationDestination(isPresented: $navigateToLaunchListView) {
+                        LaunchListView(selectedTab: $selectedTab, selectedFriendsStore: selectedFriendsStore, selectedSize: selectedSize)
+                    }
+                    .navigationDestination(isPresented: $navigateToMissileMapView) {
+                        TaskView()
+                    }
                     .onAppear {
                         Task {
-                             userId = userIdString
-                        if let fetchedInventory = await fetchInventory(for: userIdString) {
-                            inventory = UserInventory(small: fetchedInventory.small, medium: fetchedInventory.medium, large: fetchedInventory.large)
-                        }
+                            inventory = await fetchInventory(for: UUID(uuidString: user_id)!)
                         }
                     }
         }
@@ -118,11 +109,11 @@ struct InventoryView: View {
     private func inventoryValue(for size: String) -> Int {
         switch size {
         case "Quickstrike":
-            return inventory.small
+            return inventory?.small ?? 0
         case "Blaze Rocket":
-            return inventory.medium
+            return inventory?.medium ?? 0
         case "Phoenix Inferno":
-            return inventory.large
+            return inventory?.large ?? 0
         default:
             return 0
         }

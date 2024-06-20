@@ -9,9 +9,9 @@ import Foundation
 
 public struct Inventory: Codable {
     let userID: UUID?
-    let small: Int
-    let medium: Int
-    let large: Int
+    var small: Int
+    var medium: Int
+    var large: Int
 
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
@@ -86,6 +86,10 @@ public func decreaseInventory(for userId: UUID, missileType: String) async -> Bo
     } catch {
         print("Failed to update inventory: \(error)")
         return false
+    }
+
+}
+
 public func incrementInventoryItem(for userId: UUID, item: String, increment: Int = 1) async throws -> Bool {
     do {
         // Fetch the current inventory for the user
@@ -119,14 +123,14 @@ public func incrementInventoryItem(for userId: UUID, item: String, increment: In
 
         // Perform the update with new values
         let updatedRows = try await supabase
-            .from("inventories")
-            .update([
-                "small": newSmall,
-                "medium": newMedium,
-                "large": newLarge
-            ])
-            .eq("user_id", value: userId)
-            .execute()
+                .from("inventories")
+                .update([
+                    "small": newSmall,
+                    "medium": newMedium,
+                    "large": newLarge
+                ])
+                .eq("user_id", value: userId)
+                .execute()
 
         print("Updated inventory for user ID: \(userId).")
 
