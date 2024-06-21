@@ -72,7 +72,7 @@ struct SettingView: View {
             print("error: \(error)")
         }
     }
-
+    
     private func showPopup(title: String, message: String) {
         DispatchQueue.main.async {
             self.alertTitle = title

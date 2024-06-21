@@ -12,17 +12,17 @@ struct InventoryView: View {
     @State private var inventory: Inventory? // State to store the fetched inventory data
     @EnvironmentObject var userAuth: UserAuth
     @State private var navigateToMissileMapView = false
-
+    
     var user_id: String {
         return userAuth.user!.id.uuidString
     }
-
+    
     let missileData = [
         ("Quickstrike", "100m", "quickstrike.gif"),
         ("Blaze Rocket", "500m", "blaze_rocket.gif"),
         ("Phoenix Inferno", "1km", "phoenix_inferno.gif")
     ]
-
+    
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -102,7 +102,7 @@ struct InventoryView: View {
             .foregroundColor(Color("Text"))
         }
     }
-
+    
     private func inventoryValue(for size: String) -> Int {
         switch size {
         case "Quickstrike":
@@ -115,16 +115,16 @@ struct InventoryView: View {
             return 0
         }
     }
-
+    
     private func missileImage(imageName: String) -> some View {
         if let _ = Bundle.main.path(forResource: imageName, ofType: nil) {
             return AnyView(AnimatedImage(name: imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit))
+                .resizable()
+                .aspectRatio(contentMode: .fit))
         } else {
             return AnyView(Text("Image not found")
-                    .foregroundColor(.red)
-                    .frame(width: 50, height: 50))
+                .foregroundColor(.red)
+                .frame(width: 50, height: 50))
         }
     }
 }

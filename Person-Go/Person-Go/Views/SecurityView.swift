@@ -6,9 +6,9 @@ struct SecurityView: View {
     @AppStorage("unlockOption") var unlockOption: String = "Immediately"
     @AppStorage("appLockTime") var appLockTime: Int = 0 // Add this line
     @EnvironmentObject var appLockManager: AppLockManager // Inject AppLockManager
-
+    
     let unlockOptions = ["Immediately", "After 1 minute", "After 15 minutes", "After 1 hour"]
-
+    
     var body: some View {
         VStack(spacing: 20) {
             HStack {
@@ -64,11 +64,11 @@ struct SecurityView: View {
         .background(Color("Background"))
         .foregroundColor(Color("Text"))
     }
-
+    
     func authenticate() {
         let context = LAContext()
         var error: NSError?
-
+        
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Authenticate with Face ID or Touch ID"
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in

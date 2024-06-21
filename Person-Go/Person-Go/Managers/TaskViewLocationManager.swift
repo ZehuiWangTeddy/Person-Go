@@ -7,7 +7,7 @@ class TaskViewViewLocationManager: NSObject, ObservableObject, CLLocationManager
     @Published var currentLocation: CLLocation?
     private var lastLocation: CLLocation?
     @Published var isCalculatingDistance: Bool = false
-
+    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -17,10 +17,10 @@ class TaskViewViewLocationManager: NSObject, ObservableObject, CLLocationManager
         locationManager.startUpdatingLocation()
         locationManager.distanceFilter = 0.01  // meters
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard isCalculatingDistance, let newLocation = locations.last else { return }
-
+        
         if let lastLocation = lastLocation {
             let distance = newLocation.distance(from: lastLocation)
             distanceMoved += distance
@@ -28,11 +28,11 @@ class TaskViewViewLocationManager: NSObject, ObservableObject, CLLocationManager
         } else {
             print("Starting location tracking at: \(newLocation.coordinate)")
         }
-
+        
         lastLocation = newLocation
         currentLocation = newLocation
     }
-
+    
     func resetDistanceMoved() {
         distanceMoved = 0.0
         lastLocation = currentLocation

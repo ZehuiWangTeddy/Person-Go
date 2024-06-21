@@ -4,12 +4,12 @@ import SDWebImageSwiftUI
 struct MissileClaimedView: View {
     let gifName: String
     let missileName: String
-
+    
     var body: some View {
         ZStack {
             Color("Background")
                 .edgesIgnoringSafeArea(.all) // Ensure background color fills the entire view
-
+            
             VStack {
                 Text("\(missileName) claimed successfully")
                     .font(.largeTitle)

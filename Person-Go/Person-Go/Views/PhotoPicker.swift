@@ -28,7 +28,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
         }
         
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            if let image = info[.editedImage] as? UIImage {                
+            if let image = info[.editedImage] as? UIImage {
                 photoPicker.avatarImage = image
                 photoPicker.isSelectImage = true
             } else {

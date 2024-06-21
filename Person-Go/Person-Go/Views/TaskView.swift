@@ -221,7 +221,7 @@ struct TaskView: View {
             }
         }
     }
-
+    
     private func missileImage(imageName: String) -> some View {
         if let _ = Bundle.main.path(forResource: imageName, ofType: nil) {
             return AnyView(AnimatedImage(name: imageName)
@@ -233,7 +233,7 @@ struct TaskView: View {
                 .frame(width: 50, height: 50))
         }
     }
-
+    
     private func displayGif() -> some View {
         let gifName: String
         switch selectedItemType {
@@ -254,7 +254,7 @@ struct TaskView: View {
                 .padding()
         )
     }
-
+    
     func incrementInventoryItemForUser(userId: UUID, item: String) async -> Bool {
         do {
             let success = try await incrementInventoryItem(for: userId, item: item)
@@ -279,7 +279,7 @@ struct TaskView: View {
             return false
         }
     }
-
+    
     func claimMissile(item: String, imageName: String, message: String, celebrationGif: String) async {
         if let userIdUUID = UUID(uuidString: userId) {
             let success = await incrementInventoryItemForUser(userId: userIdUUID, item: item)

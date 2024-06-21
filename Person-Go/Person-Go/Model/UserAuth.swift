@@ -11,7 +11,7 @@ class UserAuth: ObservableObject {
     
     private var userManager = UserManager()
     private var chatManager = ChatManager()
-
+    
     func updateCurrentUser(user: Supabase.User)  {
         self.user = user
         
@@ -22,11 +22,6 @@ class UserAuth: ObservableObject {
             DispatchQueue.main.async {
                 self.profile = profile
             }
-//            do{
-//                try await downloadImage(for: profile)
-//            } catch {
-//                print(error)
-//            }
         }
     }
     
@@ -91,24 +86,10 @@ class UserAuth: ObservableObject {
                 }
             } else {
                 ProgressView()
-                   .controlSize(.large)
-                   .frame(width: width, height: height)
+                    .controlSize(.large)
+                    .frame(width: width, height: height)
             }
         }
     }
     
-//    func downloadImage(for profile: Profile) async throws {
-//        guard profile.avatarUrl != nil else {
-//            return;
-//        }
-//
-//        let url = chatManager.retrieveAvatarPublicUrl(path: profile.avatarUrl!)
-//
-//        let (data, _) = try await session.data(from: url)
-//        let dataURL = URL(string: "data:image/png;base64," + data.base64EncodedString())
-//
-//        DispatchQueue.main.async {
-//            self.profile!.imageDataURL = dataURL
-//        }
-//    }
 }

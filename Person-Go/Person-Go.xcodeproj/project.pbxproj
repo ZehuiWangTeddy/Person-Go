@@ -54,7 +54,6 @@
 		7F1E11C52C2326AF0002BDCF /* MissileClaimedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */; };
 		7F1E11C72C23724D0002BDCF /* Quickstrike_walking.gif in Resources */ = {isa = PBXBuildFile; fileRef = 7F1E11C62C23724D0002BDCF /* Quickstrike_walking.gif */; };
 		7F81FBE72C0D963400494DA8 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F81FBE62C0D963400494DA8 /* NotificationManager.swift */; };
-		7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0C2C0D2B370065F261 /* InventoryManager.swift */; };
 		7F821D0F2C0D2F3F0065F261 /* UserInventory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */; };
 		7F821D112C0D30610065F261 /* Missile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F821D102C0D30610065F261 /* Missile.swift */; };
 		7F821D142C0D48970065F261 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7F821D132C0D48970065F261 /* SDWebImageSwiftUI */; };
@@ -127,7 +126,6 @@
 		7F3420A02C07864B00323B0F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
 		7F3420A22C07867200323B0F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		7F81FBE62C0D963400494DA8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
-		7F821D0C2C0D2B370065F261 /* InventoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InventoryManager.swift; sourceTree = "<group>"; };
 		7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInventory.swift; sourceTree = "<group>"; };
 		7F821D102C0D30610065F261 /* Missile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
 		7F821D192C0D4CE50065F261 /* quickstrike.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = quickstrike.gif; sourceTree = "<group>"; };
@@ -178,7 +176,6 @@
 			children = (
 				27FFF3DA2BE40F940008B22B /* AppLockManager.swift */,
 				79F660CB2BFBA2D800B28D79 /* ChatManager.swift */,
-				7F821D0C2C0D2B370065F261 /* InventoryManager.swift */,
 				36B218992BE91F4C00CAE5AB /* LocationManager.swift */,
 				7F81FBE62C0D963400494DA8 /* NotificationManager.swift */,
 				7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */,
@@ -452,7 +449,6 @@
 				7F8D6C212BF8F0B30035DF7B /* Friend.swift in Sources */,
 				791F38242C242CA600B650FF /* UserManager.swift in Sources */,
 				3693DFFA2BE41215003F83BD /* UserAuth.swift in Sources */,
-				7F821D0D2C0D2B370065F261 /* InventoryManager.swift in Sources */,
 				36B218942BE91F3600CAE5AB /* SettingView.swift in Sources */,
 				7F821D0F2C0D2F3F0065F261 /* UserInventory.swift in Sources */,
 				36B218902BE91F3600CAE5AB /* FriendProfileView.swift in Sources */,

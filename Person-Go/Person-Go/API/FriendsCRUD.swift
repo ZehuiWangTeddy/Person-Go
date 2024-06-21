@@ -1,10 +1,3 @@
-//
-//  FriendsCRUD.swift
-//  Person-Go
-//
-//  Created by Atumah Gerald on 19/05/2024.
-//
-
 import Foundation
 
 public struct FriendsForMap: Identifiable, Decodable {
@@ -20,19 +13,17 @@ public struct FriendsForMap: Identifiable, Decodable {
 public func fetchFriendsForMap(for userId: UUID) async -> [FriendsForMap]? {
     do {
         let response = try await supabase
-                .from("friends_for_map")
-                .select()
-                .eq("user_id", value: userId)
-                .execute()
-
-//        print("JSON Response: \(response)")
-
+            .from("friends_for_map")
+            .select()
+            .eq("user_id", value: userId)
+            .execute()
+        
         // Create a JSONDecoder
         let decoder = JSONDecoder()
-
+        
         // Try to decode the JSON response into [FriendsForMap]
         let friends = try decoder.decode([FriendsForMap].self, from: response.data)
-//        print(friends)
+        //        print(friends)
         return friends
     } catch {
         print("Failed to decode: \(error)")
