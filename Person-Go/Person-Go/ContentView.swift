@@ -5,7 +5,6 @@ struct ContentView: View {
     @AppStorage("isFaceIDOrTouchIDEnabled") var isFaceIDOrTouchIDEnabled: Bool = false
     @State private var isUnlocked = false
     @StateObject private var appLockManager = AppLockManager()
-    //    @StateObject private var userAuth = UserAuth()
     @StateObject private var selectedFriendsStore = SelectedFriends()
     
     @EnvironmentObject var userAuth: UserAuth

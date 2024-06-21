@@ -32,7 +32,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
                 photoPicker.avatarImage = image
                 photoPicker.isSelectImage = true
             } else {
-                // return an error and show alert that choose not allow image
+                print("Choosing images is disallowed")
             }
             
             picker.dismiss(animated: true)
