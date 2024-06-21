@@ -5,8 +5,8 @@ struct LoginView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
 
     @EnvironmentObject var userAuth: UserAuth
-    @State private var email: String = "test1@test.com"
-    @State private var password: String = "1234"
+    @State private var email: String = ""
+    @State private var password: String = ""
 
     @State private var showingAlert = false
     @State private var alertTitle = ""
