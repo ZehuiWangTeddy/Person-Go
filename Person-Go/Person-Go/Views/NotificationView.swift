@@ -18,7 +18,7 @@ struct NotificationView: View {
             configureNotificationSettings()
         }
     }
-
+    
     var body: some View {
         VStack(spacing: 20) {
             HStack {
@@ -105,7 +105,7 @@ struct NotificationView: View {
             configureNotificationSettings()
         }
     }
-
+    
     private func configureNotificationSettings() {
         let enableSound = notificationSound != "None"
         NotificationManager.shared.configureNotificationSettings(enableSound: enableSound, showPreviews: showPreviews, notificationSound: notificationSound)

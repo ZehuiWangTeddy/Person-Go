@@ -4,7 +4,7 @@ import LocalAuthentication
 struct AuthenticationView: View {
     @Binding var isUnlocked: Bool
     @State private var biometricType: LABiometryType = .none
-
+    
     var body: some View {
         VStack {
             Button(action: {
@@ -24,18 +24,18 @@ struct AuthenticationView: View {
             checkBiometricType()
         }
     }
-
+    
     func checkBiometricType() {
         let context = LAContext()
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
             biometricType = context.biometryType
         }
     }
-
+    
     func authenticate() {
         let context = LAContext()
         var error: NSError?
-
+        
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             let reason = "Authenticate with Face ID or Touch ID"
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in

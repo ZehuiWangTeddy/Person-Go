@@ -3,15 +3,15 @@ import Supabase
 
 struct LoginView: View {
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
-
+    
     @EnvironmentObject var userAuth: UserAuth
     @State private var email: String = ""
     @State private var password: String = ""
-
+    
     @State private var showingAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
-
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -19,8 +19,8 @@ struct LoginView: View {
                 VStack(spacing: 20) {
                     HStack {
                         Text("Sign In")
-                                .font(.largeTitle)
-                                .bold()
+                            .font(.largeTitle)
+                            .bold()
                         Spacer()
                     }
                     Divider()
@@ -52,31 +52,31 @@ struct LoginView: View {
                     VStack(spacing: 10) {
                         NavigationLink(destination: PasswordResetView()) {
                             Text("Forgot Password?")
-                                    .font(.title3)
+                                .font(.title3)
                         }
                         NavigationLink(destination: RegistrationView()) {
                             Text("Sign Up")
-                                    .font(.title3)
+                                .font(.title3)
                         }
                     }
-                            .padding()
+                    .padding()
                 }
             }
-                    .padding()
-                    .background(Color("Background"))
+            .padding()
+            .background(Color("Background"))
         }
-
+        
         .foregroundColor(Color("Text"))
         .alert(isPresented: $showingAlert) {
             Alert(title: Text(alertTitle), message: Text(alertMessage))
         }
     }
-
+    
     private func signIn() async {
         do {
             let response = try await client.auth.signIn(
-                    email: email,
-                    password: password
+                email: email,
+                password: password
             )
             userAuth.isLoggedin = true
             userAuth.updateCurrentUser(user: response.user)

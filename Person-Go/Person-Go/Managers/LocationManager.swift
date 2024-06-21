@@ -2,8 +2,8 @@ import CoreLocation
 
 class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
-
-
+    
+    
     override init() {
         super.init()
         locationManager.delegate = self
@@ -12,7 +12,7 @@ class LocationManager: NSObject, ObservableObject {
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
     }
-
+    
     func printCurrentLocation() {
         if let location = currentLocation {
             print("Current coordinates: \(location.coordinate.latitude), \(location.coordinate.longitude)")
@@ -20,11 +20,11 @@ class LocationManager: NSObject, ObservableObject {
             print("Location not available")
         }
     }
-
+    
     var currentLocation: CLLocation? {
         return locationManager.location
     }
-
+    
     func calculateDistance(from userLocation: CLLocation, to friendLocation: CLLocation) -> Double {
         let distanceInMeters = userLocation.distance(from: friendLocation)
         let distanceInKilometers = distanceInMeters / 1000
