@@ -22,22 +22,21 @@ Deno.serve(async (req) => {
   );
 
   const url = new URL(req.url);
-  const email = url.searchParams.get("email");
+  const tokenHash = url.searchParams.get("token_hash");
   let userId = null;
 
-  if (email) {
-    const { data: users, error } = await supabaseClient
-      .from('users')
-      .select('id')
-      .eq('email', email)
-      .single();
+  if (tokenHash) {
+    const { data, error } = await supabaseClient.auth.verifyOtp({
+      token_hash: tokenHash,
+      type: 'email'
+    });
 
-    if (error || !users) {
-      console.error("Error retrieving user by email", error);
-      return new Response('Failed to retrieve user', {status: 500, headers: {"Content-Type": "text/plain"}});
+    if (error || !data) {
+      console.error("Error verifying OTP", error);
+      return new Response('Email link is invalid or has expired', {status: 500, headers: {"Content-Type": "text/plain"}});
     }
 
-    userId = users.id;
+    userId = data.user.id;
   } else {
     const token = req.headers.get("cookie")?.split(";").find(c => c.trim().startsWith("sb-access-token"))?.split("=")[1];
 
