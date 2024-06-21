@@ -18,11 +18,11 @@ public struct Inventory: Codable {
 public func fetchInventory(for userId: UUID) async -> Inventory? {
     do {
         let inventory: [Inventory] = try await supabase
-                .from("inventories")
-                .select()
-                .eq("user_id", value: userId)
-                .execute()
-                .value
+            .from("inventories")
+            .select()
+            .eq("user_id", value: userId)
+            .execute()
+            .value
         return inventory.first
     } catch {
         print("Failed to decode: \(error)")

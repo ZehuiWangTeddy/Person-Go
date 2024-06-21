@@ -296,4 +296,3 @@ class TimerAnnotationView: MKAnnotationView {
         imageView?.center = CGPoint(x: bounds.midX, y: bounds.midY)
     }
 }
-

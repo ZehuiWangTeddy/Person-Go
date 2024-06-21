@@ -122,9 +122,6 @@
 		7F1E11C22C2323040002BDCF /* TaskViewLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewLocationManager.swift; sourceTree = "<group>"; };
 		7F1E11C42C2326AF0002BDCF /* MissileClaimedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissileClaimedView.swift; sourceTree = "<group>"; };
 		7F1E11C62C23724D0002BDCF /* Quickstrike_walking.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Quickstrike_walking.gif; sourceTree = "<group>"; };
-		7F34209C2C077E6C00323B0F /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
-		7F3420A02C07864B00323B0F /* ChangeEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeEmailView.swift; sourceTree = "<group>"; };
-		7F3420A22C07867200323B0F /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		7F81FBE62C0D963400494DA8 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		7F821D0E2C0D2F3F0065F261 /* UserInventory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInventory.swift; sourceTree = "<group>"; };
 		7F821D102C0D30610065F261 /* Missile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Missile.swift; sourceTree = "<group>"; };
@@ -278,13 +275,10 @@
 			children = (
 				7F8D6C242BF901C80035DF7B /* AboutView.swift */,
 				79641E7A2C092016006C6F3B /* AccountView.swift */,
-				7F34209C2C077E6C00323B0F /* AccountView.swift */,
 				79D9AE822C16529B00A33023 /* AddFriendView.swift */,
 				36B218892BE91F3600CAE5AB /* AuthenticationView.swift */,
 				79641E7C2C092028006C6F3B /* ChangeEmailView.swift */,
-				7F3420A02C07864B00323B0F /* ChangeEmailView.swift */,
 				79641E762C091FEE006C6F3B /* ChangePasswordView.swift */,
-				7F3420A22C07867200323B0F /* ChangePasswordView.swift */,
 				36B218862BE91F3600CAE5AB /* ChatsView.swift */,
 				36B2188B2BE91F3600CAE5AB /* ChatWindowView.swift */,
 				79641E782C091FF8006C6F3B /* EditProfileView.swift */,

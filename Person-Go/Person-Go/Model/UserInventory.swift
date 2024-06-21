@@ -5,4 +5,3 @@ struct UserInventory: Codable {
     var medium: Int
     var large: Int
 }
-
