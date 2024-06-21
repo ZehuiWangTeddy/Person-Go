@@ -149,4 +149,3 @@ class UserManager: NSObject, ObservableObject{
         }
     }
 }
-
