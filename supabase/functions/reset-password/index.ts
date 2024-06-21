@@ -21,23 +21,42 @@ Deno.serve(async (req) => {
     },
   );
 
-  const token = req.headers.get("cookie")?.split(";").find(c => c.trim().startsWith("sb-access-token"))?.split("=")[1];
+  const url = new URL(req.url);
+  const email = url.searchParams.get("email");
+  let userId = null;
 
-  if (!token) {
-    return new Response("Missing 'access_token'", { status: 401 });
+  if (email) {
+    const { data: users, error } = await supabaseClient
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .single();
+
+    if (error || !users) {
+      console.error("Error retrieving user by email", error);
+      return new Response('Failed to retrieve user', {status: 500, headers: {"Content-Type": "text/plain"}});
+    }
+
+    userId = users.id;
+  } else {
+    const token = req.headers.get("cookie")?.split(";").find(c => c.trim().startsWith("sb-access-token"))?.split("=")[1];
+
+    if (token) {
+      userId = (await supabaseClient.auth.getUser(token)).data.user?.id;
+    } else {
+      return new Response("Missing 'access_token'", { status: 401 });
+    }
   }
-
-  const userId = (await supabaseClient.auth.getUser(token)).data.user?.id;
 
   const newPassword = generatePassword(12);
 
-  const { data: user, error } = await supabaseClient.auth.admin.updateUserById(
+  const { data: updatedUser, error } = await supabaseClient.auth.admin.updateUserById(
     userId,
     { password: newPassword }
   )
 
   if (error) {
-    console.log("Error updating user", error);
+    console.error("Error updating user", error);
     return new Response('Failed to update password', {status: 500, headers: {"Content-Type": "text/plain"}});
   }
 
