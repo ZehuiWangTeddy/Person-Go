@@ -217,9 +217,9 @@ class ChatManager: NSObject, ObservableObject{
             let publicURL = try client.storage
                 .from("avatars")
                 .getPublicURL(
-                    path: path                    
+                    path: path
                 )
-
+            
             if publicURL.absoluteString.isEmpty {
                 return getDefaultAvatar()
             }

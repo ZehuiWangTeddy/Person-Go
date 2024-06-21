@@ -5,7 +5,7 @@ struct PasswordResetView: View {
     @EnvironmentObject var userAuth: UserAuth
     @State private var email: String = ""
     @State private var password: String = ""
-
+    
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
     @State private var showingAlert = false

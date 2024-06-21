@@ -5,7 +5,7 @@ struct RegistrationView: View {
     @EnvironmentObject var userAuth: UserAuth
     @State private var email: String = ""
     @State private var password: String = ""
-
+    
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     
     @State private var showingAlert = false
@@ -56,7 +56,7 @@ struct RegistrationView: View {
             Alert(title: Text(alertTitle), message: Text(alertMessage))
         }
     }
-
+    
     private func register() async {
         do {
             let response = try await client.auth.signUp(

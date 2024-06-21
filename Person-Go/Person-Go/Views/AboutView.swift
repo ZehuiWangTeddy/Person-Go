@@ -3,7 +3,7 @@ import SwiftUI
 struct AboutView: View {
     var appVersion: String = "1.0.0"
     var creationYear: String = "2024"
-
+    
     var body: some View {
         VStack(spacing: 20) {
             HStack {
@@ -31,8 +31,8 @@ struct AboutView: View {
                     - Easy-to-use interface
                     - Secure and private
                     """)
-                        .font(.body)
-                        .foregroundColor(Color("Text"))
+                    .font(.body)
+                    .foregroundColor(Color("Text"))
                     
                     Text("Our Mission")
                         .font(.title2)

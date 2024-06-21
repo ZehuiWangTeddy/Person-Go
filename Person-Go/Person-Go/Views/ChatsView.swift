@@ -77,7 +77,7 @@ struct ChatsView: View {
                     NavigationLink(destination: ProfileView().environmentObject(userAuth)) {
                         userAuth.getUserAvatar(width: 50, height: 50, radius: 30)
                     }
-                    .padding(.trailing),
+                        .padding(.trailing),
                     alignment: .trailing
                 )
                 Divider()

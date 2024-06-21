@@ -12,15 +12,15 @@ struct AddFriendView: View {
     @Environment(\.presentationMode) var presentationMode
     let client = SupabaseClient(supabaseURL: URL(string: "https://" + apiUrl)!, supabaseKey: apiKey)
     @EnvironmentObject var userAuth: UserAuth
-
+    
     let userManager = UserManager()
-
+    
     @State private var email: String = ""
     @State private var showingAlert = false
     @State private var showingChoice = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
-
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -72,26 +72,26 @@ struct AddFriendView: View {
             }
         }
     }
-
+    
     private func addFriend() async {
         do {
             guard !email.isEmpty else {
                 throw AddFriendError.emptyField
             }
-
+            
             guard let friend = try await userManager.findUserByEmail(email: self.email) else {
                 throw AddFriendError.userNotFound
             }
-
+            
             if try await userManager.isFriendAlready(user: userAuth.user!.id, friend: friend) {
                 throw AddFriendError.alreadyFriends
             }
-
+            
             let success = try await userManager.addFriendShip(user: userAuth.user!.id, friend: friend)
             if !success {
                 throw AddFriendError.unknownError
             }
-
+            
             showPopup(title: "Success", message: "Friend added!")
         } catch let error as AddFriendError {
             handleAddFriendError(error) 
@@ -100,7 +100,7 @@ struct AddFriendView: View {
             showPopup(title: "Error", message: "An unexpected error occurred.")
         }
     }
-
+    
     private func handleAddFriendError(_ error: AddFriendError) {
         switch error {
         case .emptyField:
@@ -113,7 +113,7 @@ struct AddFriendView: View {
             showPopup(title: "Error", message: "An error occurred while adding the friend.")
         }
     }
-
+    
     private func sendInvite() async {
         do {
             let response: AnyJSON = try await supabase
@@ -129,7 +129,7 @@ struct AddFriendView: View {
             showPopup(title: "Error", message: "There was an error sending the invite. Please try again.")
         }
     }
-
+    
     private func showPopup(title: String, message: String) {
         DispatchQueue.main.async {
             self.alertTitle = title
@@ -137,7 +137,7 @@ struct AddFriendView: View {
             self.showingAlert = true
         }
     }
-
+    
     private func showChoice(title: String, message: String) {
         self.showingChoice = true
         showPopup(title: title, message: message)

@@ -6,7 +6,7 @@ struct ChangePasswordView: View {
     @State private var confirmNewPassword: String = ""
     @State private var isNewPasswordVisible: Bool = false
     @State private var isConfirmNewPasswordVisible: Bool = false
-
+    
     @State private var showingAlert = false
     @State private var alertTitle = ""
     @State private var alertMessage = ""
@@ -83,7 +83,7 @@ struct PasswordField: View {
     var title: String
     @Binding var text: String
     @Binding var isPasswordVisible: Bool
-
+    
     var body: some View {
         ZStack(alignment: .trailing) {
             Group {
