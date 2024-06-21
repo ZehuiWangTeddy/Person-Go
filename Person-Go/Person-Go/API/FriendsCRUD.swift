@@ -13,17 +13,14 @@ public struct FriendsForMap: Identifiable, Decodable {
 public func fetchFriendsForMap(for userId: UUID) async -> [FriendsForMap]? {
     do {
         let response = try await supabase
-            .from("friends_for_map")
-            .select()
-            .eq("user_id", value: userId)
-            .execute()
-        
-        // Create a JSONDecoder
+                .from("friends_for_map")
+                .select()
+                .eq("user_id", value: userId)
+                .execute()
+
         let decoder = JSONDecoder()
-        
-        // Try to decode the JSON response into [FriendsForMap]
+
         let friends = try decoder.decode([FriendsForMap].self, from: response.data)
-        //        print(friends)
         return friends
     } catch {
         print("Failed to decode: \(error)")
