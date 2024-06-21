@@ -61,7 +61,7 @@ struct NotificationView: View {
                             .font(.title)
                             .foregroundColor(.blue)
                         VStack(alignment: .leading) {
-                            Text("App Notifications")
+                            Text("App Notifications (Coming Soon)")
                                 .font(.headline)
                                 .foregroundColor(Color("Text"))
                             Text("Customize notifications for this app.")
